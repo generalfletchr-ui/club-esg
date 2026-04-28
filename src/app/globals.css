@@ -1,0 +1,107 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ============================================================
+   Club ESG — Design Tokens (Design System V2)
+   Source : Club ESG Design System.zip / colors_and_type.css
+   ============================================================ */
+
+@theme inline {
+
+  /* ── Couleurs marque ─────────────────────────────────── */
+  --color-teal:           #00B4B4;
+  --color-teal-hover:     #009898;
+  --color-teal-light:     #e6f7f7;
+  --color-teal-mid:       #b2e8e8;
+
+  /* ── Surfaces ────────────────────────────────────────── */
+  --color-bg:             #f5f6f8;
+  --color-sidebar:        #ebebe6;
+  --color-surface:        #ffffff;
+  --color-border:         #e5e7eb;
+  --color-border-mid:     #d1d5db;
+
+  /* ── Texte ───────────────────────────────────────────── */
+  --color-text:           #111827;
+  --color-text-mid:       #374151;
+  --color-text-muted:     #6b7280;
+  --color-text-light:     #9ca3af;
+
+  /* ── Statuts ─────────────────────────────────────────── */
+  --color-orange:         #f97316;
+  --color-orange-light:   #fff4ee;
+  --color-yellow:         #eab308;
+  --color-yellow-light:   #fefce8;
+  --color-red:            #ef4444;
+  --color-red-light:      #fef2f2;
+  --color-green:          #22c55e;
+  --color-green-light:    #f0fdf4;
+  --color-green-dark:     #16a34a;
+  --color-green-border:   #bbf7d0;
+
+  /* ── Accent événements ───────────────────────────────── */
+  --color-purple:         #7c3aed;
+  --color-purple-light:   #f5f3ff;
+
+  /* ── Hero (landing) ──────────────────────────────────── */
+  --color-navy-deep:      #0a2a4a;
+  --color-navy-mid:       #1a4a6a;
+  --color-navy-teal:      #0a3a3a;
+
+  /* ── Palette avatars ─────────────────────────────────── */
+  --color-avatar-1:       #00B4B4;
+  --color-avatar-2:       #1A365D;
+  --color-avatar-3:       #7c6ea0;
+  --color-avatar-4:       #e07040;
+  --color-avatar-5:       #2563eb;
+  --color-avatar-6:       #16a34a;
+
+  /* ── Typographie ─────────────────────────────────────── */
+  --font-sans:            'Inter', system-ui, sans-serif;
+  --font-display:         'DM Sans', 'Inter', system-ui, sans-serif;
+
+  /* ── Border radius ───────────────────────────────────── */
+  --radius-sm:            4px;
+  --radius-md:            6px;
+  --radius-lg:            8px;
+  --radius-xl:            10px;
+  --radius-pill:          20px;
+  --radius-full:          9999px;
+
+  /* ── Ombres ──────────────────────────────────────────── */
+  --shadow-card:          0 2px 16px rgba(0, 0, 0, 0.08);
+  --shadow-modal:         0 4px 24px rgba(0, 0, 0, 0.12);
+
+  /* ── Layout ──────────────────────────────────────────── */
+  --sidebar-width:        220px;
+  --topbar-height:        48px;
+}
+
+/* ── Styles de base ──────────────────────────────────────────── */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 { font-size: 24px; font-weight: 700; line-height: 1.25; color: var(--color-text); }
+h2 { font-size: 22px; font-weight: 700; line-height: 1.25; color: var(--color-text); }
+h3 { font-size: 14px; font-weight: 700; color: var(--color-text); }
+h4 { font-size: 13px; font-weight: 600; color: var(--color-text); }
+
+/* ── Classes utilitaires ─────────────────────────────────────── */
+.label-caps {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Barre de progression */
+.progress-bar {
+  background: linear-gradient(90deg, var(--color-teal), #00d4d4);
+}
