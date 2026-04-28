@@ -42,6 +42,7 @@ export async function updateSession(request: NextRequest) {
     "/replays",
     "/mon-profil",
     "/admin",
+    "/en-attente",
   ];
 
   const isProtected = protectedPaths.some((path) =>
