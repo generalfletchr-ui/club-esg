@@ -195,12 +195,10 @@ export default function InscriptionPage() {
     if (!form.type_membre)         e.type_membre        = "Ce champ est obligatoire";
     if (!form.fonction.trim())     e.fonction           = "Ce champ est obligatoire";
     if (!form.entreprise.trim())   e.entreprise         = "Ce champ est obligatoire";
-    if (!form.siret.trim())        e.siret              = "Ce champ est obligatoire";
     if (!form.secteur)             e.secteur            = "Ce champ est obligatoire";
     if (!form.taille_entreprise)   e.taille_entreprise  = "Ce champ est obligatoire";
     if (!form.zone_geo.trim())     e.zone_geo           = "Ce champ est obligatoire";
     if (!form.ville.trim())        e.ville              = "Ce champ est obligatoire";
-    if (!form.biographie.trim())   e.biographie         = "Ce champ est obligatoire";
     if (form.expertises.length === 0)
       e.expertises = "Sélectionne au moins une expertise";
     setErrors(e);
@@ -456,9 +454,7 @@ export default function InscriptionPage() {
                   placeholder="00000000000000"
                   value={form.siret}
                   onChange={(e) => update("siret", e.target.value)}
-                  error={errors.siret}
-                  hint="Non visible par les autres membres"
-                  required
+                  hint="Optionnel · Non visible par les autres membres"
                 />
 
                 <div className="grid grid-cols-2 gap-3">
@@ -541,7 +537,8 @@ export default function InscriptionPage() {
                 <div className="flex flex-col gap-1">
                   <div className="flex justify-between">
                     <label className="text-[12px] font-medium text-[#374151]">
-                      Biographie <span className="text-[#ef4444]">*</span>
+                      Biographie{" "}
+                      <span className="text-[#6b7280] font-normal">(optionnelle)</span>
                     </label>
                     <span className="text-[11px] text-[#6b7280]">
                       {form.biographie.length}/500
@@ -550,7 +547,7 @@ export default function InscriptionPage() {
                   <textarea
                     rows={3}
                     maxLength={500}
-                    placeholder="Décris ton parcours, tes missions et ta vision de la RSE..."
+                    placeholder="Décris ton parcours, tes missions et ta vision de la RSE… (facultatif)"
                     value={form.biographie}
                     onChange={(e) => update("biographie", e.target.value)}
                     className="w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-2 text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#00B4B4] resize-none transition-colors"

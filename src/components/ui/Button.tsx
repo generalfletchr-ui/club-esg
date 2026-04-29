@@ -28,9 +28,9 @@ const variantStyles: Record<Variant, string> = {
 
 /* Styles par taille */
 const sizeStyles: Record<Size, string> = {
-  sm: "px-3 py-1.5 text-[11px]",
-  md: "px-[14px] py-[7px] text-[12px]",
-  lg: "px-5 py-2.5 text-[13px]",
+  sm: "px-3 py-1.5 text-[11px] min-h-[28px]",
+  md: "px-[14px] py-[9px] text-[13px] min-h-[38px]",
+  lg: "px-5 py-[11px] text-[14px] min-h-[42px]",
 };
 
 export default function Button({

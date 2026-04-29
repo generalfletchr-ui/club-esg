@@ -1,23 +1,42 @@
 import Link from "next/link";
 import Image from "next/image";
-import { WHATSAPP_LINK } from "@/lib/constants";
 
-/* Icône type événement */
 const EVENT_ICONS: Record<string, string> = {
   Webinaire: "🎙",
   Afterwork: "🤝",
   Workshop:  "📋",
 };
 
-/* Statistiques héro */
 const HERO_STATS = [
-  ["40+",  "Membres"],
-  ["12",   "Webinaires"],
-  ["8",    "Replays"],
-  ["3",    "Events / mois"],
+  ["40+",  "Membres actifs"],
+  ["12",   "Webinaires / an"],
+  ["8",    "Replays disponibles"],
+  ["3",    "Événements / mois"],
 ];
 
-/* Membres de preview */
+const BENEFITS = [
+  {
+    icon: "🎓",
+    title: "Formez-vous en continu",
+    desc: "12 webinaires experts par an sur CSRD, bilan carbone, stratégie RSE — animés par des praticiens.",
+  },
+  {
+    icon: "🤝",
+    title: "Développez votre réseau",
+    desc: "Échangez avec 40+ professionnels ESG triés sur le volet : consultants, responsables RSE, experts-comptables.",
+  },
+  {
+    icon: "📋",
+    title: "Accédez aux replays",
+    desc: "Retrouvez toutes les sessions passées en vidéo et restez à jour même si vous ne pouvez pas assister en direct.",
+  },
+  {
+    icon: "🌿",
+    title: "Partagez en confiance",
+    desc: "Une communauté privée avec charte d'engagement : échanges bienveillants, confidentialité respectée.",
+  },
+];
+
 const PREVIEW_MEMBERS = [
   { initials: "SL", name: "Sophie L.",  role: "Consultante RSE",  tags: ["CSRD", "Stratégie RSE"] },
   { initials: "MK", name: "Marc K.",    role: "Responsable RSE",  tags: ["Bilan carbone"] },
@@ -25,116 +44,149 @@ const PREVIEW_MEMBERS = [
   { initials: "RP", name: "Rémi P.",    role: "Consultant RSE",   tags: ["Audit & Certif."] },
 ];
 
-/* Événements de preview */
 const PREVIEW_EVENTS = [
-  { type: "Webinaire", title: "CSRD : comment se préparer ?",          date: "12 mai 2026 · 12h00" },
-  { type: "Afterwork", title: "Networking ESG Paris",                   date: "20 mai 2026 · 18h30" },
-  { type: "Workshop",  title: "Bilan carbone pratique",                 date: "3 juin 2026 · 14h00" },
+  { type: "Webinaire", title: "CSRD : comment se préparer ?",  date: "12 mai 2026 · 12h00" },
+  { type: "Afterwork", title: "Networking ESG Paris",           date: "20 mai 2026 · 18h30" },
+  { type: "Workshop",  title: "Bilan carbone pratique",         date: "3 juin 2026 · 14h00" },
 ];
 
-/* Couleurs avatars déterministes */
 const AVATAR_COLORS = ["#00B4B4", "#1A365D", "#7c6ea0", "#e07040"];
+
+const PRIMARY_CTA_HREF = "/inscription";
+const PRIMARY_CTA_TEXT = "Rejoindre gratuitement →";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white font-[Inter,sans-serif]">
 
-      {/* ── Barre de navigation ──────────────────────────────── */}
-      <nav className="sticky top-0 z-10 bg-white border-b border-[#e5e7eb] px-10 py-3 flex items-center justify-between">
-        <Image src="/logo.svg" alt="Club ESG" width={140} height={46} priority />
-        <div className="flex gap-2">
+      {/* ── Navigation ──────────────────────────────────────── */}
+      <nav className="sticky top-0 z-10 bg-white border-b border-[#e5e7eb] px-4 sm:px-10 py-3 flex items-center justify-between gap-3">
+        <Image src="/logo.svg" alt="Club ESG" width={130} height={43} priority />
+        <div className="flex gap-2 flex-shrink-0">
           <Link
             href="/connexion"
-            className="px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-[#374151] bg-white border border-[#e5e7eb] hover:bg-[#f5f6f8] transition-colors"
+            className="hidden sm:inline-flex px-[14px] py-[9px] rounded-[6px] text-[13px] font-semibold text-[#374151] bg-white border border-[#e5e7eb] hover:bg-[#f5f6f8] transition-colors"
           >
             Se connecter
           </Link>
           <Link
-            href="/inscription"
-            className="px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
+            href={PRIMARY_CTA_HREF}
+            className="inline-flex px-[14px] py-[9px] rounded-[6px] text-[13px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors whitespace-nowrap"
           >
             Rejoindre le Club
           </Link>
         </div>
       </nav>
 
-      {/* ── Section héro ─────────────────────────────────────── */}
+      {/* ── Héro ────────────────────────────────────────────── */}
       <section
-        className="px-10 pt-14 pb-11 text-center"
+        className="px-4 sm:px-10 pt-20 pb-16 text-center"
         style={{ background: "linear-gradient(135deg,#0a2a4a 0%,#1a4a6a 60%,#0a3a3a 100%)" }}
       >
-        {/* Badge communauté privée */}
+        {/* Badge */}
         <div className="inline-flex items-center gap-1.5 bg-[rgba(0,180,180,0.15)] border border-[rgba(0,180,180,0.3)] rounded-[20px] px-[14px] py-1 mb-5">
           <span className="w-1.5 h-1.5 rounded-full bg-[#00B4B4] inline-block" />
           <span className="text-[#00B4B4] text-[12px] font-semibold">
-            Communauté privée · 40+ professionnels
+            Communauté privée · Accès 100% gratuit
           </span>
         </div>
 
         {/* Titre */}
         <h1
-          className="text-[32px] font-bold text-white leading-tight max-w-[560px] mx-auto mb-4"
+          className="text-[28px] sm:text-[36px] font-bold text-white leading-tight max-w-[600px] mx-auto mb-4"
           style={{ fontFamily: "'DM Sans',sans-serif" }}
         >
-          La communauté des{" "}
-          <span className="text-[#00B4B4]">professionnels ESG</span> engagés
+          Le réseau privé des{" "}
+          <span className="text-[#00B4B4]">experts ESG</span>{" "}
+          qui font avancer la transition RSE
         </h1>
 
-        <p className="text-[14px] text-white/65 max-w-[440px] mx-auto mb-7 leading-relaxed">
-          Échangez, formez-vous et développez votre réseau avec des experts-comptables,
-          consultants RSE et responsables ESG.
+        <p className="text-[15px] text-white/80 max-w-[460px] mx-auto mb-8 leading-relaxed">
+          Webinaires experts, replays, networking et entraide — rejoignez les
+          professionnels ESG les plus engagés de France.
         </p>
 
-        <div className="flex gap-2.5 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link
-            href="/inscription"
-            className="px-[20px] py-[9px] rounded-[6px] text-[13px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
+            href={PRIMARY_CTA_HREF}
+            className="inline-flex px-6 py-[11px] rounded-[6px] text-[14px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
           >
-            Demander l&apos;accès
+            {PRIMARY_CTA_TEXT}
           </Link>
           <Link
             href="/connexion"
-            className="px-[20px] py-[9px] rounded-[6px] text-[13px] font-semibold border border-white/25 text-white/70 bg-transparent hover:bg-white/10 transition-colors"
+            className="inline-flex px-6 py-[11px] rounded-[6px] text-[14px] font-semibold border border-white/30 text-white/80 bg-transparent hover:bg-white/10 transition-colors"
           >
-            Déjà membre ?
+            Déjà membre ? Se connecter
           </Link>
         </div>
 
         {/* Statistiques */}
-        <div className="flex justify-center gap-10 mt-9 pt-7 border-t border-white/10">
+        <div className="flex flex-wrap justify-center gap-8 sm:gap-10 mt-12 pt-8 border-t border-white/10">
           {HERO_STATS.map(([num, label]) => (
-            <div key={label} className="text-center">
-              <div className="text-[22px] font-bold text-[#00B4B4]">{num}</div>
-              <div className="text-[11px] text-white/45 mt-0.5">{label}</div>
+            <div key={label} className="text-center min-w-[80px]">
+              <div className="text-[24px] font-bold text-[#00B4B4]">{num}</div>
+              <div className="text-[12px] text-white/70 mt-0.5">{label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── Membres en avant-première ─────────────────────────── */}
-      <section className="px-10 py-7 bg-[#f5f6f8]">
-        <h3 className="text-[15px] font-bold text-[#111827] mb-4 text-center">
+      {/* ── Bénéfices ────────────────────────────────────────── */}
+      <section className="px-4 sm:px-10 py-14 bg-white">
+        <p className="text-[11px] font-semibold text-[#00B4B4] uppercase tracking-[0.08em] text-center mb-2">
+          Ce que vous obtenez
+        </p>
+        <h2
+          className="text-[22px] font-bold text-[#111827] text-center mb-10"
+          style={{ fontFamily: "'DM Sans',sans-serif" }}
+        >
+          Tout ce dont vous avez besoin pour progresser en ESG
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-[960px] mx-auto">
+          {BENEFITS.map((b) => (
+            <div
+              key={b.title}
+              className="bg-[#f5f6f8] border border-[#e5e7eb] rounded-[8px] p-5"
+            >
+              <span className="text-[24px] mb-3 block">{b.icon}</span>
+              <p className="text-[14px] font-semibold text-[#111827] mb-1.5">{b.title}</p>
+              <p className="text-[13px] text-[#6b7280] leading-relaxed">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Membres ──────────────────────────────────────────── */}
+      <section className="px-4 sm:px-10 py-14 bg-[#f5f6f8]">
+        <p className="text-[11px] font-semibold text-[#00B4B4] uppercase tracking-[0.08em] text-center mb-2">
+          La communauté
+        </p>
+        <h2
+          className="text-[20px] font-bold text-[#111827] mb-8 text-center"
+          style={{ fontFamily: "'DM Sans',sans-serif" }}
+        >
           Quelques membres de la communauté
-        </h3>
-        <div className="flex gap-2.5 justify-center flex-wrap">
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-[840px] mx-auto">
           {PREVIEW_MEMBERS.map((m, i) => (
             <div
               key={m.name}
-              className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 w-[190px] text-center"
+              className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 text-center"
             >
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center mx-auto text-white text-[14px] font-semibold"
+                className="w-11 h-11 rounded-full flex items-center justify-center mx-auto text-white text-[14px] font-semibold"
                 style={{ backgroundColor: AVATAR_COLORS[i % AVATAR_COLORS.length] }}
               >
                 {m.initials}
               </div>
               <p className="text-[13px] font-semibold text-[#111827] mt-2 mb-0.5">{m.name}</p>
-              <p className="text-[11px] text-[#6b7280] mb-2">{m.role}</p>
+              <p className="text-[12px] text-[#6b7280] mb-2">{m.role}</p>
               <div className="flex flex-wrap gap-1 justify-center">
                 {m.tags.map((t) => (
                   <span
                     key={t}
-                    className="px-[8px] py-[2px] rounded-[20px] bg-[#f5f6f8] text-[#6b7280] text-[10px] font-semibold"
+                    className="px-[8px] py-[2px] rounded-[20px] bg-[#f5f6f8] text-[#6b7280] text-[11px] font-semibold"
                   >
                     {t}
                   </span>
@@ -145,30 +197,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Prochains événements ──────────────────────────────── */}
-      <section className="px-10 py-7 bg-white">
-        <h3 className="text-[15px] font-bold text-[#111827] mb-4 text-center">
+      {/* ── Événements ───────────────────────────────────────── */}
+      <section className="px-4 sm:px-10 py-14 bg-white">
+        <p className="text-[11px] font-semibold text-[#00B4B4] uppercase tracking-[0.08em] text-center mb-2">
+          Agenda
+        </p>
+        <h2
+          className="text-[20px] font-bold text-[#111827] mb-8 text-center"
+          style={{ fontFamily: "'DM Sans',sans-serif" }}
+        >
           Prochains événements
-        </h3>
-        <div className="flex gap-2.5 justify-center flex-wrap">
+        </h2>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-[900px] mx-auto">
           {PREVIEW_EVENTS.map((ev) => (
             <div
               key={ev.title}
-              className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 flex-1 min-w-[220px] max-w-[280px]"
+              className="bg-white border border-[#e5e7eb] rounded-[8px] p-5 flex-1 min-w-0"
             >
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-3">
                 <span className="text-base">{EVENT_ICONS[ev.type]}</span>
                 <span className="px-[10px] py-[2px] rounded-[20px] bg-[#e6f7f7] text-[#00B4B4] text-[11px] font-semibold">
                   {ev.type}
                 </span>
               </div>
-              <p className="text-[13px] font-semibold text-[#111827] mb-1">{ev.title}</p>
-              <p className="text-[11px] text-[#6b7280] mb-3">{ev.date}</p>
+              <p className="text-[14px] font-semibold text-[#111827] mb-1">{ev.title}</p>
+              <p className="text-[12px] text-[#6b7280] mb-4">{ev.date}</p>
               <Link
-                href="/inscription"
-                className="inline-flex px-3 py-1.5 rounded-[6px] text-[11px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
+                href={PRIMARY_CTA_HREF}
+                className="inline-flex px-4 py-2 rounded-[6px] text-[12px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
               >
-                S&apos;inscrire
+                S&apos;inscrire →
               </Link>
             </div>
           ))}
@@ -176,32 +234,41 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA final ────────────────────────────────────────── */}
-      <section className="px-10 py-8 bg-[#00B4B4] text-center">
-        <p className="text-[16px] font-bold text-white mb-3">
+      <section className="px-4 sm:px-10 py-14 bg-[#0a2a4a] text-center">
+        <p
+          className="text-[11px] font-semibold text-[#00B4B4] uppercase tracking-[0.08em] mb-3"
+        >
+          Accès gratuit · Sur invitation
+        </p>
+        <h2
+          className="text-[24px] font-bold text-white mb-3"
+          style={{ fontFamily: "'DM Sans',sans-serif" }}
+        >
           Prêt·e à rejoindre la communauté ?
+        </h2>
+        <p className="text-[14px] text-white/70 mb-6 max-w-[400px] mx-auto">
+          Votre demande est examinée sous 48h. L&apos;accès est entièrement gratuit.
         </p>
         <Link
-          href="/inscription"
-          className="inline-block px-6 py-[9px] bg-white rounded-[6px] text-[13px] font-bold text-[#00B4B4] hover:opacity-90 transition-opacity"
+          href={PRIMARY_CTA_HREF}
+          className="inline-flex px-8 py-[12px] bg-[#00B4B4] rounded-[6px] text-[14px] font-bold text-white hover:bg-[#009898] transition-colors"
         >
-          Demander l&apos;accès gratuit →
+          {PRIMARY_CTA_TEXT}
         </Link>
       </section>
 
       {/* ── Pied de page ─────────────────────────────────────── */}
-      <footer className="px-10 py-5 bg-white border-t border-[#e5e7eb] flex items-center justify-between">
+      <footer className="px-4 sm:px-10 py-5 bg-white border-t border-[#e5e7eb] flex flex-col sm:flex-row items-center justify-between gap-3">
         <Image src="/logo.svg" alt="Club ESG" width={110} height={36} />
-        <p className="text-[11px] text-[#9ca3af]">
+        <p className="text-[12px] text-[#6b7280]">
           © {new Date().getFullYear()} Fletchr · Ensemble, accélérons la transition RSE
         </p>
-        <a
-          href={WHATSAPP_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[11px] text-[#16a34a] font-medium hover:underline"
+        <Link
+          href="/connexion"
+          className="text-[12px] text-[#00B4B4] font-medium hover:underline"
         >
-          💬 Rejoindre WhatsApp
-        </a>
+          Déjà membre ? Se connecter
+        </Link>
       </footer>
     </div>
   );
