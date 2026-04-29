@@ -1,11 +1,19 @@
-/* Mon profil — Édition du profil membre */
-export default function MonProfilPage() {
+import { redirect } from "next/navigation";
+import { getAuthUser, getMemberProfile } from "@/lib/auth";
+import AppLayout from "@/components/layout/AppLayout";
+import MonProfilClient from "@/components/features/MonProfilClient";
+
+export default async function MonProfilPage() {
+  const user   = await getAuthUser();
+  const member = await getMemberProfile(user.id);
+
+  if (member.statut !== "approved") redirect("/en-attente");
+
+  const isAdmin = member.role === "admin";
+
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-bleu-fonce mb-6">Mon profil</h1>
-      <p className="text-texte-secondaire">
-        Édition du profil à venir (Jour 4)
-      </p>
-    </div>
+    <AppLayout isAdmin={isAdmin}>
+      <MonProfilClient member={member} />
+    </AppLayout>
   );
 }

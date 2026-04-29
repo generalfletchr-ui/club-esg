@@ -1,13 +1,27 @@
 /* Admin — Liste complète des membres */
-export default function AdminMembresPage() {
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { getAuthUser, getMemberProfile } from "@/lib/auth";
+import AppLayout from "@/components/layout/AppLayout";
+import AdminMembresClient from "@/components/features/AdminMembresClient";
+import type { Member } from "@/types";
+
+export default async function AdminMembresPage() {
+  const user   = await getAuthUser();
+  const member = await getMemberProfile(user.id);
+
+  if (member.role !== "admin") redirect("/dashboard");
+
+  const supabase = await createClient();
+
+  const { data: members } = await supabase
+    .from("members")
+    .select("*")
+    .order("date_inscription", { ascending: false });
+
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-bleu-fonce mb-6">
-        Gestion des membres
-      </h1>
-      <p className="text-texte-secondaire">
-        Liste des membres à venir (Jour 5)
-      </p>
-    </div>
+    <AppLayout isAdmin>
+      <AdminMembresClient members={(members as Member[]) ?? []} />
+    </AppLayout>
   );
 }

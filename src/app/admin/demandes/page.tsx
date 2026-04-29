@@ -1,13 +1,28 @@
 /* Admin — Gestion des demandes d'inscription */
-export default function AdminDemandesPage() {
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { getAuthUser, getMemberProfile } from "@/lib/auth";
+import AppLayout from "@/components/layout/AppLayout";
+import AdminDemandesClient from "@/components/features/AdminDemandesClient";
+import type { Member } from "@/types";
+
+export default async function AdminDemandesPage() {
+  const user   = await getAuthUser();
+  const member = await getMemberProfile(user.id);
+
+  if (member.role !== "admin") redirect("/dashboard");
+
+  const supabase = await createClient();
+
+  /* Toutes les demandes triées : en attente d'abord, puis par date */
+  const { data: members } = await supabase
+    .from("members")
+    .select("*")
+    .order("date_inscription", { ascending: false });
+
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-bleu-fonce mb-6">
-        Demandes d&apos;inscription
-      </h1>
-      <p className="text-texte-secondaire">
-        Gestion des demandes à venir (Jour 5)
-      </p>
-    </div>
+    <AppLayout isAdmin>
+      <AdminDemandesClient members={(members as Member[]) ?? []} />
+    </AppLayout>
   );
 }

@@ -1,13 +1,27 @@
 /* Admin — Gestion des événements */
-export default function AdminEvenementsPage() {
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { getAuthUser, getMemberProfile } from "@/lib/auth";
+import AppLayout from "@/components/layout/AppLayout";
+import AdminEvenementsClient from "@/components/features/AdminEvenementsClient";
+import type { Event } from "@/types";
+
+export default async function AdminEvenementsPage() {
+  const user   = await getAuthUser();
+  const member = await getMemberProfile(user.id);
+
+  if (member.role !== "admin") redirect("/dashboard");
+
+  const supabase = await createClient();
+
+  const { data: events } = await supabase
+    .from("events")
+    .select("*")
+    .order("date_heure", { ascending: false });
+
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-bleu-fonce mb-6">
-        Gestion des événements
-      </h1>
-      <p className="text-texte-secondaire">
-        CRUD événements à venir (Jour 5)
-      </p>
-    </div>
+    <AppLayout isAdmin>
+      <AdminEvenementsClient events={(events as Event[]) ?? []} />
+    </AppLayout>
   );
 }

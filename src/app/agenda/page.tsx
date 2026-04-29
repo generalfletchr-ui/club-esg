@@ -1,11 +1,29 @@
-/* Agenda — Liste des événements à venir */
-export default function AgendaPage() {
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { getAuthUser, getMemberProfile } from "@/lib/auth";
+import AppLayout from "@/components/layout/AppLayout";
+import AgendaClient from "@/components/features/AgendaClient";
+import type { Event } from "@/types";
+
+export default async function AgendaPage() {
+  const user   = await getAuthUser();
+  const member = await getMemberProfile(user.id);
+
+  if (member.statut !== "approved") redirect("/en-attente");
+
+  const isAdmin  = member.role === "admin";
+  const supabase = await createClient();
+
+  /* Événements à venir uniquement (passés masqués automatiquement) */
+  const { data: events } = await supabase
+    .from("events")
+    .select("*")
+    .gte("date_heure", new Date().toISOString())
+    .order("date_heure", { ascending: true });
+
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-bleu-fonce mb-6">Agenda</h1>
-      <p className="text-texte-secondaire">
-        Liste des événements à venir (Jour 4)
-      </p>
-    </div>
+    <AppLayout isAdmin={isAdmin}>
+      <AgendaClient events={(events ?? []) as Event[]} />
+    </AppLayout>
   );
 }
