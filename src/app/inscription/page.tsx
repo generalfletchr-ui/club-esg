@@ -602,22 +602,102 @@ export default function InscriptionPage() {
                       Télécharger ↓
                     </a>
                   </div>
-                  <div className="h-[110px] px-4 py-3 overflow-y-auto">
-                    <p className="text-[11px] text-[#6b7280] leading-relaxed">
-                      La présente charte définit les engagements des membres du Club ESG…
+                  <div className="h-[260px] px-4 py-3 overflow-y-auto flex flex-col gap-3 text-[11px] text-[#6b7280] leading-relaxed">
+                    {/* Introduction */}
+                    <p>
+                      Bienvenue au sein du Club ESG, la communauté professionnelle dédiée aux acteurs de la transition
+                      Environnementale, Sociale et de Gouvernance. Cette charte définit les règles de fonctionnement et
+                      les valeurs communes qui permettent à tous les membres d&apos;échanger dans un climat de confiance,
+                      de bienveillance et de sécurité. Le Club ESG est un espace gratuit, géré et animé par{" "}
+                      <strong className="text-[#374151]">Fletchr</strong> (SaaS ESG).
                     </p>
-                    <ul className="mt-2 flex flex-col gap-1">
-                      {[
-                        "Respect des autres membres et de la confidentialité des échanges",
-                        "Contribution active à la vie de la communauté",
-                        "Partage d'informations de bonne foi et dans un esprit constructif",
-                        "Valorisation de la diversité des profils et des expertises",
-                      ].map((item) => (
-                        <li key={item} className="text-[11px] text-[#6b7280] leading-relaxed">
-                          • {item}
-                        </li>
-                      ))}
-                    </ul>
+
+                    {/* Article 1 */}
+                    <div>
+                      <p className="font-semibold text-[#374151] mb-1">1. Objet et Accès au Club ESG</p>
+                      <p className="mb-1">
+                        Le Club ESG favorise les échanges, le partage d&apos;expérience et le développement des compétences
+                        entre professionnels ESG. Les membres accèdent à un annuaire qualifié, un agenda d&apos;événements
+                        (webinaires, afterworks, workshops) et une bibliothèque de replays exclusifs.
+                      </p>
+                      <p>
+                        L&apos;accès est gratuit mais conditionné à une <strong className="text-[#374151]">validation manuelle</strong>{" "}
+                        par l&apos;équipe Fletchr. Fletchr se réserve le droit de refuser une adhésion si le profil ne correspond
+                        pas aux critères du Club.
+                      </p>
+                    </div>
+
+                    {/* Article 2 */}
+                    <div>
+                      <p className="font-semibold text-[#374151] mb-1">2. Engagements des Membres</p>
+
+                      <p className="font-medium text-[#374151] mb-0.5">2.1 Confidentialité et Usage des Données</p>
+                      <ul className="flex flex-col gap-0.5 mb-2 pl-2">
+                        <li>• <strong className="text-[#374151]">Interdiction de démarchage massif :</strong> vous vous engagez à ne pas utiliser l&apos;annuaire à des fins de prospection de masse, scraping ou revente de base de données.</li>
+                        <li>• <strong className="text-[#374151]">Confidentialité des échanges :</strong> les discussions privées (événements, groupe WhatsApp, échanges directs) sont confidentielles et ne doivent pas être diffusées sans accord des personnes concernées.</li>
+                      </ul>
+
+                      <p className="font-medium text-[#374151] mb-0.5">2.2 Comportement et Bienveillance</p>
+                      <ul className="flex flex-col gap-0.5 mb-2 pl-2">
+                        <li>• <strong className="text-[#374151]">Non-démarchage agressif :</strong> les sollicitations commerciales directes et insistantes entre membres sont proscrites.</li>
+                        <li>• <strong className="text-[#374151]">Respect et courtoisie :</strong> aucun propos discriminatoire, injurieux, diffamatoire ou contraire à l&apos;ordre public ne sera toléré.</li>
+                      </ul>
+
+                      <p className="font-medium text-[#374151] mb-0.5">2.3 Exactitude des Informations</p>
+                      <p>Vous vous engagez à fournir des informations exactes et à jour sur votre profil (identité, fonction, entreprise).</p>
+                    </div>
+
+                    {/* Article 3 */}
+                    <div>
+                      <p className="font-semibold text-[#374151] mb-1">3. Engagements de Fletchr</p>
+
+                      <p className="font-medium text-[#374151] mb-0.5">3.1 Protection des Données (RGPD)</p>
+                      <p className="mb-1">
+                        Fletchr s&apos;engage à protéger la vie privée des membres en conformité avec le RGPD. Les données
+                        collectées (nom, prénom, email, fonction, entreprise…) sont utilisées pour la gestion des adhésions,
+                        la mise en relation, l&apos;organisation des événements et l&apos;amélioration des services. Elles ne sont pas
+                        transmises à des tiers commerciaux sans consentement.
+                      </p>
+                      <p>Vous disposez à tout moment d&apos;un droit d&apos;accès, de rectification, d&apos;effacement et d&apos;opposition sur vos données.</p>
+
+                      <p className="font-medium text-[#374151] mt-2 mb-0.5">3.2 Modération et Droit d&apos;Exclusion</p>
+                      <p>
+                        Fletchr se réserve le droit de suspendre ou supprimer définitivement le compte d&apos;un membre en cas
+                        de manquement à la présente charte (démarchage abusif, violation de confidentialité, comportement
+                        inapproprié), sans indemnité ni préavis.
+                      </p>
+                    </div>
+
+                    {/* Article 4 */}
+                    <div>
+                      <p className="font-semibold text-[#374151] mb-1">4. Propriété Intellectuelle</p>
+                      <p>
+                        Les contenus mis à disposition par Fletchr (supports, replays, articles…) restent sa propriété
+                        exclusive. Vous disposez d&apos;un droit d&apos;usage personnel et non commercial. Toute reproduction ou
+                        diffusion sans autorisation écrite préalable est interdite.
+                      </p>
+                    </div>
+
+                    {/* Article 5 */}
+                    <div>
+                      <p className="font-semibold text-[#374151] mb-1">5. Modification de la Charte</p>
+                      <p>
+                        Fletchr se réserve le droit de modifier la présente charte. Les membres seront informés de toute
+                        modification substantielle par email ou notification. La poursuite de l&apos;utilisation du Club vaudra
+                        acceptation des nouvelles conditions.
+                      </p>
+                    </div>
+
+                    {/* Article 6 */}
+                    <div>
+                      <p className="font-semibold text-[#374151] mb-1">6. Contact et Réclamations</p>
+                      <p>
+                        Pour toute question, signalement ou exercice de vos droits sur vos données, contactez notre DPO à :{" "}
+                        <span className="text-[#00B4B4]">contact@fletchr.fr</span>
+                      </p>
+                    </div>
+
+                    <p className="text-[10px] text-[#9ca3af] italic">Dernière mise à jour : 10/12/2025</p>
                   </div>
                 </div>
 
