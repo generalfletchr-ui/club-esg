@@ -38,19 +38,18 @@ const BENEFITS = [
 ];
 
 const PREVIEW_MEMBERS = [
-  { initials: "SL", name: "Sophie L.",  role: "Consultante RSE",  tags: ["CSRD", "Stratégie RSE"] },
-  { initials: "MK", name: "Marc K.",    role: "Responsable RSE",  tags: ["Bilan carbone"] },
-  { initials: "AB", name: "Aïcha B.",   role: "Expert-comptable", tags: ["Finance durable"] },
-  { initials: "RP", name: "Rémi P.",    role: "Consultant RSE",   tags: ["Audit & Certif."] },
+  { photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEs3F0Aw5nYmYFrvk03O3GQdFR2a5GOR-5zg&s", name: "Sophie L.",  role: "Consultante RSE",  tags: ["CSRD", "Stratégie RSE"] },
+  { photo: "https://images.generated.photos/A7p_Zekk5uUp-tuD-6vrPEwse0z_cNHDzqbmOnZNVBU/g:no/rs:fill:256:384/czM6Ly9yMi1ncGhvdG9zLXByb2QtaHVtYW4tZ2FsbGVyeS80OTU1LzU0N2U1MGYxLTg0ZjQtNGNhYS1iZTk4LTU2YzIwMjVkMDY1MC0xLmpwZw.jpg", name: "Marc K.",    role: "Responsable RSE",  tags: ["Bilan carbone"] },
+  { photo: "https://images.generated.photos/8NOXTi9siuCx9xwsGkurQ-QPloebtZkZ9imYD35znbc/g:no/rs:fill:256:384/czM6Ly9ncGhvdG9zLXByb2QtaHVtYW4tZ2FsbGVyeS80NzY4LzhkZTI3ZjA2LWEzMjUtNDQyOC04MWY3LThlM2EzMGY5ZjAyYy0xLmpwZw.jpg", name: "Aïcha B.",   role: "Expert-comptable", tags: ["Finance durable"] },
+  { photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJuv-hx6x9XGmis-zfl5VcLE6jfb1e99k5iw&s", name: "Rémi P.",    role: "Consultant RSE",   tags: ["Audit & Certif."] },
 ];
 
 const PREVIEW_EVENTS = [
-  { type: "Webinaire", title: "CSRD : comment se préparer ?",  date: "12 mai 2026 · 12h00" },
-  { type: "Afterwork", title: "Networking ESG Paris",           date: "20 mai 2026 · 18h30" },
-  { type: "Workshop",  title: "Bilan carbone pratique",         date: "3 juin 2026 · 14h00" },
+  { type: "Webinaire", title: "CSRD : comment se préparer ?",  date: "3 juin 2026 · 12h00" },
+  { type: "Afterwork", title: "Networking ESG Paris",           date: "10 septembre 2026 · 18h30" },
+  { type: "Workshop",  title: "Bilan carbone pratique",         date: "24 septembre 2026 · 14h00" },
 ];
 
-const AVATAR_COLORS = ["#00B4B4", "#1A365D", "#7c6ea0", "#e07040"];
 
 const PRIMARY_CTA_HREF = "/inscription";
 const PRIMARY_CTA_TEXT = "Rejoindre gratuitement →";
@@ -169,17 +168,19 @@ export default function HomePage() {
           Quelques membres de la communauté
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-[840px] mx-auto">
-          {PREVIEW_MEMBERS.map((m, i) => (
+          {PREVIEW_MEMBERS.map((m) => (
             <div
               key={m.name}
               className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 text-center"
             >
-              <div
-                className="w-11 h-11 rounded-full flex items-center justify-center mx-auto text-white text-[14px] font-semibold"
-                style={{ backgroundColor: AVATAR_COLORS[i % AVATAR_COLORS.length] }}
-              >
-                {m.initials}
-              </div>
+              <Image
+                src={m.photo}
+                alt={m.name}
+                width={44}
+                height={44}
+                className="rounded-full object-cover mx-auto"
+                unoptimized
+              />
               <p className="text-[13px] font-semibold text-[#111827] mt-2 mb-0.5">{m.name}</p>
               <p className="text-[12px] text-[#6b7280] mb-2">{m.role}</p>
               <div className="flex flex-wrap gap-1 justify-center">

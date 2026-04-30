@@ -77,19 +77,21 @@
 }
 
 /* ── Styles de base ──────────────────────────────────────────── */
-body {
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
+@layer base {
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
 
-h1 { font-size: 24px; font-weight: 700; line-height: 1.25; color: var(--color-text); }
-h2 { font-size: 22px; font-weight: 700; line-height: 1.25; color: var(--color-text); }
-h3 { font-size: 14px; font-weight: 700; color: var(--color-text); }
-h4 { font-size: 13px; font-weight: 600; color: var(--color-text); }
+  h1 { font-size: 24px; font-weight: 700; line-height: 1.25; color: var(--color-text); }
+  h2 { font-size: 22px; font-weight: 700; line-height: 1.25; color: var(--color-text); }
+  h3 { font-size: 14px; font-weight: 700; color: var(--color-text); }
+  h4 { font-size: 13px; font-weight: 600; color: var(--color-text); }
+}
 
 /* ── Classes utilitaires ─────────────────────────────────────── */
 .label-caps {

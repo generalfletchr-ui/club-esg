@@ -54,6 +54,7 @@ type FormErrors = Partial<{
   nom:               string;
   email:             string;
   password:          string;
+  telephone:         string;
   type_membre:       string;
   fonction:          string;
   entreprise:        string;
@@ -185,6 +186,7 @@ export default function InscriptionPage() {
     if (!form.email.trim())    e.email    = "Ce champ est obligatoire";
     if (!form.password || form.password.length < 8)
       e.password = "Minimum 8 caractères";
+    if (!form.telephone.trim()) e.telephone = "Ce champ est obligatoire";
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -286,7 +288,7 @@ export default function InscriptionPage() {
       biographie:        form.biographie,
       expertises:        form.expertises,
       linkedin:          form.linkedin || null,
-      telephone:         form.telephone || null,
+      telephone:         form.telephone,
       charte_acceptee:   true,
       statut:            "pending",
       role:              "pending",
@@ -376,6 +378,8 @@ export default function InscriptionPage() {
                   placeholder="+33 6 00 00 00 00"
                   value={form.telephone}
                   onChange={(e) => update("telephone", e.target.value)}
+                  error={errors.telephone}
+                  required
                 />
 
                 {/* Upload photo */}
