@@ -67,7 +67,6 @@ type FormErrors = Partial<{
   biographie:        string;
   expertises:        string;
   expertise_autre:   string;
-  siret:             string;
 }>;
 
 const INITIAL_FORM: FormData = {
@@ -245,6 +244,7 @@ export default function InscriptionPage() {
     });
 
     if (authError) {
+      console.error("[inscription] authError:", authError.message, authError);
       if (authError.message.includes("already registered")) {
         setSubmitError("Cette adresse email est déjà associée à un compte.");
       } else {
