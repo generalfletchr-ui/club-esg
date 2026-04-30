@@ -43,6 +43,7 @@ interface FormData {
   site_web:          string;
   biographie:        string;
   expertises:        string[];
+  expertise_autre:   string;
   linkedin:          string;
   /* Étape 3 */
   charte_acceptee: boolean;
@@ -65,13 +66,15 @@ type FormErrors = Partial<{
   ville:             string;
   biographie:        string;
   expertises:        string;
+  expertise_autre:   string;
+  siret:             string;
 }>;
 
 const INITIAL_FORM: FormData = {
   prenom: "", nom: "", email: "", password: "", telephone: "", photo: null,
   type_membre: "", fonction: "", entreprise: "", siret: "",
   secteur: "", taille_entreprise: "", zone_geo: "", ville: "",
-  site_web: "", biographie: "", expertises: [], linkedin: "",
+  site_web: "", biographie: "", expertises: [], expertise_autre: "", linkedin: "",
   charte_acceptee: false,
 };
 
@@ -197,12 +200,15 @@ export default function InscriptionPage() {
     if (!form.type_membre)         e.type_membre        = "Ce champ est obligatoire";
     if (!form.fonction.trim())     e.fonction           = "Ce champ est obligatoire";
     if (!form.entreprise.trim())   e.entreprise         = "Ce champ est obligatoire";
+    if (!form.siret.trim())        e.siret              = "Ce champ est obligatoire";
     if (!form.secteur)             e.secteur            = "Ce champ est obligatoire";
     if (!form.taille_entreprise)   e.taille_entreprise  = "Ce champ est obligatoire";
     if (!form.zone_geo.trim())     e.zone_geo           = "Ce champ est obligatoire";
     if (!form.ville.trim())        e.ville              = "Ce champ est obligatoire";
     if (form.expertises.length === 0)
       e.expertises = "Sélectionne au moins une expertise";
+    if (form.expertises.includes("Autre") && !form.expertise_autre.trim())
+      e.expertise_autre = "Précise ton expertise";
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -286,7 +292,11 @@ export default function InscriptionPage() {
       site_web:          form.site_web || null,
       photo_url:         photoUrl,
       biographie:        form.biographie,
-      expertises:        form.expertises,
+      expertises:        form.expertises.map((e) =>
+                           e === "Autre" && form.expertise_autre.trim()
+                             ? `Autre : ${form.expertise_autre.trim()}`
+                             : e
+                         ),
       linkedin:          form.linkedin || null,
       telephone:         form.telephone,
       charte_acceptee:   true,
@@ -458,7 +468,9 @@ export default function InscriptionPage() {
                   placeholder="00000000000000"
                   value={form.siret}
                   onChange={(e) => update("siret", e.target.value)}
-                  hint="Optionnel · Non visible par les autres membres"
+                  error={errors.siret}
+                  hint="Non visible par les autres membres"
+                  required
                 />
 
                 <div className="grid grid-cols-2 gap-3">
@@ -579,6 +591,16 @@ export default function InscriptionPage() {
                   </div>
                   {errors.expertises && (
                     <p className="text-[11px] text-[#ef4444]">{errors.expertises}</p>
+                  )}
+                  {form.expertises.includes("Autre") && (
+                    <Input
+                      label='Précise ton expertise "Autre"'
+                      placeholder="Ex : Compensation carbone, ESG notation..."
+                      value={form.expertise_autre}
+                      onChange={(e) => update("expertise_autre", e.target.value)}
+                      error={errors.expertise_autre}
+                      required
+                    />
                   )}
                 </div>
               </div>
@@ -709,7 +731,10 @@ export default function InscriptionPage() {
                       border:     `1.5px solid ${form.charte_acceptee ? "#00B4B4" : "#d1d5db"}`,
                       background: form.charte_acceptee ? "#00B4B4" : "#fff",
                     }}
-                    onClick={() => update("charte_acceptee", !form.charte_acceptee)}
+                    onClick={() => {
+                      update("charte_acceptee", !form.charte_acceptee);
+                      if (!form.charte_acceptee) setSubmitError("");
+                    }}
                   >
                     {form.charte_acceptee && (
                       <span className="text-white text-[10px]">✓</span>
