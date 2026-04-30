@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f5f6f8; padding: 20px; }
+.grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatch { border-radius: 8px; overflow: hidden; width: 110px; }
+.color-block { height: 60px; }
+.swatch-info { background: #fff; border: 1px solid #e5e7eb; border-top: none; padding: 8px 10px; border-radius: 0 0 8px 8px; }
+.swatch-name { font-size: 11px; font-weight: 600; color: #111827; }
+.swatch-hex { font-size: 10px; color: #6b7280; margin-top: 2px; font-family: monospace; }
+.section-label { font-size: 10px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; margin-top: 14px; }
+</style>
+</head>
+<body>
+<div class="section-label">Text</div>
+<div class="grid">
+  <div class="swatch"><div class="color-block" style="background:#111827"></div><div class="swatch-info"><div class="swatch-name">Text</div><div class="swatch-hex">#111827</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#374151"></div><div class="swatch-info"><div class="swatch-name">Text Mid</div><div class="swatch-hex">#374151</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#6b7280"></div><div class="swatch-info"><div class="swatch-name">Muted</div><div class="swatch-hex">#6b7280</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#9ca3af"></div><div class="swatch-info"><div class="swatch-name">Light</div><div class="swatch-hex">#9ca3af</div></div></div>
+</div>
+<div class="section-label">Borders</div>
+<div class="grid">
+  <div class="swatch"><div class="color-block" style="background:#e5e7eb"></div><div class="swatch-info"><div class="swatch-name">Border</div><div class="swatch-hex">#e5e7eb</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#d1d5db"></div><div class="swatch-info"><div class="swatch-name">Border Mid</div><div class="swatch-hex">#d1d5db</div></div></div>
+</div>
+</body>
+</html>

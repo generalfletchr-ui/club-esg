@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f5f6f8; padding: 20px; }
+.label { font-size: 10px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; margin-top: 14px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.radius-box { background: #fff; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; }
+.sp-token { background: #00B4B4; height: 8px; border-radius: 2px; display: inline-block; }
+.sp-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.sp-label { font-size: 10px; color: #6b7280; font-family: monospace; min-width: 60px; }
+</style>
+</head>
+<body>
+  <div class="label">Border radius</div>
+  <div class="row">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div class="radius-box" style="width:40px;height:40px;border-radius:4px"></div>
+      <span style="font-size:10px;color:#6b7280">4px</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div class="radius-box" style="width:40px;height:40px;border-radius:6px"></div>
+      <span style="font-size:10px;color:#6b7280">6px btn</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div class="radius-box" style="width:40px;height:40px;border-radius:8px"></div>
+      <span style="font-size:10px;color:#6b7280">8px card</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div class="radius-box" style="width:40px;height:40px;border-radius:10px"></div>
+      <span style="font-size:10px;color:#6b7280">10px</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div class="radius-box" style="width:40px;height:40px;border-radius:20px"></div>
+      <span style="font-size:10px;color:#6b7280">20px pill</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div class="radius-box" style="width:40px;height:40px;border-radius:50%"></div>
+      <span style="font-size:10px;color:#6b7280">50% avatar</span>
+    </div>
+  </div>
+  <div class="label">Spacing scale</div>
+  <div>
+    <div class="sp-row"><span class="sp-label">4px</span><span class="sp-token" style="width:4px"></span></div>
+    <div class="sp-row"><span class="sp-label">8px</span><span class="sp-token" style="width:8px"></span></div>
+    <div class="sp-row"><span class="sp-label">12px</span><span class="sp-token" style="width:12px"></span></div>
+    <div class="sp-row"><span class="sp-label">16px card</span><span class="sp-token" style="width:16px"></span></div>
+    <div class="sp-row"><span class="sp-label">24px page</span><span class="sp-token" style="width:24px"></span></div>
+    <div class="sp-row"><span class="sp-label">40px section</span><span class="sp-token" style="width:40px"></span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f5f6f8; padding: 20px; display: flex; flex-wrap: wrap; gap: 14px; }
+.card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px; }
+.label { font-size: 10px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.tag { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; background: #e6f7f7; color: #00B4B4; }
+.avatar { border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; flex-shrink: 0; }
+</style>
+</head>
+<body>
+  <!-- Member card -->
+  <div class="card" style="width:220px">
+    <div class="label">Member directory card</div>
+    <div style="display:flex;gap:10px">
+      <div class="avatar" style="width:40px;height:40px;font-size:15px;background:#00B4B4">SL</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px">
+          <div>
+            <p style="font-size:13px;font-weight:600;color:#111827">Sophie Laurent</p>
+            <p style="font-size:11px;color:#6b7280">Directrice RSE · Veolia</p>
+          </div>
+          <span class="tag">RSE</span>
+        </div>
+        <p style="font-size:11px;color:#6b7280;margin:4px 0 6px">📍 Paris · Énergie</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">
+          <span class="tag">CSRD</span>
+          <span class="tag" style="background:#f5f6f8;color:#6b7280">Finance durable</span>
+        </div>
+        <div style="text-align:right"><span style="font-size:11px;color:#6b7280;border:1px solid #e5e7eb;border-radius:6px;padding:4px 10px;cursor:pointer">Voir le profil →</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event card -->
+  <div class="card" style="width:220px;padding:0;overflow:hidden">
+    <div class="label" style="padding:12px 14px 0">Event card</div>
+    <div style="display:flex;gap:0">
+      <div style="width:56px;background:#e6f7f7;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 0;border-right:1px solid #e5e7eb;flex-shrink:0">
+        <span style="font-size:10px;color:#00B4B4;font-weight:600">Mer.</span>
+        <span style="font-size:22px;font-weight:700;color:#00B4B4;line-height:1.1">12</span>
+        <span style="font-size:9px;color:#00B4B4">mai</span>
+      </div>
+      <div style="flex:1;padding:10px 12px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">
+          <span class="tag">Webinaire</span>
+          <span style="font-size:10px;color:#6b7280">12h00</span>
+        </div>
+        <p style="font-size:12px;font-weight:600;color:#111827;margin-bottom:4px">CSRD : comment se préparer ?</p>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <span style="font-size:11px;color:#fff;background:#00B4B4;border-radius:5px;padding:4px 10px;cursor:pointer">S'inscrire</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile card (compact) -->
+  <div class="card" style="width:200px;text-align:center">
+    <div class="label" style="text-align:left">Profile card</div>
+    <div class="avatar" style="width:56px;height:56px;font-size:20px;background:#00B4B4;margin:0 auto 8px">SL</div>
+    <p style="font-size:14px;font-weight:700;color:#111827;margin-bottom:2px">Sophie Laurent</p>
+    <p style="font-size:11px;color:#6b7280;margin-bottom:8px">Directrice RSE · Veolia</p>
+    <span class="tag">Responsable RSE</span>
+    <div style="margin-top:10px;display:flex;flex-direction:column;gap:4px">
+      <div style="display:flex;align-items:center;gap:7px;padding:6px 8px;background:#f5f6f8;border-radius:6px">
+        <span style="font-size:12px">📍</span><span style="font-size:11px;color:#374151">Paris, Île-de-France</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;padding:6px 8px;background:#f5f6f8;border-radius:6px">
+        <span style="font-size:12px">🏢</span><span style="font-size:11px;color:#374151">Énergie & Utilities</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard widget -->
+  <div class="card" style="width:220px">
+    <div class="label">Dashboard widget</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span style="font-size:13px;font-weight:600;color:#111827">Complétion du profil</span>
+      <span style="font-size:13px;font-weight:700;color:#00B4B4">75%</span>
+    </div>
+    <div style="height:5px;background:#e5e7eb;border-radius:3px;overflow:hidden">
+      <div style="width:75%;height:100%;background:#00B4B4;border-radius:3px"></div>
+    </div>
+    <p style="font-size:11px;color:#6b7280;margin-top:6px">Ajoutez votre photo et votre biographie.</p>
+  </div>
+</body>
+</html>

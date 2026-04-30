@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f5f6f8; padding: 20px; }
+.label { font-size: 10px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; margin-top: 14px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; }
+.btn-outline { background: #fff; color: #374151; border: 1px solid #e5e7eb; }
+.btn-ghost { background: transparent; color: #00B4B4; border: none; }
+</style>
+</head>
+<body>
+  <div class="label">Primary</div>
+  <div class="row">
+    <button class="btn" style="background:#00B4B4;color:#fff">Demander l'accès</button>
+    <button class="btn" style="background:#00B4B4;color:#fff">Continuer →</button>
+    <button class="btn" style="background:#00B4B4;color:#fff;padding:5px 12px;font-size:11px">S'inscrire</button>
+  </div>
+  <div class="label">Hover state</div>
+  <div class="row">
+    <button class="btn" style="background:#009898;color:#fff">Hover →</button>
+  </div>
+  <div class="label">Outline</div>
+  <div class="row">
+    <button class="btn btn-outline">Se connecter</button>
+    <button class="btn btn-outline">← Retour</button>
+    <button class="btn btn-outline" style="font-size:11px;padding:5px 12px">Voir le profil →</button>
+    <button class="btn btn-outline" style="font-size:11px;padding:5px 12px">+ Ajouter au calendrier</button>
+  </div>
+  <div class="label">Special</div>
+  <div class="row">
+    <button class="btn" style="background:#16a34a;color:#fff">💬 Rejoindre →</button>
+    <button class="btn" style="background:#fff;color:#00B4B4;border:1px solid #e5e7eb">Découvrir le club</button>
+    <button class="btn" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3)">Ghost (hero)</button>
+  </div>
+  <div class="label">Filter tabs (agenda)</div>
+  <div class="row">
+    <button class="btn" style="background:#00B4B4;color:#fff;border-radius:20px;padding:6px 14px">Tous</button>
+    <button class="btn btn-outline" style="border-radius:20px;padding:6px 14px">Webinaire</button>
+    <button class="btn btn-outline" style="border-radius:20px;padding:6px 14px">Afterwork</button>
+    <button class="btn btn-outline" style="border-radius:20px;padding:6px 14px">Workshop</button>
+  </div>
+</body>
+</html>

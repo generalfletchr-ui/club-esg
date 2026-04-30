@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f5f6f8; padding: 20px; }
+.label { font-size: 10px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; margin-top: 14px; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.shadow-box { width: 100px; height: 60px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+.shadow-label { font-size: 10px; color: #6b7280; margin-top: 5px; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="label">Shadows</div>
+  <div class="row">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="shadow-box" style="border:1px solid #e5e7eb;box-shadow:none"><span style="font-size:10px;color:#9ca3af">Card (border)</span></div>
+      <div class="shadow-label">border only</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="shadow-box" style="box-shadow:0 2px 16px rgba(0,0,0,0.08)"><span style="font-size:10px;color:#9ca3af">Elevated</span></div>
+      <div class="shadow-label">0 2px 16px .08</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="shadow-box" style="box-shadow:0 4px 24px rgba(0,0,0,0.12)"><span style="font-size:10px;color:#9ca3af">Modal</span></div>
+      <div class="shadow-label">0 4px 24px .12</div>
+    </div>
+  </div>
+  <div class="label">Progress bar</div>
+  <div style="background:#e5e7eb;border-radius:4px;height:6px;width:300px;overflow:hidden">
+    <div style="width:75%;height:100%;background:linear-gradient(90deg,#00B4B4,#00d4d4);border-radius:4px"></div>
+  </div>
+  <div style="font-size:11px;color:#6b7280;margin-top:5px">75% — gradient(90deg, #00B4B4 → #00d4d4)</div>
+</body>
+</html>

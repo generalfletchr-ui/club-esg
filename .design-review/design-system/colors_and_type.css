@@ -1,0 +1,284 @@
+/* ============================================================
+   Club ESG — Design Tokens
+   Source: uploads/Club ESG Wireframes v2.html + Fletchr screenshot
+   ============================================================ */
+
+:root {
+
+  /* ── Brand colors ──────────────────────────────────────── */
+  --color-teal:          #00B4B4;
+  --color-teal-hover:    #009898;
+  --color-teal-light:    #e6f7f7;
+  --color-teal-mid:      #b2e8e8;
+
+  /* ── Neutral / surface ─────────────────────────────────── */
+  --color-bg:            #f5f6f8;
+  --color-sidebar:       #ebebe6;
+  --color-surface:       #ffffff;
+  --color-border:        #e5e7eb;
+  --color-border-mid:    #d1d5db;
+
+  /* ── Text ──────────────────────────────────────────────── */
+  --color-text:          #111827;
+  --color-text-mid:      #374151;
+  --color-text-muted:    #6b7280;
+  --color-text-light:    #9ca3af;
+
+  /* ── Status ────────────────────────────────────────────── */
+  --color-orange:        #f97316;
+  --color-orange-light:  #fff4ee;
+  --color-yellow:        #eab308;
+  --color-yellow-light:  #fefce8;
+  --color-red:           #ef4444;
+  --color-red-light:     #fef2f2;
+  --color-green:         #22c55e;
+  --color-green-light:   #f0fdf4;
+  --color-green-dark:    #16a34a;
+  --color-green-border:  #bbf7d0;
+
+  /* ── Accent (events) ───────────────────────────────────── */
+  --color-purple:        #7c3aed;
+  --color-purple-light:  #f5f3ff;
+
+  /* ── Hero/dark backgrounds ─────────────────────────────── */
+  --color-navy-deep:     #0a2a4a;
+  --color-navy-mid:      #1a4a6a;
+  --color-navy-teal:     #0a3a3a;
+
+  /* ── Avatar palette ────────────────────────────────────── */
+  --color-avatar-1:      #00B4B4;
+  --color-avatar-2:      #1A365D;
+  --color-avatar-3:      #7c6ea0;
+  --color-avatar-4:      #e07040;
+  --color-avatar-5:      #2563eb;
+  --color-avatar-6:      #16a34a;
+
+  /* ── Typography ────────────────────────────────────────── */
+  --font-sans:           'Inter', system-ui, sans-serif;
+  --font-display:        'DM Sans', 'Inter', system-ui, sans-serif;
+
+  /* Type scale */
+  --text-xs:             10px;
+  --text-sm:             11px;
+  --text-base:           12px;
+  --text-md:             13px;
+  --text-lg:             14px;
+  --text-xl:             16px;
+  --text-2xl:            18px;
+  --text-3xl:            22px;
+  --text-4xl:            24px;
+  --text-hero:           32px;
+
+  /* Font weights */
+  --weight-regular:      400;
+  --weight-medium:       500;
+  --weight-semibold:     600;
+  --weight-bold:         700;
+
+  /* Line heights */
+  --leading-tight:       1.25;
+  --leading-snug:        1.4;
+  --leading-normal:      1.5;
+  --leading-relaxed:     1.6;
+
+  /* Letter spacing */
+  --tracking-normal:     0;
+  --tracking-wide:       0.03em;
+  --tracking-wider:      0.05em;
+  --tracking-widest:     0.08em;
+
+  /* ── Spacing ───────────────────────────────────────────── */
+  --space-1:   4px;
+  --space-2:   6px;
+  --space-3:   8px;
+  --space-4:   10px;
+  --space-5:   12px;
+  --space-6:   14px;
+  --space-7:   16px;
+  --space-8:   20px;
+  --space-9:   24px;
+  --space-10:  28px;
+  --space-11:  32px;
+  --space-12:  40px;
+
+  /* ── Border radius ─────────────────────────────────────── */
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-xl:   10px;
+  --radius-pill: 20px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ───────────────────────────────────────────── */
+  --shadow-card:   0 2px 16px rgba(0, 0, 0, 0.08);
+  --shadow-modal:  0 4px 24px rgba(0, 0, 0, 0.12);
+  --shadow-none:   none;
+
+  /* ── Layout ────────────────────────────────────────────── */
+  --sidebar-width:        220px;
+  --sidebar-width-sm:     60px;
+  --topbar-height:        48px;
+  --content-padding:      24px;
+
+  /* ── Semantic tokens ───────────────────────────────────── */
+  --fg-primary:           var(--color-text);
+  --fg-secondary:         var(--color-text-mid);
+  --fg-muted:             var(--color-text-muted);
+  --fg-disabled:          var(--color-text-light);
+  --fg-link:              var(--color-teal);
+  --fg-inverse:           #ffffff;
+
+  --bg-page:              var(--color-bg);
+  --bg-sidebar:           var(--color-sidebar);
+  --bg-card:              var(--color-surface);
+  --bg-input:             var(--color-surface);
+  --bg-hover:             var(--color-teal-light);
+
+  --border-default:       var(--color-border);
+  --border-strong:        var(--color-border-mid);
+  --border-focus:         var(--color-teal);
+
+  --btn-primary-bg:       var(--color-teal);
+  --btn-primary-fg:       #ffffff;
+  --btn-primary-hover:    var(--color-teal-hover);
+  --btn-outline-bg:       var(--color-surface);
+  --btn-outline-fg:       var(--color-text-mid);
+  --btn-outline-border:   var(--color-border);
+
+  --nav-active-bg:        var(--color-teal-light);
+  --nav-active-border:    var(--color-teal);
+  --nav-active-fg:        var(--color-teal);
+  --nav-inactive-fg:      var(--color-text);
+}
+
+/* ── Semantic element styles ───────────────────────────────── */
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-page);
+  color: var(--fg-primary);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--fg-primary);
+}
+
+h2 {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--fg-primary);
+}
+
+h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--fg-primary);
+}
+
+h4 {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-primary);
+}
+
+p {
+  font-size: var(--text-md);
+  color: var(--fg-secondary);
+  line-height: var(--leading-normal);
+}
+
+.label-caps {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.text-link {
+  color: var(--fg-link);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* ── Card ───────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-7);
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.btn:hover { background: var(--btn-primary-hover); }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  background: var(--btn-outline-bg);
+  color: var(--btn-outline-fg);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  border: 1px solid var(--btn-outline-border);
+  white-space: nowrap;
+}
+
+/* ── Tag / Badge ────────────────────────────────────────────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-teal-light);
+  color: var(--color-teal);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.tag-neutral {
+  background: var(--color-bg);
+  color: var(--fg-muted);
+}
+
+/* ── Input ──────────────────────────────────────────────────── */
+.input {
+  height: 34px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  padding: 0 10px;
+  font-size: var(--text-base);
+  color: var(--fg-muted);
+  width: 100%;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input:focus { border-color: var(--border-focus); }

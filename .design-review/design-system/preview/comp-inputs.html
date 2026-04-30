@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f5f6f8; padding: 20px; }
+.label { font-size: 10px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; margin-top: 14px; }
+.field { margin-bottom: 12px; }
+.field label { font-size: 12px; font-weight: 500; color: #374151; display: block; margin-bottom: 4px; }
+.input { height: 34px; border: 1px solid #e5e7eb; border-radius: 6px; background: #fff; padding: 0 10px; font-size: 12px; color: #6b7280; width: 100%; font-family: 'Inter', sans-serif; }
+.input-focus { border-color: #00B4B4; }
+.select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7280'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+.chip-area { border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px; background: #f5f6f8; display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { padding: 3px 10px; border-radius: 20px; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:500px">
+    <div>
+      <div class="label">Default</div>
+      <div class="field">
+        <label>Prénom *</label>
+        <input class="input" placeholder="Thomas" />
+      </div>
+      <div class="field">
+        <label>Email *</label>
+        <input class="input" placeholder="thomas@exemple.fr" />
+      </div>
+      <div class="field">
+        <label>Type de membre *</label>
+        <select class="input select"><option>Sélectionner...</option><option>Responsable RSE</option><option>Consultant RSE</option><option>Expert-comptable</option></select>
+      </div>
+    </div>
+    <div>
+      <div class="label">Focus state</div>
+      <div class="field">
+        <label>Entreprise *</label>
+        <input class="input input-focus" value="Veolia" style="outline:none" />
+      </div>
+      <div class="label" style="margin-top:8px">Multi-select chips</div>
+      <div class="chip-area">
+        <span class="chip" style="background:#e6f7f7;border:1px solid #00B4B4;color:#00B4B4;font-weight:600">Bilan carbone</span>
+        <span class="chip" style="background:#e6f7f7;border:1px solid #00B4B4;color:#00B4B4;font-weight:600">CSRD</span>
+        <span class="chip" style="background:#fff;border:1px solid #e5e7eb;color:#374151">Stratégie RSE</span>
+        <span class="chip" style="background:#fff;border:1px solid #e5e7eb;color:#374151">Finance durable</span>
+        <span class="chip" style="background:#fff;border:1px solid #e5e7eb;color:#374151">Autre...</span>
+      </div>
+      <div class="label" style="margin-top:8px">File upload</div>
+      <div style="height:52px;border:1.5px dashed #e5e7eb;border-radius:6px;background:#f5f6f8;display:flex;align-items:center;justify-content:center;gap:8px">
+        <span>📷</span><span style="font-size:11px;color:#6b7280">Glisser-déposer · JPEG/PNG · 5Mo</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

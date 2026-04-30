@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guide de démarrage Fletchr × EODEN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,600;0,700;0,800;1,600;1,700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* === 1. ISOLATION CSS === */
+    #fl-root, #fl-root * {
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* === 2. ELEMENTOR ESCAPE === */
+    .elementor-widget-html,
+    .elementor-widget-html .elementor-widget-container {
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+    #fl-root {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    /* === 3. VARIABLES & RESET === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:       #00AF91;
+      --green-dark:  #016050;
+      --green-xdark: #003A30;
+      --green-bold:  #1B3F3D;
+      --beige:       #EFF4E3;
+      --beige-btn:   #E4F7F3;
+      --border:      #7C9E95;
+      --text-sec:    #527669;
+      --white:       #FFFFFF;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif !important;
+      font-size: 16px !important;
+      color: var(--green-dark) !important;
+      background: var(--white) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .container {
+      max-width: 860px !important;
+      margin: 0 auto !important;
+      padding: 0 40px !important;
+    }
+
+    /* === 4. NAV === */
+    .fl-nav {
+      position: fixed !important;
+      top: 0 !important; left: 0 !important; right: 0 !important;
+      background: var(--white) !important;
+      border-bottom: 1px solid #e0ebe7 !important;
+      z-index: 100 !important;
+      padding: 12px 0 !important;
+    }
+    .fl-nav .container {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+    .fl-nav-logos {
+      display: flex !important;
+      align-items: center !important;
+      gap: 16px !important;
+    }
+    .fl-nav-logos img.logo-fletchr { height: 32px !important; }
+    .fl-nav-logos img.logo-eoden { height: 36px !important; width: auto !important; }
+    .fl-nav-sep {
+      width: 1px !important;
+      height: 22px !important;
+      background: var(--border) !important;
+      opacity: 0.5 !important;
+    }
+    .fl-nav-links {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      flex-wrap: wrap !important;
+    }
+    .fl-nav-links a {
+      font-family: 'Nunito', sans-serif !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      color: var(--green-dark) !important;
+      text-decoration: none !important;
+      padding: 6px 12px !important;
+      border-radius: 50px !important;
+      transition: background 0.2s !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-nav-links a:hover {
+      background: var(--beige) !important;
+    }
+    .fl-nav-cta {
+      background: var(--green) !important;
+      color: var(--white) !important;
+      font-family: 'Nunito', sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      padding: 9px 20px !important;
+      border-radius: 50px !important;
+      text-decoration: none !important;
+      white-space: nowrap !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-nav-cta:hover { background: var(--green-dark) !important; }
+
+    /* === 5. HERO === */
+    .fl-hero {
+      background: var(--green-bold) !important;
+      padding: 120px 0 72px !important;
+    }
+    .fl-hero-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      background: rgba(0,175,145,0.18) !important;
+      border: 1px solid rgba(0,175,145,0.4) !important;
+      border-radius: 50px !important;
+      padding: 6px 16px !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      color: var(--green) !important;
+      letter-spacing: 0.5px !important;
+      text-transform: uppercase !important;
+      margin-bottom: 8px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero-private {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      background: rgba(255,255,255,0.07) !important;
+      border: 1px solid rgba(255,255,255,0.18) !important;
+      border-radius: 50px !important;
+      padding: 4px 14px !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      color: rgba(255,255,255,0.55) !important;
+      letter-spacing: 0.4px !important;
+      margin-bottom: 20px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero h1 {
+      font-family: 'Work Sans', sans-serif !important;
+      font-size: 40px !important;
+      font-weight: 700 !important;
+      color: var(--white) !important;
+      line-height: 1.15 !important;
+      margin-bottom: 16px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero h1 em {
+      font-style: italic !important;
+      color: var(--green) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero-lead {
+      font-size: 17px !important;
+      font-weight: 500 !important;
+      color: rgba(255,255,255,0.8) !important;
+      max-width: 620px !important;
+      line-height: 1.65 !important;
+      margin-bottom: 36px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero-pills {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 10px !important;
+      margin-bottom: 40px !important;
+    }
+    .fl-hero-pill {
+      background: rgba(255,255,255,0.08) !important;
+      border: 1px solid rgba(255,255,255,0.2) !important;
+      border-radius: 50px !important;
+      padding: 7px 16px !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: rgba(255,255,255,0.85) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero-access {
+      background: rgba(0,175,145,0.12) !important;
+      border: 1.5px solid var(--green) !important;
+      border-radius: 12px !important;
+      padding: 20px 24px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 14px !important;
+      flex-wrap: wrap !important;
+    }
+    .fl-hero-access-info {
+      font-size: 14px !important;
+      color: rgba(255,255,255,0.75) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero-access-info strong {
+      display: block !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: var(--white) !important;
+      margin-bottom: 3px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero-access-btn {
+      background: var(--green) !important;
+      color: var(--white) !important;
+      font-family: 'Nunito', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      padding: 11px 22px !important;
+      border-radius: 6px !important;
+      text-decoration: none !important;
+      white-space: nowrap !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero-bilan-btn {
+      background: transparent !important;
+      color: var(--white) !important;
+      font-family: 'Nunito', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      padding: 11px 22px !important;
+      border-radius: 6px !important;
+      border: 1.5px solid rgba(255,255,255,0.45) !important;
+      text-decoration: none !important;
+      white-space: nowrap !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero-bilan-btn:hover {
+      background: rgba(255,255,255,0.1) !important;
+      border-color: rgba(255,255,255,0.7) !important;
+    }
+    .fl-hero-nav {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      margin-top: 28px !important;
+      padding-top: 24px !important;
+      border-top: 1px solid rgba(255,255,255,0.12) !important;
+    }
+    .fl-hero-nav a {
+      font-family: 'Nunito', sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: rgba(255,255,255,0.7) !important;
+      text-decoration: none !important;
+      padding: 7px 16px !important;
+      border-radius: 50px !important;
+      border: 1px solid rgba(255,255,255,0.18) !important;
+      transition: background 0.2s, color 0.2s !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-hero-nav a:hover {
+      background: rgba(255,255,255,0.1) !important;
+      color: var(--white) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* === 6. CHECKLIST RAPIDE === */
+    .fl-checklist-section {
+      background: var(--beige) !important;
+      padding: 56px 0 !important;
+    }
+    .fl-checklist-title {
+      font-family: 'Work Sans', sans-serif !important;
+      font-size: 22px !important;
+      font-weight: 700 !important;
+      color: var(--green-bold) !important;
+      margin-bottom: 24px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-check-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px !important;
+    }
+    .fl-check-item {
+      display: flex !important;
+      align-items: flex-start !important;
+      gap: 12px !important;
+      background: var(--white) !important;
+      border-radius: 10px !important;
+      padding: 14px 16px !important;
+      box-shadow: rgba(0,0,0,0.06) 0 0 12px 0 !important;
+    }
+    .fl-check-num {
+      flex-shrink: 0 !important;
+      width: 26px !important;
+      height: 26px !important;
+      background: var(--green) !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      color: var(--white) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-check-text {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: var(--green-dark) !important;
+      line-height: 1.4 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-check-text span {
+      display: block !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      color: var(--text-sec) !important;
+      margin-top: 2px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* === 7. SECTIONS FONCTIONNALITES === */
+    .fl-section {
+      padding: 72px 0 60px !important;
+    }
+    .fl-section-alt {
+      background: var(--beige) !important;
+    }
+    .fl-section-tag {
+      display: inline-block !important;
+      background: var(--beige-btn) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 50px !important;
+      padding: 4px 14px !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      color: var(--green-dark) !important;
+      letter-spacing: 0.5px !important;
+      text-transform: uppercase !important;
+      margin-bottom: 10px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-section h2 {
+      font-family: 'Work Sans', sans-serif !important;
+      font-size: 30px !important;
+      font-weight: 700 !important;
+      color: var(--green-bold) !important;
+      line-height: 1.2 !important;
+      margin-bottom: 8px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-section h2 em {
+      font-style: italic !important;
+      color: var(--green) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-section-intro {
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      color: var(--text-sec) !important;
+      max-width: 680px !important;
+      line-height: 1.65 !important;
+      margin-bottom: 36px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* Steps */
+    .fl-steps {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+    }
+    .fl-step {
+      display: flex !important;
+      gap: 20px !important;
+      background: var(--white) !important;
+      border-radius: 12px !important;
+      padding: 20px 22px !important;
+      box-shadow: rgba(0,0,0,0.08) 0 0 16px 0 !important;
+      align-items: flex-start !important;
+    }
+    .fl-section-alt .fl-step {
+      background: var(--white) !important;
+    }
+    .fl-step-num {
+      flex-shrink: 0 !important;
+      width: 36px !important;
+      height: 36px !important;
+      background: var(--green) !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 14px !important;
+      font-weight: 800 !important;
+      color: var(--white) !important;
+      margin-top: 2px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-step-body h3 {
+      font-family: 'Work Sans', sans-serif !important;
+      font-size: 17px !important;
+      font-weight: 700 !important;
+      color: var(--green-dark) !important;
+      margin-bottom: 6px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-step-body p {
+      font-size: 15px !important;
+      font-weight: 500 !important;
+      color: var(--text-sec) !important;
+      line-height: 1.6 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-step-body p strong {
+      color: var(--green-dark) !important;
+      font-weight: 700 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-step-body .fl-tip {
+      margin-top: 10px !important;
+      background: rgba(0,175,145,0.08) !important;
+      border-left: 3px solid var(--green) !important;
+      border-radius: 0 6px 6px 0 !important;
+      padding: 8px 12px !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: var(--green-dark) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* Info cards */
+    .fl-cards {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 16px !important;
+    }
+    .fl-card {
+      background: var(--white) !important;
+      border-radius: 14px !important;
+      padding: 22px 20px !important;
+      box-shadow: rgba(0,0,0,0.1) 0 0 18px 0 !important;
+    }
+    .fl-section-alt .fl-card {
+      background: var(--white) !important;
+    }
+    .fl-card-icon {
+      font-size: 26px !important;
+      margin-bottom: 10px !important;
+      display: block !important;
+    }
+    .fl-card h3 {
+      font-family: 'Work Sans', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: var(--green-dark) !important;
+      margin-bottom: 8px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-card p {
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      color: var(--text-sec) !important;
+      line-height: 1.55 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-card p strong {
+      color: var(--green-dark) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* Highlight box */
+    .fl-highlight {
+      background: var(--green) !important;
+      border-radius: 14px !important;
+      padding: 24px 26px !important;
+      margin-top: 24px !important;
+    }
+    .fl-highlight p {
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      color: var(--white) !important;
+      line-height: 1.6 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-highlight p strong {
+      font-weight: 800 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* === 8. BANDE CTA SEPARATRICE === */
+    .fl-cta-band {
+      background: var(--green-dark) !important;
+      padding: 30px 0 !important;
+    }
+    .fl-cta-band .container {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 20px !important;
+    }
+    .fl-cta-band-text {
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      color: rgba(255,255,255,0.9) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-cta-band-text strong {
+      color: var(--white) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-cta-band a {
+      background: var(--green) !important;
+      color: var(--white) !important;
+      font-family: 'Nunito', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      padding: 12px 24px !important;
+      border-radius: 6px !important;
+      text-decoration: none !important;
+      white-space: nowrap !important;
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* === 9. TABLE RECAP REFERENTIELS === */
+    .fl-table-wrap {
+      overflow-x: auto !important;
+      border-radius: 12px !important;
+      box-shadow: rgba(0,0,0,0.1) 0 0 18px 0 !important;
+      margin-top: 28px !important;
+    }
+    .fl-table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      font-size: 14px !important;
+    }
+    .fl-table thead tr {
+      background: var(--green-dark) !important;
+    }
+    .fl-table thead th {
+      font-family: 'Nunito', sans-serif !important;
+      font-weight: 700 !important;
+      color: var(--white) !important;
+      padding: 14px 18px !important;
+      text-align: left !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-table tbody tr:nth-child(even) {
+      background: var(--beige) !important;
+    }
+    .fl-table tbody tr:nth-child(odd) {
+      background: var(--white) !important;
+    }
+    .fl-table tbody td {
+      padding: 13px 18px !important;
+      color: var(--green-dark) !important;
+      font-weight: 500 !important;
+      border-bottom: 1px solid #e0ebe7 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-table tbody td strong {
+      font-weight: 700 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-badge-yes {
+      background: rgba(0,175,145,0.15) !important;
+      color: var(--green-dark) !important;
+      border-radius: 4px !important;
+      padding: 2px 8px !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* === 10. SECTION BILAN === */
+    .fl-bilan {
+      background: var(--green-dark) !important;
+      padding: 72px 0 !important;
+    }
+    .fl-bilan h2 {
+      font-family: 'Work Sans', sans-serif !important;
+      font-size: 30px !important;
+      font-weight: 700 !important;
+      color: var(--white) !important;
+      margin-bottom: 12px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-bilan h2 em {
+      font-style: italic !important;
+      color: var(--green) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-bilan-intro {
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      color: rgba(255,255,255,0.75) !important;
+      max-width: 580px !important;
+      line-height: 1.65 !important;
+      margin-bottom: 36px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-bilan-cards {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 16px !important;
+    }
+    .fl-bilan-card {
+      background: rgba(255,255,255,0.07) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      border-radius: 12px !important;
+      padding: 22px 18px !important;
+    }
+    .fl-bilan-card-date {
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      color: var(--green) !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      margin-bottom: 6px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-bilan-card h3 {
+      font-family: 'Work Sans', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: var(--white) !important;
+      margin-bottom: 8px !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-bilan-card p {
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      color: rgba(255,255,255,0.65) !important;
+      line-height: 1.55 !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-bilan-cta {
+      display: inline-block !important;
+      margin-top: 36px !important;
+      background: var(--beige-btn) !important;
+      color: var(--green-dark) !important;
+      font-family: 'Nunito', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 800 !important;
+      padding: 16px 32px !important;
+      border: 1.8px solid var(--border) !important;
+      border-radius: 6px !important;
+      text-decoration: none !important;
+      -webkit-text-fill-color: unset !important;
+    }
+    .fl-bilan-cta:hover {
+      background: var(--white) !important;
+    }
+
+    /* === 11. FOOTER === */
+    .fl-footer {
+      background: var(--green-xdark) !important;
+      padding: 28px 0 !important;
+    }
+    .fl-footer .container {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+    .fl-footer img { height: 28px !important; }
+    .fl-footer-text {
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      color: rgba(255,255,255,0.45) !important;
+      -webkit-text-fill-color: unset !important;
+    }
+
+    /* === 12. SCROLL REVEAL === */
+    .reveal {
+      opacity: 0 !important;
+      transform: translateY(24px) !important;
+      transition: opacity 0.55s ease, transform 0.55s ease !important;
+    }
+    .reveal.visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    /* === 13. RESPONSIVE === */
+    @media (max-width: 700px) {
+      .container { padding: 0 20px !important; }
+      .fl-hero { padding: 100px 0 52px !important; }
+      .fl-hero h1 { font-size: 28px !important; }
+      .fl-nav-links { display: none !important; }
+      .fl-check-grid,
+      .fl-cards,
+      .fl-bilan-cards { grid-template-columns: 1fr !important; }
+      .fl-cta-band .container { flex-direction: column !important; align-items: flex-start !important; }
+      .fl-hero-access { flex-direction: column !important; align-items: flex-start !important; }
+      .fl-footer .container { flex-direction: column !important; gap: 10px !important; }
+    }
+  </style>
+</head>
+<body>
+<div id="fl-root">
+
+  <!-- NAV -->
+  <nav class="fl-nav">
+    <div class="container">
+      <div class="fl-nav-logos">
+        <img class="logo-fletchr" src="https://fletchr.fr/wp-content/uploads/IH_Fl-color.png" alt="Fletchr">
+        <div class="fl-nav-sep"></div>
+        <img class="logo-eoden" src="https://eoden.fr/wp-content/uploads/2023/03/logo-eoden-horizontal-degrade.png" alt="EODEN">
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="fl-hero">
+    <div class="container">
+      <div class="fl-hero-badge">Guide de démarrage · Période d'essai</div>
+      <div class="fl-hero-private">🔒 Page privée · Accès par mot de passe</div>
+      <h1>Votre guide <em>Fletchr</em><br>pour la période d'essai EODEN</h1>
+      <p class="fl-hero-lead">Ce guide rassemble les fonctionnalités présentées lors de votre session de kick-off du 9 mars. Il vous accompagne pas à pas pour explorer la plateforme et tirer le meilleur parti de vos 2 semaines d'accès.</p>
+      <div class="fl-hero-pills">
+        <span class="fl-hero-pill">📅 Kick-off : 9 mars 2026</span>
+        <span class="fl-hero-pill">⏱ Accès : 2 semaines</span>
+        <span class="fl-hero-pill">🏨 Clé Verte · VSME</span>
+        <span class="fl-hero-pill">🔗 eoden.fletchr.fr</span>
+      </div>
+      <div class="fl-hero-access">
+        <div class="fl-hero-access-info">
+          <strong>Votre accès plateforme</strong>
+          Identifiant : votre adresse email EODEN
+        </div>
+        <a href="https://eoden.fletchr.fr/" target="_blank" class="fl-hero-access-btn">Accéder à la plateforme →</a>
+        <a href="#bilan" class="fl-hero-bilan-btn">Point bilan — 23 mars</a>
+      </div>
+      <div class="fl-hero-nav">
+        <a href="#connexion">Connexion</a>
+        <a href="#referentiels">Référentiels</a>
+        <a href="#indicateurs">Indicateurs</a>
+        <a href="#collecte">Collecte</a>
+        <a href="#questionnaires">Questionnaires</a>
+        <a href="#feuille-de-route">Feuille de route</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST RAPIDE -->
+  <section class="fl-checklist-section">
+    <div class="container">
+      <div class="fl-checklist-title reveal">7 actions à réaliser pendant votre période d'essai</div>
+      <div class="fl-check-grid">
+        <div class="fl-check-item reveal">
+          <div class="fl-check-num">1</div>
+          <div class="fl-check-text">Explorer l'arborescence EODEN <span>Vérifier les entités et en ajouter si besoin</span></div>
+        </div>
+        <div class="fl-check-item reveal">
+          <div class="fl-check-num">2</div>
+          <div class="fl-check-text">Ouvrir le référentiel Clé Verte sur Horizon <span>Parcourir les critères section par section</span></div>
+        </div>
+        <div class="fl-check-item reveal">
+          <div class="fl-check-num">3</div>
+          <div class="fl-check-text">Saisir un indicateur dans le référentiel VSME <span>Vérifier qu'il remonte automatiquement dans Clé Verte</span></div>
+        </div>
+        <div class="fl-check-item reveal">
+          <div class="fl-check-num">4</div>
+          <div class="fl-check-text">Créer un tag "Clé Verte" et taguer des indicateurs <span>Permettra de filtrer rapidement la base</span></div>
+        </div>
+        <div class="fl-check-item reveal">
+          <div class="fl-check-num">5</div>
+          <div class="fl-check-text">Tester une campagne de collecte <span>Envoyer le référentiel Clé Verte à votre chargée RSE Hôtellerie</span></div>
+        </div>
+        <div class="fl-check-item reveal">
+          <div class="fl-check-num">6</div>
+          <div class="fl-check-text">Créer la coquille de votre grille de suivi RSE <span>Commencer la structure avec vos chapitres internes</span></div>
+        </div>
+        <div class="fl-check-item reveal">
+          <div class="fl-check-num">7</div>
+          <div class="fl-check-text">Préparer vos questions pour le bilan du 23 mars <span>Lister ce qui est clair, ce qui manque, et les prochaines étapes</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANDE CTA 1 -->
+  <div class="fl-cta-band">
+    <div class="container">
+      <p class="fl-cta-band-text"><strong>Une question pendant la période d'essai ?</strong> Marie HEBRAS est disponible par mail ou téléphone.</p>
+      <a href="mailto:marie@fletchr.fr">Contacter Marie</a>
+    </div>
+  </div>
+
+  <!-- SECTION 1 : CONNEXION & ARBORESCENCE -->
+  <section class="fl-section" id="connexion">
+    <div class="container">
+      <div class="fl-section-tag reveal">Étape 1</div>
+      <h2 class="reveal">Se connecter et <em>explorer l'arborescence</em></h2>
+      <p class="fl-section-intro reveal">L'arborescence est le socle de la plateforme. Elle reflète la structure de votre groupe et conditionne la consolidation des données entre entités.</p>
+      <div class="fl-steps">
+        <div class="fl-step reveal">
+          <div class="fl-step-num">1</div>
+          <div class="fl-step-body">
+            <h3>Accéder à votre instance</h3>
+            <p>Rendez-vous sur <strong>eoden.fluture.fr</strong>. Votre identifiant est votre adresse email EODEN. Vous avez reçu un lien d'activation par email lors du kick-off.</p>
+            <div class="fl-tip">💡 Ajoutez eoden.fluture.fr en favori pour y accéder rapidement.</div>
+          </div>
+        </div>
+        <div class="fl-step reveal">
+          <div class="fl-step-num">2</div>
+          <div class="fl-step-body">
+            <h3>Vérifier l'arborescence préparée</h3>
+            <p>L'arborescence a été préconfigurée avec <strong>EODEN et ses 4 branches d'activité</strong>, avec les entités en N-2. Parcourez-la pour vérifier que les filiales importantes sont bien présentes.</p>
+          </div>
+        </div>
+        <div class="fl-step reveal">
+          <div class="fl-step-num">3</div>
+          <div class="fl-step-body">
+            <h3>Ajouter une entité manquante</h3>
+            <p>Dans l'arborescence, cliquez sur le <strong>petit "+"</strong> à côté de la branche concernée, renseignez "Participation" et le nom de l'entité. La création prend 2 clics.</p>
+            <div class="fl-tip">💡 Vous pouvez renseigner tous les détails d'une participation (siège, SIREN, secteur...) depuis la fiche entité.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 : UTILISATEURS -->
+  <section class="fl-section fl-section-alt" id="utilisateurs">
+    <div class="container">
+      <div class="fl-section-tag reveal">Étape 2</div>
+      <h2 class="reveal">Gérer les <em>utilisateurs et accès</em></h2>
+      <p class="fl-section-intro reveal">En tant qu'administratrice, vous avez la main sur la création des comptes. Deux façons d'impliquer vos collaboratrices dans la plateforme.</p>
+      <div class="fl-cards">
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">👤</span>
+          <h3>Créer un compte utilisateur</h3>
+          <p>Dans <strong>Utilisateurs → Ajouter un nouvel utilisateur</strong>, renseignez le prénom, nom, email et fonction. Définissez les droits (lecture ou modification). La personne reçoit un email d'activation et accède à <strong>l'ensemble du SaaS sur son entité</strong>.</p>
+        </div>
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">📩</span>
+          <h3>Assigner sans créer de compte</h3>
+          <p>Sans compte permanent, vous pouvez envoyer une requête par mail via les <strong>campagnes de collecte</strong>. La personne reçoit un lien ciblé et complète uniquement les données demandées. Idéal pour une collaboration ponctuelle.</p>
+        </div>
+      </div>
+      <div class="fl-highlight reveal">
+        <p><strong>Pendant la période d'essai :</strong> testez la création d'un compte pour votre chargée RSE Hôtellerie sur la branche Expérience. Elle pourra voir l'interface et vous donner un retour concret avant la présentation au DGA.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 : REFERENTIELS -->
+  <section class="fl-section" id="referentiels">
+    <div class="container">
+      <div class="fl-section-tag reveal">Étape 3</div>
+      <h2 class="reveal">Travailler avec les <em>référentiels</em></h2>
+      <p class="fl-section-intro reveal">La grande force de Fletchr : une donnée saisie une seule fois alimente tous les référentiels simultanément. Fini la double saisie entre Clé Verte et VSME.</p>
+
+      <div class="fl-table-wrap reveal">
+        <table class="fl-table">
+          <thead>
+            <tr>
+              <th>Référentiel</th>
+              <th>Usage EODEN</th>
+              <th>Disponible</th>
+              <th>Entités cibles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Clé Verte (Hôtels)</strong></td>
+              <td>Pilotage labellisation annuelle</td>
+              <td><span class="fl-badge-yes">✓ Poussé</span></td>
+              <td>6 hôtels — branche Expérience</td>
+            </tr>
+            <tr>
+              <td><strong>VSME</strong></td>
+              <td>Reporting ESG groupe</td>
+              <td><span class="fl-badge-yes">✓ Poussé</span></td>
+              <td>Toutes entités</td>
+            </tr>
+            <tr>
+              <td><strong>Ecovadis</strong></td>
+              <td>Référencement fournisseur</td>
+              <td><span class="fl-badge-yes">✓ En base</span></td>
+              <td>Entités concernées</td>
+            </tr>
+            <tr>
+              <td><strong>Référentiel personnalisé</strong></td>
+              <td>Grille interne EODEN</td>
+              <td><span class="fl-badge-yes">✓ À créer</span></td>
+              <td>À définir</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="fl-steps" style="margin-top: 32px;">
+        <div class="fl-step reveal">
+          <div class="fl-step-num">1</div>
+          <div class="fl-step-body">
+            <h3>Ouvrir le référentiel Clé Verte sur une entité hôtelière</h3>
+            <p>Dans la liste déroulante des entités, sélectionnez <strong>Horizon</strong> (branche Expérience). Choisissez le référentiel Clé Verte Hôtels. Vous retrouvez tous les critères organisés par sections : eau, énergie, gestion des déchets, etc.</p>
+            <div class="fl-tip">💡 Chaque critère indique s'il est impératif ou conseillé, et si une pièce jointe est requise.</div>
+          </div>
+        </div>
+        <div class="fl-step reveal">
+          <div class="fl-step-num">2</div>
+          <div class="fl-step-body">
+            <h3>Saisir un indicateur quantitatif</h3>
+            <p>Dans une rubrique (ex. Gestion de la ressource énergie), cliquez sur l'indicateur. Une fenêtre s'ouvre pour saisir la donnée, fixer un objectif, ajouter un commentaire et <strong>assigner un responsable</strong> pour la collecte.</p>
+            <div class="fl-tip">💡 La donnée saisie ici remonte automatiquement dans le référentiel VSME. Pas de double saisie.</div>
+          </div>
+        </div>
+        <div class="fl-step reveal">
+          <div class="fl-step-num">3</div>
+          <div class="fl-step-body">
+            <h3>Déléguer tout un référentiel à une collaboratrice</h3>
+            <p>Depuis <strong>Campagnes de collecte</strong>, créez une campagne, sélectionnez le référentiel Clé Verte, choisissez l'entité et l'année, ajoutez votre chargée RSE Hôtellerie. Elle reçoit un email avec accès direct au référentiel pour le compléter.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANDE CTA 2 -->
+  <div class="fl-cta-band">
+    <div class="container">
+      <p class="fl-cta-band-text"><strong>Besoin d'aide sur les référentiels ?</strong> Marie peut vous guider sur le paramétrage Clé Verte pendant la période d'essai.</p>
+      <a href="mailto:marie@fletchr.fr">Contacter Marie</a>
+    </div>
+  </div>
+
+  <!-- SECTION 4 : INDICATEURS -->
+  <section class="fl-section fl-section-alt" id="indicateurs">
+    <div class="container">
+      <div class="fl-section-tag reveal">Étape 4</div>
+      <h2 class="reveal">Gérer votre base <em>d'indicateurs</em></h2>
+      <p class="fl-section-intro reveal">Plus de 1 000 indicateurs sont disponibles en base, classés par thème et sous-thème. Vous pouvez les filtrer, les enrichir et en créer de nouveaux spécifiques à EODEN.</p>
+      <div class="fl-cards">
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">🏷️</span>
+          <h3>Créer un tag personnalisé</h3>
+          <p>Dans Paramétrage → Tags, créez un tag <strong>"Clé Verte"</strong> et une couleur associée. Appliquez-le sur tous les indicateurs que vous souhaitez pousser dans le référentiel Clé Verte. Vous pouvez ensuite filtrer par tag dans toute la collecte de data.</p>
+        </div>
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">➕</span>
+          <h3>Créer un indicateur sur mesure</h3>
+          <p>Dans Paramétrage → Indicateurs, créez un indicateur propre à vos hôtels (ex. <strong>% chambres non-fumeurs</strong>). Choisissez l'unité (%), le thème, et taggez-le Clé Verte. Vous pouvez aussi créer des formules numérateur/dénominateur pour les ratios.</p>
+        </div>
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">📥</span>
+          <h3>Importer vos données historiques</h3>
+          <p>Vous disposez déjà d'un historique de données sur vos filiales ? La plateforme propose un <strong>import Excel</strong> avec système de mapping. Évite de ressaisir manuellement des années de données.</p>
+        </div>
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">🎯</span>
+          <h3>Fixer des objectifs</h3>
+          <p>Sur chaque indicateur quantitatif, vous pouvez <strong>fixer un objectif à date</strong> (ex. passer à 90% de taux de satisfaction avant fin 2027). L'objectif est visible par les entités quand elles remplissent leurs données.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5 : COLLECTE -->
+  <section class="fl-section" id="collecte">
+    <div class="container">
+      <div class="fl-section-tag reveal">Étape 5</div>
+      <h2 class="reveal">Lancer une <em>campagne de collecte</em></h2>
+      <p class="fl-section-intro reveal">Les campagnes de collecte vous permettent de demander à vos entités de compléter un référentiel ou un questionnaire, avec suivi du taux de complétion en temps réel.</p>
+      <div class="fl-steps">
+        <div class="fl-step reveal">
+          <div class="fl-step-num">1</div>
+          <div class="fl-step-body">
+            <h3>Créer une campagne</h3>
+            <p>Dans <strong>Campagnes de collecte → Nouvelles données à collecter</strong>, sélectionnez le référentiel (ex. Clé Verte), l'entité cible (ex. Horizon), l'année de reporting et la personne responsable.</p>
+          </div>
+        </div>
+        <div class="fl-step reveal">
+          <div class="fl-step-num">2</div>
+          <div class="fl-step-body">
+            <h3>Envoyer et suivre</h3>
+            <p>La personne assignée reçoit un <strong>email avec un lien d'accès direct</strong> au référentiel à compléter. Depuis votre tableau de bord, vous visualisez le taux de complétion entité par entité.</p>
+            <div class="fl-tip">💡 Testez avec votre propre email pour voir l'expérience côté collaboratrice avant de l'envoyer à votre équipe.</div>
+          </div>
+        </div>
+        <div class="fl-step reveal">
+          <div class="fl-step-num">3</div>
+          <div class="fl-step-body">
+            <h3>Retrouver les données saisies</h3>
+            <p>Toutes les données saisies par vos entités remontent automatiquement dans la <strong>collecte de data centrale</strong>, avec historique année par année. Aucune perte, aucune double saisie.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6 : QUESTIONNAIRES -->
+  <section class="fl-section fl-section-alt" id="questionnaires">
+    <div class="container">
+      <div class="fl-section-tag reveal">Étape 6</div>
+      <h2 class="reveal">Créer votre <em>grille de suivi RSE</em></h2>
+      <p class="fl-section-intro reveal">Vos questionnaires internes (notations, évaluations, cotations) ont leur espace dédié. Distinct des référentiels normatifs, le module Questionnaires vous permet de créer votre propre grille from scratch.</p>
+      <div class="fl-cards">
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">📝</span>
+          <h3>Structure du questionnaire</h3>
+          <p>Créez votre questionnaire <strong>"Grille de suivi RSE EODEN"</strong>, ajoutez des sections (Gouvernance RSE, Environnement, Social...) et des sous-sections. Vous reprenez directement la structure de votre fichier Excel existant.</p>
+        </div>
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">🔀</span>
+          <h3>Questions conditionnelles</h3>
+          <p>Si une entité répond "Non" à une question, <strong>des sous-questions s'affichent automatiquement</strong>. Vous avez configuré cette logique dans votre grille actuelle. La plateforme le reproduit nativement.</p>
+        </div>
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">⭐</span>
+          <h3>Système de notation</h3>
+          <p>Pour chaque question numérique, configurez une <strong>grille de scoring</strong> (ex. moins de 25% = 0 pt, entre 25% et 50% = 25 pts...). La plateforme calcule automatiquement le score global par entité.</p>
+        </div>
+        <div class="fl-card reveal">
+          <span class="fl-card-icon">🔗</span>
+          <h3>Liaison avec les indicateurs</h3>
+          <p>Les questions numériques peuvent être <strong>liées aux indicateurs en base</strong>. Les entités qui ont déjà saisi leurs données n'ont pas à les ressaisir dans le questionnaire.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANDE CTA 3 -->
+  <div class="fl-cta-band">
+    <div class="container">
+      <p class="fl-cta-band-text"><strong>Pour paramétrer votre grille RSE,</strong> un accompagnement dédié sera proposé lors de l'onboarding complet.</p>
+      <a href="mailto:marie@fletchr.fr">Contacter Marie</a>
+    </div>
+  </div>
+
+  <!-- SECTION 7 : FEUILLE DE ROUTE -->
+  <section class="fl-section" id="feuille-de-route">
+    <div class="container">
+      <div class="fl-section-tag reveal">Étape 7</div>
+      <h2 class="reveal">Activer la <em>feuille de route</em></h2>
+      <p class="fl-section-intro reveal">La feuille de route transforme les données collectées en plan d'action concret. Elle vous permet de piloter les améliorations RSE entité par entité.</p>
+      <div class="fl-steps">
+        <div class="fl-step reveal">
+          <div class="fl-step-num">1</div>
+          <div class="fl-step-body">
+            <h3>Créer un objectif qualitatif</h3>
+            <p>Dans la feuille de route d'une entité, créez un objectif (ex. <strong>"Évaluer les émissions GES du Scope 3"</strong>), fixez une échéance, assignez un responsable et ajoutez des tâches. Idéal pour suivre les axes d'amélioration Ecovadis.</p>
+          </div>
+        </div>
+        <div class="fl-step reveal">
+          <div class="fl-step-num">2</div>
+          <div class="fl-step-body">
+            <h3>Créer un objectif quantitatif</h3>
+            <p>Liez un objectif directement à un indicateur (ex. <strong>taux de satisfaction > 90% avant fin 2027</strong>). L'objectif est visible par l'entité lors de la saisie de ses données, avec comparaison à l'historique.</p>
+          </div>
+        </div>
+        <div class="fl-step reveal">
+          <div class="fl-step-num">3</div>
+          <div class="fl-step-body">
+            <h3>Dashboard & consolidation</h3>
+            <p>Créez des graphiques de synthèse multi-entités dans <strong>Dashboards</strong>. Comparez les performances par entité sur un même indicateur, en consolidé ou par branche. Vue d'ensemble pour votre reporting groupe.</p>
+            <div class="fl-tip">💡 Le dashboard sera pleinement utile une fois les premières données saisies. Priorité pendant la période d'essai : la collecte et les référentiels.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION BILAN -->
+  <section class="fl-bilan" id="bilan">
+    <div class="container">
+      <h2 class="reveal">Point bilan — <em>23 mars 2026</em></h2>
+      <p class="fl-bilan-intro reveal">À l'issue de vos 2 semaines d'accès, nous nous retrouvons pour un point de synthèse. L'objectif : répondre à vos dernières questions et définir ensemble les prochaines étapes.</p>
+      <div class="fl-bilan-cards">
+        <div class="fl-bilan-card reveal">
+          <div class="fl-bilan-card-date">9 mars</div>
+          <h3>Kick-off & accès</h3>
+          <p>Présentation plateforme, création du compte, accès eoden.fluture.fr ouvert.</p>
+        </div>
+        <div class="fl-bilan-card reveal">
+          <div class="fl-bilan-card-date">9 — 21 mars</div>
+          <h3>Période d'essai</h3>
+          <p>Exploration autonome, tests des fonctionnalités, collecte des retours et questions.</p>
+        </div>
+        <div class="fl-bilan-card reveal">
+          <div class="fl-bilan-card-date">23 mars — 10h30</div>
+          <h3>Point bilan</h3>
+          <p>Synthèse des retours, décision sur les prochaines étapes, calendrier de déploiement.</p>
+        </div>
+      </div>
+      <a href="mailto:marie@fletchr.fr" class="fl-bilan-cta reveal">Contacter Marie pour le bilan →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="fl-footer">
+    <div class="container">
+      <img src="https://fletchr.fr/wp-content/uploads/IH_Fl-color.png" alt="Fletchr" style="filter: brightness(0) invert(1); opacity: 0.6;">
+      <span class="fl-footer-text">© 2026 Fletchr by Imagine Human · Guide confidentiel EODEN · Page privée protégée par mot de passe</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Stagger reveal dans grilles
+  document.querySelectorAll('.fl-check-grid, .fl-cards, .fl-bilan-cards').forEach(grid => {
+    const children = grid.querySelectorAll('.reveal');
+    children.forEach((child, i) => {
+      child.style.transitionDelay = (i * 0.08) + 's';
+    });
+  });
+</script>
+</body>
+</html>

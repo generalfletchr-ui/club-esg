@@ -275,36 +275,37 @@ export default function InscriptionPage() {
       }
     }
 
-    /* 3. Insertion dans la table members */
-    const { error: insertError } = await supabase.from("members").insert({
-      id:                userId,
-      email:             form.email,
-      prenom:            form.prenom,
-      nom:               form.nom,
-      type_membre:       form.type_membre,
-      fonction:          form.fonction,
-      entreprise:        form.entreprise,
-      siret:             form.siret,
-      secteur:           form.secteur,
-      taille_entreprise: form.taille_entreprise,
-      zone_geo:          form.zone_geo,
-      ville:             form.ville,
-      site_web:          form.site_web || null,
-      photo_url:         photoUrl,
-      biographie:        form.biographie,
-      expertises:        form.expertises.map((e) =>
-                           e === "Autre" && form.expertise_autre.trim()
-                             ? `Autre : ${form.expertise_autre.trim()}`
-                             : e
-                         ),
-      linkedin:          form.linkedin || null,
-      telephone:         form.telephone,
-      charte_acceptee:   true,
-      statut:            "pending",
-      role:              "pending",
+    /* 3. Insertion dans la table members via API (service role) */
+    const insertRes = await fetch("/api/inscription", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id:                userId,
+        email:             form.email,
+        prenom:            form.prenom,
+        nom:               form.nom,
+        type_membre:       form.type_membre,
+        fonction:          form.fonction,
+        entreprise:        form.entreprise,
+        siret:             form.siret,
+        secteur:           form.secteur,
+        taille_entreprise: form.taille_entreprise,
+        zone_geo:          form.zone_geo,
+        ville:             form.ville,
+        site_web:          form.site_web || null,
+        photo_url:         photoUrl,
+        biographie:        form.biographie,
+        expertises:        form.expertises.map((e) =>
+                             e === "Autre" && form.expertise_autre.trim()
+                               ? `Autre : ${form.expertise_autre.trim()}`
+                               : e
+                           ),
+        linkedin:          form.linkedin || null,
+        telephone:         form.telephone,
+      }),
     });
 
-    if (insertError) {
+    if (!insertRes.ok) {
       setSubmitError("Erreur lors de la sauvegarde de ton profil. Réessaie.");
       setLoading(false);
       return;

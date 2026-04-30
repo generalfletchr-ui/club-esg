@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --yes)",
+      "Bash(where node:*)",
+      "Bash(where npm:*)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Users/ThomasPERRIEN/AppData/Roaming/**)",
+      "Read(//c/Users/ThomasPERRIEN/AppData/Local/**)",
+      "Bash(cmd.exe /c \"where node\")",
+      "Bash(cmd.exe /c \"where npm\")",
+      "Bash(cmd.exe /c \"where npx\")",
+      "Bash(winget install:*)",
+      "Bash(export PATH=\"/c/Program Files/nodejs:$PATH\")",
+      "Bash(npm --version)",
+      "Bash(mkdir -p /tmp/club-esg-temp)",
+      "Bash(mv .env.local.txt SPEC_Club_ESG_MVP.md /tmp/club-esg-temp/)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npx which:*)",
+      "Bash(mkdir -p C:/Users/ThomasPERRIEN/club-esg/.design-review)",
+      "Bash(unzip -o \"C:/Users/ThomasPERRIEN/Downloads/Club ESG Design System.zip\" -d ./design-system)",
+      "Bash(unzip -o \"C:/Users/ThomasPERRIEN/Downloads/Club ESG.zip\" -d C:/Users/ThomasPERRIEN/club-esg/.design-review/mockups)",
+      "Bash(npx tsc *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f5f6f8; padding: 20px; }
+.grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatch { border-radius: 8px; overflow: hidden; width: 110px; }
+.color-block { height: 60px; }
+.swatch-info { background: #fff; border: 1px solid #e5e7eb; border-top: none; padding: 8px 10px; border-radius: 0 0 8px 8px; }
+.swatch-name { font-size: 11px; font-weight: 600; color: #111827; }
+.swatch-hex { font-size: 10px; color: #6b7280; margin-top: 2px; font-family: monospace; }
+.section-label { font-size: 10px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; margin-top: 14px; }
+.pill { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="section-label">Status colors</div>
+<div class="grid">
+  <div class="swatch"><div class="color-block" style="background:#22c55e"></div><div class="swatch-info"><div class="swatch-name">Green</div><div class="swatch-hex">#22c55e</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#f0fdf4"></div><div class="swatch-info"><div class="swatch-name">Green Light</div><div class="swatch-hex">#f0fdf4</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#f97316"></div><div class="swatch-info"><div class="swatch-name">Orange</div><div class="swatch-hex">#f97316</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#fff4ee"></div><div class="swatch-info"><div class="swatch-name">Orange Light</div><div class="swatch-hex">#fff4ee</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#ef4444"></div><div class="swatch-info"><div class="swatch-name">Red</div><div class="swatch-hex">#ef4444</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#fef2f2"></div><div class="swatch-info"><div class="swatch-name">Red Light</div><div class="swatch-hex">#fef2f2</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#eab308"></div><div class="swatch-info"><div class="swatch-name">Yellow</div><div class="swatch-hex">#eab308</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#7c3aed"></div><div class="swatch-info"><div class="swatch-name">Purple</div><div class="swatch-hex">#7c3aed</div></div></div>
+</div>
+<div class="section-label">Status pills</div>
+<div class="pills">
+  <span class="pill" style="background:#f0fdf4;color:#16a34a">✓ Inscrit</span>
+  <span class="pill" style="background:#fff4ee;color:#f97316">En attente</span>
+  <span class="pill" style="background:#fef2f2;color:#ef4444">Non collecté</span>
+  <span class="pill" style="background:#fefce8;color:#eab308">À valider</span>
+  <span class="pill" style="background:#f5f3ff;color:#7c3aed">Workshop</span>
+</div>
+</body>
+</html>

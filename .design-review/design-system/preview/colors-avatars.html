@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f5f6f8; padding: 20px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.avatar { border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+.label { font-size: 10px; color: #6b7280; font-family: monospace; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="item"><div class="avatar" style="width:44px;height:44px;font-size:16px;background:#00B4B4">SL</div><div class="label">#00B4B4</div></div>
+  <div class="item"><div class="avatar" style="width:44px;height:44px;font-size:16px;background:#1A365D">MK</div><div class="label">#1A365D</div></div>
+  <div class="item"><div class="avatar" style="width:44px;height:44px;font-size:16px;background:#7c6ea0">AB</div><div class="label">#7c6ea0</div></div>
+  <div class="item"><div class="avatar" style="width:44px;height:44px;font-size:16px;background:#e07040">RP</div><div class="label">#e07040</div></div>
+  <div class="item"><div class="avatar" style="width:44px;height:44px;font-size:16px;background:#2563eb">JD</div><div class="label">#2563eb</div></div>
+  <div class="item"><div class="avatar" style="width:44px;height:44px;font-size:16px;background:#16a34a">TP</div><div class="label">#16a34a</div></div>
+</div>
+<div style="margin-top:12px;font-size:10px;color:#9ca3af">Assigned deterministically from initials charcode sum mod 6</div>
+</body>
+</html>

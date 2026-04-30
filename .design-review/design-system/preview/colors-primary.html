@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f5f6f8; padding: 20px; }
+.grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatch { border-radius: 8px; overflow: hidden; width: 110px; }
+.color-block { height: 60px; }
+.swatch-info { background: #fff; border: 1px solid #e5e7eb; border-top: none; padding: 8px 10px; border-radius: 0 0 8px 8px; }
+.swatch-name { font-size: 11px; font-weight: 600; color: #111827; }
+.swatch-hex { font-size: 10px; color: #6b7280; margin-top: 2px; font-family: monospace; }
+.section-label { font-size: 10px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; margin-top: 14px; }
+</style>
+</head>
+<body>
+<div class="section-label">Primary</div>
+<div class="grid">
+  <div class="swatch"><div class="color-block" style="background:#00B4B4"></div><div class="swatch-info"><div class="swatch-name">Teal</div><div class="swatch-hex">#00B4B4</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#009898"></div><div class="swatch-info"><div class="swatch-name">Teal Hover</div><div class="swatch-hex">#009898</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#b2e8e8"></div><div class="swatch-info"><div class="swatch-name">Teal Mid</div><div class="swatch-hex">#b2e8e8</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#e6f7f7"></div><div class="swatch-info"><div class="swatch-name">Teal Light</div><div class="swatch-hex">#e6f7f7</div></div></div>
+</div>
+<div class="section-label">Surfaces</div>
+<div class="grid">
+  <div class="swatch"><div class="color-block" style="background:#ffffff; border:1px solid #e5e7eb; border-bottom:none;"></div><div class="swatch-info"><div class="swatch-name">Surface</div><div class="swatch-hex">#ffffff</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#f5f6f8"></div><div class="swatch-info"><div class="swatch-name">BG Page</div><div class="swatch-hex">#f5f6f8</div></div></div>
+  <div class="swatch"><div class="color-block" style="background:#ebebe6"></div><div class="swatch-info"><div class="swatch-name">Sidebar</div><div class="swatch-hex">#ebebe6</div></div></div>
+</div>
+</body>
+</html>

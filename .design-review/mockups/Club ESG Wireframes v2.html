@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Club ESG — Wireframes v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f0eee9; }
+</style>
+</head>
+<body>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel">
+
+// ─── Fletchr Design Tokens (extrait des screenshots) ─────────────
+const T = {
+  // Colors
+  teal:       '#00B4B4',
+  tealHover:  '#009898',
+  tealLight:  '#e6f7f7',
+  tealMid:    '#b2e8e8',
+  white:      '#ffffff',
+  bg:         '#f5f6f8',
+  bgCard:     '#ffffff',
+  sidebar:    '#ebebe6',
+  sidebarBg:  '#ebebe6',
+  border:     '#e5e7eb',
+  borderMid:  '#d1d5db',
+  text:       '#111827',
+  textMid:    '#374151',
+  textMuted:  '#6b7280',
+  textLight:  '#9ca3af',
+  // Status colors (from Fletchr)
+  orange:     '#f97316',
+  orangeLight:'#fff4ee',
+  yellow:     '#eab308',
+  yellowLight:'#fefce8',
+  red:        '#ef4444',
+  redLight:   '#fef2f2',
+  green:      '#22c55e',
+  greenLight: '#f0fdf4',
+  // Font
+  font:       "'Inter', sans-serif",
+};
+
+// ─── Shared primitives ────────────────────────────────────────────
+const s = {
+  card: {
+    background: T.bgCard,
+    border: `1px solid ${T.border}`,
+    borderRadius: 8,
+    padding: '16px',
+  },
+  label: {
+    fontSize: 11,
+    fontWeight: 600,
+    color: T.textMuted,
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em',
+  },
+  pill: (color, bg) => ({
+    display: 'inline-flex', alignItems: 'center',
+    padding: '2px 10px', borderRadius: 20,
+    fontSize: 11, fontWeight: 600,
+    color, background: bg,
+  }),
+  btn: {
+    display: 'inline-flex', alignItems: 'center', gap: 6,
+    padding: '7px 14px', borderRadius: 6,
+    background: T.teal, color: '#fff',
+    fontSize: 12, fontWeight: 600, cursor: 'pointer', border: 'none',
+    whiteSpace: 'nowrap',
+  },
+  btnOutline: {
+    display: 'inline-flex', alignItems: 'center', gap: 6,
+    padding: '6px 14px', borderRadius: 6,
+    background: '#fff', color: T.textMid,
+    fontSize: 12, fontWeight: 500, cursor: 'pointer',
+    border: `1px solid ${T.border}`,
+    whiteSpace: 'nowrap',
+  },
+  input: {
+    height: 34, border: `1px solid ${T.border}`,
+    borderRadius: 6, background: '#fff',
+    padding: '0 10px', fontSize: 12,
+    color: T.textMuted, width: '100%',
+    display: 'flex', alignItems: 'center',
+  },
+};
+
+const Tag = ({ children, color = T.teal, bg = T.tealLight }) => (
+  <span style={s.pill(color, bg)}>{children}</span>
+);
+
+const Avatar = ({ initials, size = 28, colors = ['#00B4B4','#1A365D','#7c6ea0','#e07040','#2563eb','#16a34a'] }) => {
+  const idx = (initials.charCodeAt(0) + (initials.charCodeAt(1)||0)) % colors.length;
+  return (
+    <div style={{ width: size, height: size, borderRadius: size/2, background: colors[idx], display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+      <span style={{ color: '#fff', fontSize: size * 0.38, fontWeight: 700 }}>{initials}</span>
+    </div>
+  );
+};
+
+// ─── LOGO OPTIONS ─────────────────────────────────────────────────
+// Option A — Wordmark "club esg." style fietchr.
+const LogoA = ({ size = 1 }) => (
+  <svg width={160*size} height={44*size} viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* leaf/circle icon */}
+    <circle cx="20" cy="22" r="16" fill="#00B4B4" opacity="0.12"/>
+    <path d="M14 26 C14 26 16 16 26 14 C26 14 24 24 14 26Z" fill="#00B4B4"/>
+    <path d="M20 28 C20 28 14 26 14 26 L16 22" stroke="#00B4B4" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+    {/* wordmark */}
+    <text x="44" y="17" fontFamily="'DM Sans', 'Inter', sans-serif" fontSize="11" fontWeight="500" fill="#6b7280">by Fletchr</text>
+    <text x="44" y="33" fontFamily="'DM Sans', 'Inter', sans-serif" fontSize="18" fontWeight="700" fill="#111827" letterSpacing="-0.5">club esg<tspan fill="#00B4B4">.</tspan></text>
+  </svg>
+);
+
+// Option B — Badge rond + texte
+const LogoB = ({ size = 1 }) => (
+  <svg width={160*size} height={44*size} viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* badge */}
+    <rect x="2" y="4" width="36" height="36" rx="10" fill="#00B4B4"/>
+    {/* CE monogram */}
+    <text x="20" y="27" fontFamily="'DM Sans','Inter',sans-serif" fontSize="16" fontWeight="700" fill="#fff" textAnchor="middle">CE</text>
+    {/* text */}
+    <text x="48" y="17" fontFamily="'DM Sans', 'Inter', sans-serif" fontSize="10" fontWeight="500" fill="#6b7280" letterSpacing="0.05em">BY FLETCHR</text>
+    <text x="48" y="33" fontFamily="'DM Sans','Inter',sans-serif" fontSize="17" fontWeight="700" fill="#111827" letterSpacing="-0.3">Club ESG</text>
+  </svg>
+);
+
+// Option C — Nœud réseau (communauté) + texte
+const LogoC = ({ size = 1 }) => (
+  <svg width={170*size} height={56*size} viewBox="0 0 170 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* réseau */}
+    <circle cx="20" cy="28" r="4" fill="#00B4B4"/>
+    <circle cx="8" cy="20" r="3" fill="#00B4B4" opacity="0.7"/>
+    <circle cx="32" cy="20" r="3" fill="#00B4B4" opacity="0.7"/>
+    <circle cx="8" cy="36" r="3" fill="#00B4B4" opacity="0.5"/>
+    <circle cx="32" cy="36" r="3" fill="#00B4B4" opacity="0.5"/>
+    <line x1="20" y1="28" x2="8" y2="20" stroke="#00B4B4" strokeWidth="1.2" opacity="0.6"/>
+    <line x1="20" y1="28" x2="32" y2="20" stroke="#00B4B4" strokeWidth="1.2" opacity="0.6"/>
+    <line x1="20" y1="28" x2="8" y2="36" stroke="#00B4B4" strokeWidth="1.2" opacity="0.4"/>
+    <line x1="20" y1="28" x2="32" y2="36" stroke="#00B4B4" strokeWidth="1.2" opacity="0.4"/>
+    {/* line 1: club esg. */}
+    <text x="46" y="24" fontFamily="'DM Sans','Inter',sans-serif" fontSize="17" fontWeight="700" fill="#111827" letterSpacing="-0.4">club esg<tspan fill="#00B4B4">.</tspan></text>
+    {/* line 2: by Fletchr */}
+    <text x="46" y="40" fontFamily="'DM Sans','Inter',sans-serif" fontSize="11" fontWeight="500" fill="#6b7280" letterSpacing="0.01em">by Fletchr</text>
+  </svg>
+);
+
+// ─── Sidebar ──────────────────────────────────────────────────────
+const navMain = [
+  { icon: '⊞', label: 'Tableau de bord', active: true },
+  { icon: '◫', label: 'Annuaire' },
+  { icon: '◷', label: 'Agenda' },
+  { icon: '▶', label: 'Replays' },
+  { icon: '◉', label: 'Mon profil' },
+];
+const navAdmin = [
+  { icon: '⚙', label: 'Demandes' },
+  { icon: '≡', label: 'Membres' },
+  { icon: '✦', label: 'Événements' },
+  { icon: '▤', label: 'Replays' },
+];
+
+const Sidebar = ({ activeItem = 'Tableau de bord', logo = 'C' }) => {
+  const LogoComp = logo === 'B' ? LogoB : logo === 'C' ? LogoC : LogoA;
+  return (
+    <div style={{
+      width: 220, background: T.sidebar,
+      borderRight: `1px solid ${T.border}`,
+      height: '100%', display: 'flex', flexDirection: 'column',
+      flexShrink: 0,
+    }}>
+      {/* Logo */}
+      <div style={{ padding: '14px 16px 12px', borderBottom: `1px solid ${T.border}` }}>
+        <LogoComp size={0.82} />
+      </div>
+
+      {/* Nav */}
+      <div style={{ flex: 1, padding: '8px 8px', overflowY: 'auto' }}>
+        {navMain.map(item => {
+          const isActive = item.label === activeItem;
+          return (
+            <div key={item.label} style={{
+              display: 'flex', alignItems: 'center', gap: 9,
+              padding: '7px 10px', borderRadius: 6, marginBottom: 1,
+              cursor: 'pointer',
+              background: isActive ? T.tealLight : 'transparent',
+              borderLeft: isActive ? `2px solid ${T.teal}` : '2px solid transparent',
+            }}>
+              <span style={{ fontSize: 13, color: isActive ? T.teal : T.textMuted, width: 16, textAlign: 'center' }}>{item.icon}</span>
+              <span style={{ fontSize: 13, color: isActive ? T.teal : T.text, fontWeight: isActive ? 600 : 500 }}>{item.label}</span>
+            </div>
+          );
+        })}
+
+        {/* Admin section */}
+        <div style={{ marginTop: 14, marginBottom: 4, padding: '0 10px' }}>
+          <span style={{ ...s.label, fontSize: 10 }}>Admin</span>
+        </div>
+        {navAdmin.map(item => (
+          <div key={item.label} style={{
+            display: 'flex', alignItems: 'center', gap: 9,
+            padding: '7px 10px', borderRadius: 6, marginBottom: 1,
+            cursor: 'pointer', borderLeft: '2px solid transparent',
+          }}>
+            <span style={{ fontSize: 12, color: T.textLight, width: 16, textAlign: 'center' }}>{item.icon}</span>
+            <span style={{ fontSize: 13, color: T.text, fontWeight: 500 }}>{item.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer */}
+      <div style={{ borderTop: `1px solid ${T.border}`, padding: '8px 8px' }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 9, padding: '7px 10px',
+          borderRadius: 6, background: '#f0fdf4', cursor: 'pointer', marginBottom: 4,
+          border: `1px solid #bbf7d0`,
+        }}>
+          <span style={{ fontSize: 13 }}>💬</span>
+          <span style={{ fontSize: 12, color: '#16a34a', fontWeight: 700 }}>WhatsApp groupe</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '6px 10px', borderRadius: 6, cursor: 'pointer' }}>
+          <span style={{ fontSize: 12, color: T.textLight }}>⏻</span>
+          <span style={{ fontSize: 13, color: T.text }}>Déconnexion</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── Top bar ──────────────────────────────────────────────────────
+const TopBar = ({ page = 'Tableau de bord' }) => (
+  <div style={{
+    height: 48, background: T.white, borderBottom: `1px solid ${T.border}`,
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    padding: '0 20px', flexShrink: 0,
+  }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: T.bg, padding: '5px 14px', borderRadius: 6, border: `1px solid ${T.border}` }}>
+      <span style={{ fontSize: 12, color: T.textMuted }}>⊞</span>
+      <span style={{ fontSize: 13, fontWeight: 500, color: T.textMid }}>{page}</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <span style={{ fontSize: 13, color: T.textMid, fontWeight: 500 }}>Thomas Perrien</span>
+      <Avatar initials="TP" size={30} />
+    </div>
+  </div>
+);
+
+// ─── SCREEN 1: Dashboard ──────────────────────────────────────────
+const DashboardScreen = ({ logo = 'A' }) => (
+  <div style={{ display: 'flex', height: 640, width: 960, fontFamily: T.font, background: T.bg, borderRadius: 8, overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.08)' }}>
+    <Sidebar activeItem="Tableau de bord" logo={logo} />
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <TopBar page="Tableau de bord" />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px' }}>
+        {/* Welcome */}
+        <p style={{ fontSize: 13, color: T.teal, fontWeight: 500, marginBottom: 3 }}>Bonjour, Thomas,</p>
+        <h1 style={{ fontSize: 24, fontWeight: 700, color: T.text, marginBottom: 16 }}>Bienvenue au Club ESG !</h1>
+
+        {/* Profile completion */}
+        <div style={{ ...s.card, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 20 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: T.textMid }}>Complétion du profil</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: T.teal }}>75%</span>
+            </div>
+            <div style={{ height: 5, background: T.border, borderRadius: 3, overflow: 'hidden' }}>
+              <div style={{ width: '75%', height: '100%', background: T.teal, borderRadius: 3 }} />
+            </div>
+            <p style={{ fontSize: 11, color: T.textMuted, marginTop: 5 }}>Ajoutez votre photo de profil et votre biographie pour compléter votre profil.</p>
+          </div>
+          <div style={s.btn}>Compléter mon profil →</div>
+        </div>
+
+        {/* Row: events + members */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 14 }}>
+          {/* Events */}
+          <div style={s.card}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: T.text }}>Prochains événements</span>
+              <span style={{ fontSize: 11, color: T.teal, fontWeight: 600, cursor: 'pointer' }}>Voir tout →</span>
+            </div>
+            {[
+              { type: 'Webinaire', label: 'teal', title: 'CSRD : comment se préparer ?', date: '12 mai · 12h00', icon: '🎙' },
+              { type: 'Afterwork', label: 'navy', title: 'Networking ESG Paris', date: '20 mai · 18h30', icon: '🤝' },
+            ].map((ev, i) => (
+              <div key={i} style={{ display: 'flex', gap: 10, padding: '10px 0', borderTop: `1px solid ${T.border}` }}>
+                <div style={{ width: 34, height: 34, borderRadius: 8, background: T.tealLight, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
+                  {ev.icon}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ marginBottom: 3 }}>
+                    <Tag>{ev.type}</Tag>
+                  </div>
+                  <p style={{ fontSize: 12, fontWeight: 600, color: T.text }}>{ev.title}</p>
+                  <p style={{ fontSize: 11, color: T.textMuted }}>{ev.date}</p>
+                </div>
+                <div style={{ ...s.btn, padding: '5px 10px', fontSize: 11, alignSelf: 'center' }}>S'inscrire</div>
+              </div>
+            ))}
+          </div>
+
+          {/* New members */}
+          <div style={s.card}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: T.text }}>Nouveaux membres</span>
+              <span style={{ fontSize: 11, color: T.teal, fontWeight: 600, cursor: 'pointer' }}>Annuaire →</span>
+            </div>
+            {[
+              { i: 'SL', name: 'Sophie Laurent', role: 'Consultante RSE', company: 'BNP Paribas' },
+              { i: 'MK', name: 'Marc Kowalski', role: 'Responsable RSE', company: 'Veolia' },
+              { i: 'AB', name: 'Aïcha Benali', role: 'Expert-comptable', company: 'Cabinet Benali' },
+            ].map((m, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', borderTop: `1px solid ${T.border}` }}>
+                <Avatar initials={m.i} size={30} />
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontSize: 12, fontWeight: 600, color: T.text }}>{m.name}</p>
+                  <p style={{ fontSize: 11, color: T.textMuted }}>{m.role} · {m.company}</p>
+                </div>
+                <span style={{ fontSize: 11, color: T.teal, fontWeight: 500, cursor: 'pointer' }}>Voir →</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* WhatsApp */}
+        <div style={{ borderRadius: 8, background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: 22 }}>💬</span>
+            <div>
+              <p style={{ fontSize: 13, fontWeight: 600, color: '#166534' }}>Groupe WhatsApp communautaire</p>
+              <p style={{ fontSize: 11, color: '#16a34a' }}>Rejoignez les échanges rapides et informels avec les membres</p>
+            </div>
+          </div>
+          <div style={{ ...s.btn, background: '#16a34a' }}>Rejoindre →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── SCREEN 2: Annuaire ───────────────────────────────────────────
+const AnnuaireScreen = ({ logo = 'A' }) => (
+  <div style={{ display: 'flex', height: 640, width: 960, fontFamily: T.font, background: T.bg, borderRadius: 8, overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.08)' }}>
+    <Sidebar activeItem="Annuaire" logo={logo} />
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <TopBar page="Annuaire des membres" />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px' }}>
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+          <div>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: T.text }}>Annuaire des membres</h2>
+            <p style={{ fontSize: 12, color: T.textMuted, marginTop: 2 }}>42 membres · 3 nouveaux cette semaine</p>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
+          <div style={{ ...s.input, flex: 1, minWidth: 180, gap: 8, display: 'flex', alignItems: 'center' }}>
+            <span style={{ color: T.textMuted, fontSize: 13 }}>🔍</span>
+            <span style={{ fontSize: 12, color: T.textLight }}>Rechercher un membre...</span>
+          </div>
+          {['Type de membre ▾', 'Secteur ▾', 'Expertise ▾', 'Zone géo. ▾'].map(f => (
+            <div key={f} style={{ ...s.btnOutline, padding: '0 12px', height: 34 }}>
+              <span style={{ fontSize: 12 }}>{f}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Active filters */}
+        <div style={{ display: 'flex', gap: 6, marginBottom: 14, flexWrap: 'wrap' }}>
+          {['Consultant RSE ×', 'Finance & Assurance ×'].map(t => (
+            <span key={t} style={{ ...s.pill(T.teal, T.tealLight), cursor: 'pointer' }}>{t}</span>
+          ))}
+          <span style={{ fontSize: 11, color: T.textMuted, alignSelf: 'center', cursor: 'pointer' }}>Effacer les filtres</span>
+        </div>
+
+        {/* Grid 2 cols */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          {[
+            { i: 'SL', name: 'Sophie Laurent', fn: 'Directrice RSE', co: 'Veolia', sector: 'Énergie & Utilities', city: 'Paris', type: 'Responsable RSE', tags: ['CSRD', 'Stratégie RSE', 'Finance durable'] },
+            { i: 'MK', name: 'Marc Kowalski', fn: 'Consultant senior', co: 'EY', sector: 'Finance & Assurance', city: 'Lyon', type: 'Consultant RSE', tags: ['Bilan carbone', 'Audit & Certif.'] },
+            { i: 'AB', name: 'Aïcha Benali', fn: 'Expert-comptable', co: 'Cabinet Benali', sector: 'Services', city: 'Bordeaux', type: 'Expert-comptable', tags: ['Finance durable', 'Conformité'] },
+            { i: 'RP', name: 'Rémi Petit', fn: 'RSE Manager', co: 'Décathlon', sector: 'Commerce', city: 'Lille', type: 'Responsable RSE', tags: ['Éco. circulaire', 'QVT & RH'] },
+          ].map((m, i) => (
+            <div key={i} style={{ ...s.card, display: 'flex', gap: 12, padding: '12px 14px' }}>
+              <Avatar initials={m.i} size={40} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 6 }}>
+                  <div>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: T.text }}>{m.name}</p>
+                    <p style={{ fontSize: 11, color: T.textMuted }}>{m.fn} · {m.co}</p>
+                  </div>
+                  <Tag>{m.type.split(' ')[0]}</Tag>
+                </div>
+                <p style={{ fontSize: 11, color: T.textMuted, margin: '4px 0 6px' }}>📍 {m.city} · {m.sector}</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
+                  {m.tags.map(t => <Tag key={t} color={T.textMuted} bg={T.bg}>{t}</Tag>)}
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ ...s.btnOutline, display: 'inline-flex', padding: '4px 12px', fontSize: 11 }}>
+                    Voir le profil →
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Pagination */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 4, marginTop: 16 }}>
+          {['‹', 1, 2, 3, '...', 11, '›'].map((p, i) => (
+            <div key={i} style={{
+              width: 28, height: 28, borderRadius: 6,
+              background: p === 1 ? T.teal : '#fff',
+              border: `1px solid ${p === 1 ? T.teal : T.border}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer'
+            }}>
+              <span style={{ fontSize: 12, fontWeight: p === 1 ? 700 : 400, color: p === 1 ? '#fff' : T.textMid }}>{p}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── SCREEN 3: Inscription ────────────────────────────────────────
+const InscriptionScreen = ({ step = 1, logo = 'A' }) => {
+  const LogoComp = logo === 'B' ? LogoB : logo === 'C' ? LogoC : LogoA;
+  const steps = ['Infos personnelles', 'Infos professionnelles', 'Charte & validation'];
+  return (
+    <div style={{ width: 540, background: T.white, borderRadius: 8, overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.08)', fontFamily: T.font }}>
+      {/* Header */}
+      <div style={{ background: T.white, padding: '16px 24px', borderBottom: `1px solid ${T.border}`, display: 'flex', alignItems: 'center', gap: 12 }}>
+        <LogoComp size={0.8} />
+      </div>
+
+      <div style={{ padding: '24px 28px' }}>
+        <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 4 }}>Rejoindre le Club ESG</h2>
+        <p style={{ fontSize: 12, color: T.textMuted, marginBottom: 20 }}>Votre demande sera examinée par notre équipe avant validation.</p>
+
+        {/* Stepper */}
+        <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 24 }}>
+          {steps.map((label, i) => {
+            const done = i + 1 < step;
+            const active = i + 1 === step;
+            return (
+              <React.Fragment key={label}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+                  <div style={{
+                    width: 26, height: 26, borderRadius: 13,
+                    background: done ? T.teal : active ? T.teal : T.border,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    border: active && !done ? `2px solid ${T.teal}` : 'none',
+                  }}>
+                    {done
+                      ? <span style={{ color: '#fff', fontSize: 12 }}>✓</span>
+                      : <span style={{ color: active ? '#fff' : T.textMuted, fontSize: 11, fontWeight: 700 }}>{i+1}</span>}
+                  </div>
+                  <span style={{ fontSize: 10, color: active ? T.teal : T.textMuted, fontWeight: active ? 600 : 400, textAlign: 'center', width: 90 }}>{label}</span>
+                </div>
+                {i < 2 && <div style={{ flex: 1, height: 2, background: done ? T.teal : T.border, margin: '12px 4px 0', borderRadius: 1 }} />}
+              </React.Fragment>
+            );
+          })}
+        </div>
+
+        {step === 1 && (
+          <div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+              {['Prénom *', 'Nom *'].map(l => (
+                <div key={l}>
+                  <label style={{ fontSize: 12, fontWeight: 500, color: T.textMid, display: 'block', marginBottom: 4 }}>{l}</label>
+                  <div style={s.input} />
+                </div>
+              ))}
+            </div>
+            {['Email *', 'Mot de passe *', 'Téléphone'].map(l => (
+              <div key={l} style={{ marginBottom: 12 }}>
+                <label style={{ fontSize: 12, fontWeight: 500, color: T.textMid, display: 'block', marginBottom: 4 }}>{l}</label>
+                <div style={s.input} />
+              </div>
+            ))}
+            <div style={{ marginBottom: 12 }}>
+              <label style={{ fontSize: 12, fontWeight: 500, color: T.textMid, display: 'block', marginBottom: 4 }}>Photo de profil *</label>
+              <div style={{ height: 60, border: `1.5px dashed ${T.border}`, borderRadius: 6, background: T.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                <span style={{ fontSize: 16 }}>📷</span>
+                <span style={{ fontSize: 11, color: T.textMuted }}>Glisser-déposer ou cliquer · JPEG/PNG · max 5Mo</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div>
+            {[
+              { l: 'Type de membre *', type: 'select', hint: 'Sélectionner...' },
+              { l: 'Fonction / Poste *', type: 'text' },
+              { l: 'Entreprise *', type: 'text' },
+            ].map(f => (
+              <div key={f.l} style={{ marginBottom: 12 }}>
+                <label style={{ fontSize: 12, fontWeight: 500, color: T.textMid, display: 'block', marginBottom: 4 }}>{f.l}</label>
+                <div style={{ ...s.input, justifyContent: 'space-between' }}>
+                  <span style={{ fontSize: 12, color: T.textLight }}>{f.hint || ''}</span>
+                  {f.type === 'select' && <span style={{ color: T.textMuted }}>▾</span>}
+                </div>
+              </div>
+            ))}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+              {['Secteur d\'activité *', 'Taille d\'entreprise *'].map(l => (
+                <div key={l}>
+                  <label style={{ fontSize: 12, fontWeight: 500, color: T.textMid, display: 'block', marginBottom: 4 }}>{l}</label>
+                  <div style={{ ...s.input, justifyContent: 'flex-end' }}><span style={{ color: T.textMuted }}>▾</span></div>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <label style={{ fontSize: 12, fontWeight: 500, color: T.textMid, display: 'block', marginBottom: 4 }}>Expertises * <span style={{ color: T.textMuted, fontWeight: 400 }}>(multi-sélection)</span></label>
+              <div style={{ border: `1px solid ${T.border}`, borderRadius: 6, padding: 8, background: T.bg, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {['Bilan carbone', 'CSRD', 'Stratégie RSE', 'Audit & Certif.', 'Finance durable', 'Autre...'].map((t, i) => (
+                  <div key={t} style={{ padding: '3px 10px', borderRadius: 20, border: `1px solid ${i < 2 ? T.teal : T.border}`, background: i < 2 ? T.tealLight : '#fff', cursor: 'pointer' }}>
+                    <span style={{ fontSize: 11, color: i < 2 ? T.teal : T.textMid, fontWeight: i < 2 ? 600 : 400 }}>{t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div>
+            <div style={{ border: `1px solid ${T.border}`, borderRadius: 8, overflow: 'hidden', marginBottom: 14 }}>
+              <div style={{ background: T.bg, padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${T.border}` }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: T.textMid }}>📄 Charte d'engagement du Club ESG</span>
+                <span style={{ fontSize: 11, color: T.teal, cursor: 'pointer', fontWeight: 500 }}>Télécharger ↓</span>
+              </div>
+              <div style={{ height: 120, padding: '12px 14px', overflowY: 'auto' }}>
+                <p style={{ fontSize: 11, color: T.textMuted, lineHeight: 1.6 }}>La présente charte définit les engagements des membres du Club ESG…</p>
+                <p style={{ fontSize: 11, color: T.textMuted, lineHeight: 1.6, marginTop: 6 }}>• Respect des autres membres et de la confidentialité des échanges</p>
+                <p style={{ fontSize: 11, color: T.textMuted, lineHeight: 1.6 }}>• Contribution active à la vie de la communauté</p>
+                <p style={{ fontSize: 11, color: T.textMuted, lineHeight: 1.6 }}>• Partage d'informations de bonne foi et dans un esprit constructif</p>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginBottom: 14 }}>
+              <div style={{ width: 16, height: 16, borderRadius: 4, border: `1.5px solid ${T.teal}`, background: T.teal, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+                <span style={{ color: '#fff', fontSize: 10 }}>✓</span>
+              </div>
+              <p style={{ fontSize: 12, color: T.textMid, lineHeight: 1.5 }}>J'ai lu et j'accepte la charte d'engagement du Club ESG.</p>
+            </div>
+            <div style={{ background: T.bg, borderRadius: 6, padding: '10px 12px', border: `1px solid ${T.border}` }}>
+              <p style={{ fontSize: 11, color: T.textMuted, lineHeight: 1.5 }}>⏳ Votre demande sera examinée sous 48h. Vous recevrez un email de confirmation.</p>
+            </div>
+          </div>
+        )}
+
+        {/* Actions */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 18, paddingTop: 16, borderTop: `1px solid ${T.border}` }}>
+          {step > 1
+            ? <div style={s.btnOutline}>← Retour</div>
+            : <span style={{ fontSize: 12, color: T.textMuted }}>Déjà membre ? <span style={{ color: T.teal, cursor: 'pointer' }}>Se connecter</span></span>
+          }
+          <div style={s.btn}>{step === 3 ? 'Envoyer ma demande ✓' : 'Continuer →'}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── SCREEN 4: Fiche membre ───────────────────────────────────────
+const FicheMembreScreen = ({ logo = 'C' }) => (
+  <div style={{ display: 'flex', height: 700, width: 960, fontFamily: T.font, background: T.bg, borderRadius: 8, overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.08)' }}>
+    <Sidebar activeItem="Annuaire" logo={logo} />
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <TopBar page="Annuaire des membres" />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px' }}>
+        {/* Breadcrumb */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 16 }}>
+          <span style={{ fontSize: 12, color: T.teal, cursor: 'pointer' }}>Annuaire</span>
+          <span style={{ fontSize: 12, color: T.textMuted }}>›</span>
+          <span style={{ fontSize: 12, color: T.textMid, fontWeight: 500 }}>Sophie Laurent</span>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 16 }}>
+          {/* Left col — identity card */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {/* Profile card */}
+            <div style={{ ...s.card, textAlign: 'center', padding: '24px 16px' }}>
+              <Avatar initials="SL" size={72} />
+              <h2 style={{ fontSize: 16, fontWeight: 700, color: T.text, marginTop: 12, marginBottom: 2 }}>Sophie Laurent</h2>
+              <p style={{ fontSize: 12, color: T.textMuted, marginBottom: 10 }}>Directrice RSE · Veolia</p>
+              <Tag>Responsable RSE</Tag>
+              <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', background: T.bg, borderRadius: 6 }}>
+                  <span style={{ fontSize: 13 }}>📍</span>
+                  <span style={{ fontSize: 12, color: T.textMid }}>Paris, Île-de-France</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', background: T.bg, borderRadius: 6 }}>
+                  <span style={{ fontSize: 13 }}>🏢</span>
+                  <span style={{ fontSize: 12, color: T.textMid }}>Énergie & Utilities</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', background: T.bg, borderRadius: 6 }}>
+                  <span style={{ fontSize: 13 }}>👥</span>
+                  <span style={{ fontSize: 12, color: T.textMid }}>1000+ employés</span>
+                </div>
+                <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', background: T.bg, borderRadius: 6, textDecoration: 'none' }}>
+                  <span style={{ fontSize: 13 }}>🔗</span>
+                  <span style={{ fontSize: 12, color: T.teal }}>Profil LinkedIn</span>
+                </a>
+              </div>
+              <div style={{ marginTop: 14 }}>
+                <div style={{ ...s.btn, width: '100%', justifyContent: 'center', fontSize: 12 }}>💬 Contacter via WhatsApp</div>
+              </div>
+            </div>
+
+            {/* Membre depuis */}
+            <div style={{ ...s.card, padding: '12px 14px' }}>
+              <p style={{ ...s.label, marginBottom: 6 }}>Membre depuis</p>
+              <p style={{ fontSize: 13, fontWeight: 600, color: T.text }}>Février 2026</p>
+            </div>
+          </div>
+
+          {/* Right col */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {/* Bio */}
+            <div style={s.card}>
+              <p style={{ ...s.label, marginBottom: 8 }}>Biographie</p>
+              <p style={{ fontSize: 13, color: T.textMid, lineHeight: 1.6 }}>
+                Directrice RSE chez Veolia depuis 5 ans, je pilote la stratégie de développement durable du groupe en France. Spécialisée dans la CSRD et le reporting extra-financier, j'accompagne les équipes dans la transformation vers un modèle d'entreprise plus responsable.
+              </p>
+            </div>
+
+            {/* Expertises */}
+            <div style={s.card}>
+              <p style={{ ...s.label, marginBottom: 10 }}>Expertises</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {['CSRD / Reporting extra-financier', 'Stratégie RSE', 'Finance durable', 'Bilan carbone', 'Conformité réglementaire'].map(t => (
+                  <Tag key={t}>{t}</Tag>
+                ))}
+              </div>
+            </div>
+
+            {/* Infos entreprise */}
+            <div style={s.card}>
+              <p style={{ ...s.label, marginBottom: 10 }}>Entreprise</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                {[
+                  { label: 'Entreprise', val: 'Veolia' },
+                  { label: 'Site web', val: 'veolia.com', link: true },
+                  { label: 'Secteur', val: 'Énergie & Utilities' },
+                  { label: 'Taille', val: '1000+ employés' },
+                ].map(f => (
+                  <div key={f.label}>
+                    <p style={{ fontSize: 11, color: T.textMuted, marginBottom: 2 }}>{f.label}</p>
+                    <p style={{ fontSize: 13, fontWeight: 500, color: f.link ? T.teal : T.text }}>{f.val}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Événements en commun */}
+            <div style={s.card}>
+              <p style={{ ...s.label, marginBottom: 10 }}>Événements en commun</p>
+              {[
+                { title: 'CSRD : comment se préparer ?', date: '12 mai 2026', type: 'Webinaire' },
+                { title: 'Networking ESG Paris', date: '20 mars 2026', type: 'Afterwork' },
+              ].map((ev, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderBottom: i === 0 ? `1px solid ${T.border}` : 'none' }}>
+                  <div style={{ width: 30, height: 30, borderRadius: 6, background: T.tealLight, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, flexShrink: 0 }}>🎙</div>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontSize: 12, fontWeight: 600, color: T.text }}>{ev.title}</p>
+                    <p style={{ fontSize: 11, color: T.textMuted }}>{ev.date}</p>
+                  </div>
+                  <Tag>{ev.type}</Tag>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── SCREEN 5: Agenda ─────────────────────────────────────────────
+const AgendaScreen = ({ logo = 'C' }) => (
+  <div style={{ display: 'flex', height: 700, width: 960, fontFamily: T.font, background: T.bg, borderRadius: 8, overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.08)' }}>
+    <Sidebar activeItem="Agenda" logo={logo} />
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <TopBar page="Agenda" />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px' }}>
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
+          <div>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: T.text }}>Agenda</h2>
+            <p style={{ fontSize: 12, color: T.textMuted, marginTop: 2 }}>Prochains événements de la communauté</p>
+          </div>
+        </div>
+
+        {/* Filter tabs */}
+        <div style={{ display: 'flex', gap: 6, marginBottom: 20 }}>
+          {['Tous', 'Webinaire', 'Afterwork', 'Workshop'].map((tab, i) => (
+            <div key={tab} style={{
+              padding: '6px 14px', borderRadius: 20, cursor: 'pointer', fontSize: 12, fontWeight: i === 0 ? 600 : 500,
+              background: i === 0 ? T.teal : T.white,
+              color: i === 0 ? '#fff' : T.textMid,
+              border: `1px solid ${i === 0 ? T.teal : T.border}`,
+            }}>{tab}</div>
+          ))}
+        </div>
+
+        {/* Month: Mai 2026 */}
+        <div style={{ marginBottom: 6, display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span style={{ fontSize: 14, fontWeight: 700, color: T.text }}>Mai 2026</span>
+          <div style={{ flex: 1, height: 1, background: T.border }} />
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
+          {[
+            { day: '12', weekday: 'Mer.', time: '12h00 – 13h00', type: 'Webinaire', title: 'CSRD : comment se préparer en 2026 ?', desc: 'Décryptage des nouvelles obligations de reporting extra-financier avec des experts.', speakers: 'Sophie Laurent, Marc Kowalski', registered: true },
+            { day: '20', weekday: 'Jeu.', time: '18h30 – 21h00', type: 'Afterwork', title: 'Networking ESG Paris', desc: "Rencontrez les membres du Club ESG autour d'un verre à Paris.", speakers: null, registered: false },
+          ].map((ev, i) => (
+            <div key={i} style={{ ...s.card, display: 'flex', gap: 0, overflow: 'hidden', padding: 0 }}>
+              {/* Date block */}
+              <div style={{ width: 72, background: T.tealLight, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px 0', flexShrink: 0, borderRight: `1px solid ${T.border}` }}>
+                <span style={{ fontSize: 11, color: T.teal, fontWeight: 600 }}>{ev.weekday}</span>
+                <span style={{ fontSize: 28, fontWeight: 700, color: T.teal, lineHeight: 1.1 }}>{ev.day}</span>
+                <span style={{ fontSize: 10, color: T.teal }}>mai</span>
+              </div>
+              {/* Content */}
+              <div style={{ flex: 1, padding: '14px 18px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10, marginBottom: 6 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <Tag>{ev.type}</Tag>
+                    <span style={{ fontSize: 11, color: T.textMuted }}>⏱ {ev.time}</span>
+                  </div>
+                  {ev.registered && (
+                    <span style={{ ...s.pill('#16a34a', '#f0fdf4'), fontSize: 11 }}>✓ Inscrit</span>
+                  )}
+                </div>
+                <h3 style={{ fontSize: 14, fontWeight: 700, color: T.text, marginBottom: 4 }}>{ev.title}</h3>
+                <p style={{ fontSize: 12, color: T.textMuted, lineHeight: 1.5, marginBottom: ev.speakers ? 8 : 12 }}>{ev.desc}</p>
+                {ev.speakers && (
+                  <p style={{ fontSize: 11, color: T.textMuted, marginBottom: 12 }}>🎤 {ev.speakers}</p>
+                )}
+                <div style={{ display: 'flex', gap: 8 }}>
+                  {ev.registered
+                    ? <div style={{ ...s.btnOutline, fontSize: 11, padding: '5px 12px' }}>Voir le lien de connexion →</div>
+                    : <div style={{ ...s.btn, fontSize: 11, padding: '5px 14px' }}>S'inscrire</div>
+                  }
+                  <div style={{ ...s.btnOutline, fontSize: 11, padding: '5px 12px' }}>+ Ajouter au calendrier</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Month: Juin 2026 */}
+        <div style={{ marginBottom: 6, display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span style={{ fontSize: 14, fontWeight: 700, color: T.text }}>Juin 2026</span>
+          <div style={{ flex: 1, height: 1, background: T.border }} />
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {[
+            { day: '3', weekday: 'Mer.', time: '14h00 – 17h00', type: 'Workshop', title: 'Bilan carbone pratique : méthodologie et outils', desc: 'Atelier pratique pour maîtriser le calcul du bilan carbone de votre organisation.', speakers: 'Rémi Petit', registered: false },
+          ].map((ev, i) => (
+            <div key={i} style={{ ...s.card, display: 'flex', gap: 0, overflow: 'hidden', padding: 0 }}>
+              <div style={{ width: 72, background: '#f5f3ff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px 0', flexShrink: 0, borderRight: `1px solid ${T.border}` }}>
+                <span style={{ fontSize: 11, color: '#7c3aed', fontWeight: 600 }}>{ev.weekday}</span>
+                <span style={{ fontSize: 28, fontWeight: 700, color: '#7c3aed', lineHeight: 1.1 }}>{ev.day}</span>
+                <span style={{ fontSize: 10, color: '#7c3aed' }}>juin</span>
+              </div>
+              <div style={{ flex: 1, padding: '14px 18px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                  <span style={{ ...s.pill('#7c3aed', '#f5f3ff') }}>{ev.type}</span>
+                  <span style={{ fontSize: 11, color: T.textMuted }}>⏱ {ev.time}</span>
+                </div>
+                <h3 style={{ fontSize: 14, fontWeight: 700, color: T.text, marginBottom: 4 }}>{ev.title}</h3>
+                <p style={{ fontSize: 12, color: T.textMuted, lineHeight: 1.5, marginBottom: 8 }}>{ev.desc}</p>
+                <p style={{ fontSize: 11, color: T.textMuted, marginBottom: 12 }}>🎤 {ev.speakers}</p>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <div style={{ ...s.btn, fontSize: 11, padding: '5px 14px' }}>S'inscrire</div>
+                  <div style={{ ...s.btnOutline, fontSize: 11, padding: '5px 12px' }}>+ Ajouter au calendrier</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── SCREEN 4: Landing page ───────────────────────────────────────
+const LandingScreen = ({ logo = 'A' }) => {
+  const LogoComp = logo === 'B' ? LogoB : logo === 'C' ? LogoC : LogoA;
+  return (
+    <div style={{ width: 960, background: T.white, borderRadius: 8, overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.08)', fontFamily: T.font }}>
+      {/* Nav */}
+      <div style={{ background: T.white, padding: '12px 40px', borderBottom: `1px solid ${T.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <LogoComp size={0.9} />
+        <div style={{ display: 'flex', gap: 8 }}>
+          <div style={s.btnOutline}>Se connecter</div>
+          <div style={s.btn}>Rejoindre le Club</div>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <div style={{ background: `linear-gradient(135deg, #0a2a4a 0%, #1a4a6a 60%, #0a3a3a 100%)`, padding: '52px 40px 44px', textAlign: 'center' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(0,180,180,0.15)', border: '1px solid rgba(0,180,180,0.3)', borderRadius: 20, padding: '4px 14px', marginBottom: 18 }}>
+          <span style={{ width: 6, height: 6, borderRadius: 3, background: T.teal, display: 'inline-block' }}></span>
+          <span style={{ color: T.teal, fontSize: 12, fontWeight: 600 }}>Communauté privée · 40+ professionnels</span>
+        </div>
+        <h1 style={{ fontSize: 32, fontWeight: 700, color: '#fff', lineHeight: 1.25, maxWidth: 560, margin: '0 auto 14px' }}>
+          La communauté des <span style={{ color: T.teal }}>professionnels ESG</span> engagés
+        </h1>
+        <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.65)', maxWidth: 440, margin: '0 auto 28px', lineHeight: 1.6 }}>
+          Échangez, formez-vous et développez votre réseau avec des experts-comptables, consultants RSE et responsables ESG.
+        </p>
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+          <div style={s.btn}>Demander l'accès</div>
+          <div style={{ ...s.btnOutline, background: 'transparent', color: 'rgba(255,255,255,0.7)', borderColor: 'rgba(255,255,255,0.25)' }}>Découvrir le club</div>
+        </div>
+        {/* Stats */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 40, marginTop: 36, paddingTop: 28, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          {[['40+','Membres'],['12','Webinaires'],['8','Replays'],['3','Events / mois']].map(([n,l]) => (
+            <div key={l} style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 22, fontWeight: 700, color: T.teal }}>{n}</div>
+              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Members preview */}
+      <div style={{ padding: '28px 40px', background: T.bg }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, color: T.text, marginBottom: 14, textAlign: 'center' }}>Quelques membres de la communauté</h3>
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+          {[
+            { i: 'SL', name: 'Sophie L.', role: 'Consultante RSE', tags: ['CSRD', 'Stratégie RSE'] },
+            { i: 'MK', name: 'Marc K.', role: 'Responsable RSE', tags: ['Bilan carbone'] },
+            { i: 'AB', name: 'Aïcha B.', role: 'Expert-comptable', tags: ['Finance durable'] },
+            { i: 'RP', name: 'Rémi P.', role: 'Consultant RSE', tags: ['Audit & Certif.'] },
+          ].map((m, i) => (
+            <div key={i} style={{ ...s.card, width: 200, textAlign: 'center', padding: '14px' }}>
+              <Avatar initials={m.i} size={40} />
+              <p style={{ fontSize: 13, fontWeight: 600, color: T.text, marginTop: 8, marginBottom: 2 }}>{m.name}</p>
+              <p style={{ fontSize: 11, color: T.textMuted, marginBottom: 8 }}>{m.role}</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, justifyContent: 'center' }}>
+                {m.tags.map(t => <Tag key={t} color={T.textMuted} bg={T.bg}>{t}</Tag>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Events */}
+      <div style={{ padding: '24px 40px', background: T.white }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, color: T.text, marginBottom: 14, textAlign: 'center' }}>Prochains événements</h3>
+        <div style={{ display: 'flex', gap: 10 }}>
+          {[
+            { type: 'Webinaire', title: 'CSRD : comment se préparer ?', date: '12 mai 2026 · 12h00', icon: '🎙' },
+            { type: 'Afterwork', title: 'Networking ESG Paris', date: '20 mai 2026 · 18h30', icon: '🤝' },
+            { type: 'Workshop', title: 'Bilan carbone pratique', date: '3 juin 2026 · 14h00', icon: '📋' },
+          ].map((ev, i) => (
+            <div key={i} style={{ ...s.card, flex: 1 }}>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
+                <span style={{ fontSize: 16 }}>{ev.icon}</span>
+                <Tag>{ev.type}</Tag>
+              </div>
+              <p style={{ fontSize: 13, fontWeight: 600, color: T.text, marginBottom: 4 }}>{ev.title}</p>
+              <p style={{ fontSize: 11, color: T.textMuted, marginBottom: 10 }}>{ev.date}</p>
+              <div style={{ ...s.btn, fontSize: 11, padding: '5px 12px', width: 'fit-content' }}>S'inscrire</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div style={{ padding: '24px 40px', background: T.teal, textAlign: 'center' }}>
+        <p style={{ fontSize: 16, fontWeight: 700, color: '#fff', marginBottom: 12 }}>Prêt·e à rejoindre la communauté ?</p>
+        <div style={{ display: 'inline-flex', padding: '9px 24px', background: '#fff', borderRadius: 6, cursor: 'pointer' }}>
+          <span style={{ color: T.teal, fontWeight: 700, fontSize: 13 }}>Demander l'accès gratuit →</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── Logo proposals ───────────────────────────────────────────────
+const LogoShowcase = () => (
+  <div style={{ background: T.white, borderRadius: 8, padding: '28px 32px', boxShadow: '0 2px 16px rgba(0,0,0,0.08)', fontFamily: T.font, width: 700 }}>
+    <h2 style={{ fontSize: 16, fontWeight: 700, color: T.text, marginBottom: 4 }}>Propositions de logo — Club ESG</h2>
+    <p style={{ fontSize: 12, color: T.textMuted, marginBottom: 24 }}>3 directions. Style cohérent avec le logotype Fletchr.</p>
+
+    {[
+      { logo: <LogoA size={1.2} />, id: 'A', name: 'Feuille + Wordmark', desc: 'Icône feuille organique (ESG/nature) + "club esg." en minuscules style fietchr. Proche du parent, reconnaissable.' },
+      { logo: <LogoB size={1.2} />, id: 'B', name: 'Badge carré + Texte', desc: 'Monogramme CE dans un badge teal arrondi + "Club ESG" capitalisé. Plus institutionnel, badge facilement utilisable en favicon.' },
+      { logo: <LogoC size={1.2} />, id: 'C', name: 'Réseau communautaire', desc: 'Nœuds interconnectés → métaphore du réseau/communauté + "Club ESG." Storytelling fort, différenciant.' },
+    ].map(({ logo, id, name, desc }) => (
+      <div key={id} style={{ display: 'flex', alignItems: 'center', gap: 24, padding: '16px 0', borderBottom: `1px solid ${T.border}` }}>
+        {/* Light bg */}
+        <div style={{ width: 200, padding: '14px 16px', background: T.white, border: `1px solid ${T.border}`, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {logo}
+        </div>
+        {/* Dark bg */}
+        <div style={{ width: 200, padding: '14px 16px', background: '#0f1c2e', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {logo}
+        </div>
+        <div style={{ flex: 1 }}>
+          <p style={{ fontSize: 14, fontWeight: 700, color: T.text, marginBottom: 4 }}>Option {id} — {name}</p>
+          <p style={{ fontSize: 12, color: T.textMuted, lineHeight: 1.6 }}>{desc}</p>
+        </div>
+      </div>
+    ))}
+    <p style={{ fontSize: 11, color: T.textLight, marginTop: 16 }}>→ Choisis une direction, on l'affine et on l'applique à tous les écrans.</p>
+  </div>
+);
+
+// ─── App ──────────────────────────────────────────────────────────
+const App = () => (
+  <DesignCanvas title="Club ESG — Wireframes v2 · Design Fletchr">
+    <DCSection id="logos" title="Propositions de logo">
+      <DCArtboard id="logo-showcase" label="3 options logo" width={700} height={420}>
+        <LogoShowcase />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="dashboard" title="Dashboard membre">
+      <DCArtboard id="dash-1" label="Dashboard — Logo A (feuille)" width={960} height={640}>
+        <DashboardScreen logo="A" />
+      </DCArtboard>
+      <DCArtboard id="dash-b" label="Dashboard — Logo B (badge)" width={960} height={640}>
+        <DashboardScreen logo="B" />
+      </DCArtboard>
+      <DCArtboard id="dash-c" label="Dashboard — Logo C (réseau)" width={960} height={640}>
+        <DashboardScreen logo="C" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="annuaire" title="Annuaire des membres">
+      <DCArtboard id="ann-1" label="Annuaire — Grille 2 colonnes" width={960} height={640}>
+        <AnnuaireScreen logo="A" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="inscription" title="Inscription 3 étapes">
+      <DCArtboard id="ins-1" label="Étape 1 — Infos perso" width={540} height={560}>
+        <InscriptionScreen step={1} logo="A" />
+      </DCArtboard>
+      <DCArtboard id="ins-2" label="Étape 2 — Infos pro" width={540} height={580}>
+        <InscriptionScreen step={2} logo="A" />
+      </DCArtboard>
+      <DCArtboard id="ins-3" label="Étape 3 — Charte" width={540} height={520}>
+        <InscriptionScreen step={3} logo="A" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="fiche" title="Fiche membre">
+      <DCArtboard id="fiche-1" label="Fiche membre — Sophie Laurent" width={960} height={700}>
+        <FicheMembreScreen logo="C" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="agenda" title="Agenda">
+      <DCArtboard id="agenda-1" label="Agenda — Liste événements" width={960} height={700}>
+        <AgendaScreen logo="C" />
+      </DCArtboard>
+    </DCSection>
+  </DesignCanvas>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+<div id="root"></div>
+</body>
+</html>
