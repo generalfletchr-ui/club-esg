@@ -19,20 +19,25 @@ function NouvelleSessionForm() {
   const [loading,   setLoading]   = useState(false);
   const [ready,     setReady]     = useState(false);
 
-  /* Échange le code PKCE contre une session active */
+  /* Le middleware SSR peut avoir déjà échangé le code.
+     On tente d'abord de récupérer la session existante,
+     puis on essaie l'échange explicite si un code est présent. */
   useEffect(() => {
-    const code = params.get("code");
-    if (!code) {
-      setError("Lien invalide ou expiré. Demande un nouveau lien.");
-      return;
-    }
-    supabase.auth.exchangeCodeForSession(code).then(({ error: e }) => {
-      if (e) {
-        setError("Lien invalide ou expiré. Demande un nouveau lien.");
-      } else {
-        setReady(true);
+    async function init() {
+      // 1. Session déjà établie par le middleware SSR ?
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) { setReady(true); return; }
+
+      // 2. Code PKCE encore présent dans l'URL ?
+      const code = params.get("code");
+      if (code) {
+        const { error: e } = await supabase.auth.exchangeCodeForSession(code);
+        if (!e) { setReady(true); return; }
       }
-    });
+
+      setError("Lien invalide ou expiré. Demande un nouveau lien.");
+    }
+    init();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
