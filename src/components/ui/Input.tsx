@@ -49,7 +49,7 @@ export default function Input({
             "px-[10px] text-[12px] text-[#111827]",
             "placeholder:text-[#9ca3af]",
             "outline-none transition-colors duration-150",
-            "focus:border-[#00B4B4]",
+            "focus:border-[#016050]",
             "disabled:bg-[#f5f6f8] disabled:text-[#9ca3af] disabled:cursor-not-allowed",
             error ? "border-[#ef4444] focus:border-[#ef4444]" : "",
             icon ? "pl-8" : "",

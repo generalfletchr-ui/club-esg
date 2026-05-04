@@ -39,11 +39,11 @@ function toDateTimeLocal(iso: string): string {
 
 /* ── Styles partagés ─────────────────────────────────────────── */
 const inputCls =
-  "w-full h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#00B4B4] transition-colors";
+  "w-full h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#016050] transition-colors";
 const selectCls =
-  "w-full h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#00B4B4] transition-colors cursor-pointer";
+  "w-full h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#016050] transition-colors cursor-pointer";
 const textareaCls =
-  "w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-[8px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#00B4B4] transition-colors resize-none";
+  "w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-[8px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#016050] transition-colors resize-none";
 
 /* ── Champ de formulaire ─────────────────────────────────────── */
 function Field({
@@ -259,7 +259,7 @@ function EventModal({
               <button
                 type="button"
                 onClick={addIntervenant}
-                className="text-[11px] font-semibold text-[#00B4B4] hover:text-[#009898] transition-colors"
+                className="text-[11px] font-semibold text-[#016050] hover:text-[#014d40] transition-colors"
               >
                 + Ajouter
               </button>
@@ -340,7 +340,7 @@ function EventCard({
     <div
       className={[
         "bg-white border rounded-[8px] p-4 flex gap-4",
-        isPast ? "border-[#f3f4f6] opacity-60" : "border-[#e5e7eb] hover:border-[#00B4B4]",
+        isPast ? "border-[#f3f4f6] opacity-60" : "border-[#e5e7eb] hover:border-[#016050]",
         "transition-colors",
       ].join(" ")}
     >
@@ -353,7 +353,7 @@ function EventCard({
           className="w-[64px] h-[48px] rounded-[6px] object-cover flex-shrink-0"
         />
       ) : (
-        <div className="w-[48px] h-[48px] rounded-[8px] bg-[#e6f7f7] flex items-center justify-center flex-shrink-0 text-xl">
+        <div className="w-[48px] h-[48px] rounded-[8px] bg-[#e6f2ef] flex items-center justify-center flex-shrink-0 text-xl">
           {EVENT_ICONS[event.type_event] ?? "📅"}
         </div>
       )}

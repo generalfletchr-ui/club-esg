@@ -32,11 +32,11 @@ function formatDate(iso: string): string {
 
 /* ── Styles partagés ─────────────────────────────────────────── */
 const inputCls =
-  "w-full h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#00B4B4] transition-colors";
+  "w-full h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#016050] transition-colors";
 const selectCls =
-  "w-full h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#00B4B4] transition-colors cursor-pointer";
+  "w-full h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#016050] transition-colors cursor-pointer";
 const textareaCls =
-  "w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-[8px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#00B4B4] transition-colors resize-none";
+  "w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-[8px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#016050] transition-colors resize-none";
 
 /* ── Champ de formulaire ─────────────────────────────────────── */
 function Field({
@@ -254,7 +254,7 @@ function ReplayCard({
   }
 
   return (
-    <div className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 flex gap-4 hover:border-[#00B4B4] transition-colors">
+    <div className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 flex gap-4 hover:border-[#016050] transition-colors">
       {/* Vignette */}
       {replay.image_url ? (
         // eslint-disable-next-line @next/next/no-img-element

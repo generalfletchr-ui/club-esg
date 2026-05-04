@@ -176,7 +176,7 @@ export default function AdminDemandesClient({ members }: { members: Member[] }) 
             className={[
               "px-[14px] py-[6px] rounded-[6px] text-[12px] font-semibold transition-colors flex items-center gap-1.5",
               activeTab === tab
-                ? "bg-[#00B4B4] text-white"
+                ? "bg-[#016050] text-white"
                 : "bg-white border border-[#e5e7eb] text-[#374151] hover:bg-[#f5f6f8]",
             ].join(" ")}
           >

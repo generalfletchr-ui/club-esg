@@ -84,7 +84,7 @@ export default function ConnexionPage() {
                 </label>
                 <Link
                   href="/mot-de-passe-oublie"
-                  className="text-[11px] text-[#00B4B4] font-medium hover:underline"
+                  className="text-[11px] text-[#016050] font-medium hover:underline"
                 >
                   Mot de passe oublié ?
                 </Link>
@@ -96,7 +96,7 @@ export default function ConnexionPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 autoComplete="current-password"
-                className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none transition-colors focus:border-[#00B4B4]"
+                className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none transition-colors focus:border-[#016050]"
               />
             </div>
 
@@ -118,7 +118,7 @@ export default function ConnexionPage() {
               Pas encore membre ?{" "}
               <Link
                 href="/inscription"
-                className="text-[#00B4B4] font-semibold hover:underline"
+                className="text-[#016050] font-semibold hover:underline"
               >
                 Rejoindre le Club
               </Link>

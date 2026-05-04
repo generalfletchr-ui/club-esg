@@ -10,7 +10,7 @@ interface AvatarProps {
 
 /* Palette de couleurs pour les avatars sans photo */
 const AVATAR_COLORS = [
-  "#00B4B4", // teal
+  "#016050", // teal
   "#1A365D", // bleu foncé
   "#7c6ea0", // violet
   "#e07040", // orange

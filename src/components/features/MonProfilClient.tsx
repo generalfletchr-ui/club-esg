@@ -49,7 +49,7 @@ function Textarea({
         placeholder={placeholder}
         maxLength={maxLength}
         rows={rows}
-        className="w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-[8px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none transition-colors focus:border-[#00B4B4] resize-none"
+        className="w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-[8px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none transition-colors focus:border-[#016050] resize-none"
       />
       {hint && (
         <p className="text-[11px] text-[#6b7280]">{hint}</p>
@@ -81,7 +81,7 @@ function SelectField({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#00B4B4] transition-colors cursor-pointer"
+        className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#016050] transition-colors cursor-pointer"
       >
         {options.map((o) => (
           <option key={o} value={o}>
@@ -456,8 +456,8 @@ export default function MonProfilClient({ member }: { member: Member }) {
                     className={[
                       "px-[10px] py-[5px] rounded-[20px] text-[11px] font-semibold transition-colors cursor-pointer",
                       selected
-                        ? "bg-[#00B4B4] text-white"
-                        : "bg-[#f5f6f8] text-[#6b7280] hover:bg-[#e6f7f7] hover:text-[#00B4B4]",
+                        ? "bg-[#016050] text-white"
+                        : "bg-[#f5f6f8] text-[#6b7280] hover:bg-[#e6f2ef] hover:text-[#016050]",
                     ].join(" ")}
                   >
                     {selected && <span className="mr-1">✓</span>}

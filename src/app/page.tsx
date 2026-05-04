@@ -72,7 +72,7 @@ export default function HomePage() {
           </Link>
           <Link
             href={PRIMARY_CTA_HREF}
-            className="inline-flex px-[14px] py-[9px] rounded-[6px] text-[13px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors whitespace-nowrap"
+            className="inline-flex px-[14px] py-[9px] rounded-[6px] text-[13px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors whitespace-nowrap"
           >
             Rejoindre le Club
           </Link>
@@ -86,8 +86,8 @@ export default function HomePage() {
       >
         {/* Badge */}
         <div className="inline-flex items-center gap-1.5 bg-[rgba(0,180,180,0.15)] border border-[rgba(0,180,180,0.3)] rounded-[20px] px-[14px] py-1 mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00B4B4] inline-block" />
-          <span className="text-[#00B4B4] text-[12px] font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#016050] inline-block" />
+          <span className="text-[#016050] text-[12px] font-semibold">
             Communauté privée · Accès 100% gratuit
           </span>
         </div>
@@ -98,7 +98,7 @@ export default function HomePage() {
           style={{ fontFamily: "'DM Sans',sans-serif" }}
         >
           Le réseau privé des{" "}
-          <span className="text-[#00B4B4]">experts ESG</span>{" "}
+          <span className="text-[#016050]">experts ESG</span>{" "}
           qui font avancer la transition RSE
         </h1>
 
@@ -110,7 +110,7 @@ export default function HomePage() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link
             href={PRIMARY_CTA_HREF}
-            className="inline-flex px-6 py-[11px] rounded-[6px] text-[14px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
+            className="inline-flex px-6 py-[11px] rounded-[6px] text-[14px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
           >
             {PRIMARY_CTA_TEXT}
           </Link>
@@ -126,7 +126,7 @@ export default function HomePage() {
         <div className="flex flex-wrap justify-center gap-8 sm:gap-10 mt-12 pt-8 border-t border-white/10">
           {HERO_STATS.map(([num, label]) => (
             <div key={label} className="text-center min-w-[80px]">
-              <div className="text-[24px] font-bold text-[#00B4B4]">{num}</div>
+              <div className="text-[24px] font-bold text-[#016050]">{num}</div>
               <div className="text-[12px] text-white/70 mt-0.5">{label}</div>
             </div>
           ))}
@@ -135,7 +135,7 @@ export default function HomePage() {
 
       {/* ── Bénéfices ────────────────────────────────────────── */}
       <section className="px-4 sm:px-10 py-14 bg-white">
-        <p className="text-[11px] font-semibold text-[#00B4B4] uppercase tracking-[0.08em] text-center mb-2">
+        <p className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.08em] text-center mb-2">
           Ce que vous obtenez
         </p>
         <h2
@@ -160,7 +160,7 @@ export default function HomePage() {
 
       {/* ── Membres ──────────────────────────────────────────── */}
       <section className="px-4 sm:px-10 py-14 bg-[#f5f6f8]">
-        <p className="text-[11px] font-semibold text-[#00B4B4] uppercase tracking-[0.08em] text-center mb-2">
+        <p className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.08em] text-center mb-2">
           La communauté
         </p>
         <h2
@@ -202,7 +202,7 @@ export default function HomePage() {
 
       {/* ── Événements ───────────────────────────────────────── */}
       <section className="px-4 sm:px-10 py-14 bg-white">
-        <p className="text-[11px] font-semibold text-[#00B4B4] uppercase tracking-[0.08em] text-center mb-2">
+        <p className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.08em] text-center mb-2">
           Agenda
         </p>
         <h2
@@ -219,7 +219,7 @@ export default function HomePage() {
             >
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-base">{EVENT_ICONS[ev.type]}</span>
-                <span className="px-[10px] py-[2px] rounded-[20px] bg-[#e6f7f7] text-[#00B4B4] text-[11px] font-semibold">
+                <span className="px-[10px] py-[2px] rounded-[20px] bg-[#e6f2ef] text-[#016050] text-[11px] font-semibold">
                   {ev.type}
                 </span>
               </div>
@@ -227,7 +227,7 @@ export default function HomePage() {
               <p className="text-[12px] text-[#6b7280] mb-4">{ev.date}</p>
               <Link
                 href={PRIMARY_CTA_HREF}
-                className="inline-flex px-4 py-2 rounded-[6px] text-[12px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
+                className="inline-flex px-4 py-2 rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
               >
                 S&apos;inscrire →
               </Link>
@@ -239,7 +239,7 @@ export default function HomePage() {
       {/* ── CTA final ────────────────────────────────────────── */}
       <section className="px-4 sm:px-10 py-14 bg-[#0a2a4a] text-center">
         <p
-          className="text-[11px] font-semibold text-[#00B4B4] uppercase tracking-[0.08em] mb-3"
+          className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.08em] mb-3"
         >
           Accès gratuit · Sur invitation
         </p>
@@ -254,7 +254,7 @@ export default function HomePage() {
         </p>
         <Link
           href={PRIMARY_CTA_HREF}
-          className="inline-flex px-8 py-[12px] bg-[#00B4B4] rounded-[6px] text-[14px] font-bold text-white hover:bg-[#009898] transition-colors"
+          className="inline-flex px-8 py-[12px] bg-[#016050] rounded-[6px] text-[14px] font-bold text-white hover:bg-[#014d40] transition-colors"
         >
           {PRIMARY_CTA_TEXT}
         </Link>
@@ -270,7 +270,7 @@ export default function HomePage() {
         </p>
         <Link
           href="/connexion"
-          className="text-[12px] text-[#00B4B4] font-medium hover:underline"
+          className="text-[12px] text-[#016050] font-medium hover:underline"
         >
           Déjà membre ? Se connecter
         </Link>

@@ -62,7 +62,7 @@ export default async function FicheMembrePage({
       <div>
         {/* ── Fil d'Ariane ───────────────────────────────── */}
         <div className="flex items-center gap-1.5 mb-5 text-[12px]">
-          <Link href="/annuaire" className="text-[#00B4B4] hover:underline">
+          <Link href="/annuaire" className="text-[#016050] hover:underline">
             Annuaire
           </Link>
           <span className="text-[#9ca3af]">›</span>
@@ -114,7 +114,7 @@ export default async function FicheMembrePage({
                         href={val as string}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[12px] text-[#00B4B4] truncate hover:underline"
+                        className="text-[12px] text-[#016050] truncate hover:underline"
                       >
                         {(val as string).replace(/^https?:\/\/(www\.)?/, "")}
                       </a>
@@ -133,7 +133,7 @@ export default async function FicheMembrePage({
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-2 rounded-[6px] text-[12px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
+                  className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-2 rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
                 >
                   💬 Contacter
                 </a>
@@ -202,7 +202,7 @@ export default async function FicheMembrePage({
                         href={value as string}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[13px] font-medium text-[#00B4B4] hover:underline break-all"
+                        className="text-[13px] font-medium text-[#016050] hover:underline break-all"
                       >
                         {(value as string).replace(/^https?:\/\/(www\.)?/, "")}
                       </a>

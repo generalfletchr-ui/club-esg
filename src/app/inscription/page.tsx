@@ -89,7 +89,7 @@ function Stepper({ currentStep }: { currentStep: number }) {
             <div className="flex flex-col items-center gap-1.5 flex-shrink-0">
               <div
                 className="w-[26px] h-[26px] rounded-full flex items-center justify-center"
-                style={{ background: done || active ? "#00B4B4" : "#e5e7eb" }}
+                style={{ background: done || active ? "#016050" : "#e5e7eb" }}
               >
                 {done ? (
                   <span className="text-white text-[12px]">✓</span>
@@ -104,7 +104,7 @@ function Stepper({ currentStep }: { currentStep: number }) {
               </div>
               <span
                 className="text-[10px] text-center w-[90px]"
-                style={{ color: active ? "#00B4B4" : "#6b7280", fontWeight: active ? 600 : 400 }}
+                style={{ color: active ? "#016050" : "#6b7280", fontWeight: active ? 600 : 400 }}
               >
                 {label}
               </span>
@@ -112,7 +112,7 @@ function Stepper({ currentStep }: { currentStep: number }) {
             {i < STEPS.length - 1 && (
               <div
                 className="flex-1 h-[2px] mx-1 rounded-[1px]"
-                style={{ background: done ? "#00B4B4" : "#e5e7eb", marginBottom: 14 }}
+                style={{ background: done ? "#016050" : "#e5e7eb", marginBottom: 14 }}
               />
             )}
           </div>
@@ -138,9 +138,9 @@ function ExpertiseChip({
       onClick={onToggle}
       className="px-[10px] py-[3px] rounded-[20px] text-[11px] transition-colors cursor-pointer"
       style={{
-        border:     `1px solid ${selected ? "#00B4B4" : "#e5e7eb"}`,
-        background: selected ? "#e6f7f7" : "#fff",
-        color:      selected ? "#00B4B4" : "#374151",
+        border:     `1px solid ${selected ? "#016050" : "#e5e7eb"}`,
+        background: selected ? "#e6f2ef" : "#fff",
+        color:      selected ? "#016050" : "#374151",
         fontWeight: selected ? 600 : 400,
       }}
     >
@@ -399,7 +399,7 @@ export default function InscriptionPage() {
                     Photo de profil
                   </label>
                   <div
-                    className="h-14 border border-dashed border-[#e5e7eb] rounded-[6px] bg-[#f5f6f8] flex items-center justify-center gap-2 cursor-pointer hover:border-[#00B4B4] transition-colors"
+                    className="h-14 border border-dashed border-[#e5e7eb] rounded-[6px] bg-[#f5f6f8] flex items-center justify-center gap-2 cursor-pointer hover:border-[#016050] transition-colors"
                     onClick={() => fileRef.current?.click()}
                   >
                     <span className="text-base">📷</span>
@@ -436,7 +436,7 @@ export default function InscriptionPage() {
                   <select
                     value={form.type_membre}
                     onChange={(e) => update("type_membre", e.target.value)}
-                    className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] outline-none focus:border-[#00B4B4] transition-colors"
+                    className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] outline-none focus:border-[#016050] transition-colors"
                   >
                     <option value="">Sélectionner...</option>
                     {MEMBER_TYPES.map((t) => (
@@ -483,7 +483,7 @@ export default function InscriptionPage() {
                     <select
                       value={form.secteur}
                       onChange={(e) => update("secteur", e.target.value)}
-                      className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] outline-none focus:border-[#00B4B4]"
+                      className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] outline-none focus:border-[#016050]"
                     >
                       <option value="">Secteur...</option>
                       {SECTORS.filter((s) => s !== "Tous Secteurs").map((s) => (
@@ -503,7 +503,7 @@ export default function InscriptionPage() {
                     <select
                       value={form.taille_entreprise}
                       onChange={(e) => update("taille_entreprise", e.target.value)}
-                      className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] outline-none focus:border-[#00B4B4]"
+                      className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] outline-none focus:border-[#016050]"
                     >
                       <option value="">Taille...</option>
                       {COMPANY_SIZES.map((s) => (
@@ -567,7 +567,7 @@ export default function InscriptionPage() {
                     placeholder="Décris ton parcours, tes missions et ta vision de la RSE… (facultatif)"
                     value={form.biographie}
                     onChange={(e) => update("biographie", e.target.value)}
-                    className="w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-2 text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#00B4B4] resize-none transition-colors"
+                    className="w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-2 text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#016050] resize-none transition-colors"
                   />
                   {errors.biographie && (
                     <p className="text-[11px] text-[#ef4444]">{errors.biographie}</p>
@@ -620,7 +620,7 @@ export default function InscriptionPage() {
                       href={CHARTER_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[11px] text-[#00B4B4] font-medium hover:underline"
+                      className="text-[11px] text-[#016050] font-medium hover:underline"
                     >
                       Télécharger ↓
                     </a>
@@ -716,7 +716,7 @@ export default function InscriptionPage() {
                       <p className="font-semibold text-[#374151] mb-1">6. Contact et Réclamations</p>
                       <p>
                         Pour toute question, signalement ou exercice de vos droits sur vos données, contactez notre DPO à :{" "}
-                        <span className="text-[#00B4B4]">contact@fletchr.fr</span>
+                        <span className="text-[#016050]">contact@fletchr.fr</span>
                       </p>
                     </div>
 
@@ -729,8 +729,8 @@ export default function InscriptionPage() {
                   <div
                     className="w-4 h-4 rounded-[4px] flex-shrink-0 flex items-center justify-center mt-0.5 transition-colors"
                     style={{
-                      border:     `1.5px solid ${form.charte_acceptee ? "#00B4B4" : "#d1d5db"}`,
-                      background: form.charte_acceptee ? "#00B4B4" : "#fff",
+                      border:     `1.5px solid ${form.charte_acceptee ? "#016050" : "#d1d5db"}`,
+                      background: form.charte_acceptee ? "#016050" : "#fff",
                     }}
                     onClick={() => {
                       update("charte_acceptee", !form.charte_acceptee);
@@ -772,7 +772,7 @@ export default function InscriptionPage() {
               ) : (
                 <p className="text-[12px] text-[#6b7280]">
                   Déjà membre ?{" "}
-                  <Link href="/connexion" className="text-[#00B4B4] font-semibold hover:underline">
+                  <Link href="/connexion" className="text-[#016050] font-semibold hover:underline">
                     Se connecter
                   </Link>
                 </p>

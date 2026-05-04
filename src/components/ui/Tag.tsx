@@ -11,7 +11,7 @@ interface TagProps {
 }
 
 const variantStyles: Record<TagVariant, string> = {
-  teal:    "bg-[#e6f7f7] text-[#00B4B4]",
+  teal:    "bg-[#e6f2ef] text-[#016050]",
   neutral: "bg-[#f5f6f8] text-[#6b7280]",
   orange:  "bg-[#fff4ee] text-[#f97316]",
   green:   "bg-[#f0fdf4] text-[#16a34a]",

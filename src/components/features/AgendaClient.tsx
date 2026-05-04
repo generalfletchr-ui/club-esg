@@ -93,7 +93,7 @@ export default function AgendaClient({ events }: { events: Event[] }) {
             className={[
               "px-[14px] py-[6px] rounded-[6px] text-[12px] font-semibold transition-colors",
               activeTab === tab
-                ? "bg-[#00B4B4] text-white"
+                ? "bg-[#016050] text-white"
                 : "bg-white border border-[#e5e7eb] text-[#374151] hover:bg-[#f5f6f8]",
             ].join(" ")}
           >
@@ -124,7 +124,7 @@ export default function AgendaClient({ events }: { events: Event[] }) {
           </p>
           <button
             onClick={() => setActiveTab("Tout")}
-            className="mt-2 text-[12px] text-[#00B4B4] font-medium hover:underline"
+            className="mt-2 text-[12px] text-[#016050] font-medium hover:underline"
           >
             Voir tous les événements
           </button>
@@ -155,7 +155,7 @@ export default function AgendaClient({ events }: { events: Event[] }) {
 
 function EventCard({ event: ev }: { event: Event }) {
   return (
-    <div className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 flex gap-4 hover:border-[#00B4B4] transition-colors group">
+    <div className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 flex gap-4 hover:border-[#016050] transition-colors group">
       {/* Icône ou image */}
       {ev.image_url ? (
         /* eslint-disable-next-line @next/next/no-img-element */
@@ -165,7 +165,7 @@ function EventCard({ event: ev }: { event: Event }) {
           className="w-[72px] h-[56px] rounded-[6px] object-cover flex-shrink-0"
         />
       ) : (
-        <div className="w-[56px] h-[56px] rounded-[8px] bg-[#e6f7f7] flex items-center justify-center flex-shrink-0 text-2xl">
+        <div className="w-[56px] h-[56px] rounded-[8px] bg-[#e6f2ef] flex items-center justify-center flex-shrink-0 text-2xl">
           {EVENT_ICONS[ev.type_event] ?? "📅"}
         </div>
       )}
@@ -198,7 +198,7 @@ function EventCard({ event: ev }: { event: Event }) {
                         href={it.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#00B4B4] hover:underline"
+                        className="text-[#016050] hover:underline"
                       >
                         {it.nom}
                       </a>
@@ -219,7 +219,7 @@ function EventCard({ event: ev }: { event: Event }) {
             href={ev.lien_inscription}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-shrink-0 self-start px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors whitespace-nowrap"
+            className="flex-shrink-0 self-start px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors whitespace-nowrap"
           >
             S&apos;inscrire →
           </a>

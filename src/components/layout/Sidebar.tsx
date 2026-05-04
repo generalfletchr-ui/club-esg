@@ -48,11 +48,11 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
           "flex items-center gap-2.5 px-3 py-2 rounded-[8px] text-[13px] font-medium",
           "transition-colors duration-150",
           isActive
-            ? "bg-[#e6f7f7] text-[#00B4B4] border-l-2 border-[#00B4B4] pl-[10px]"
+            ? "bg-[#e6f2ef] text-[#016050] border-l-2 border-[#016050] pl-[10px]"
             : "text-[#111827] hover:bg-[#f5f6f8]",
         ].join(" ")}
       >
-        <span className={`text-[14px] ${isActive ? "text-[#00B4B4]" : "text-[#9ca3af]"}`}>
+        <span className={`text-[14px] ${isActive ? "text-[#016050]" : "text-[#9ca3af]"}`}>
           {icon}
         </span>
         {label}

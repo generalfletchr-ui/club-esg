@@ -59,7 +59,7 @@ function Pagination({
       <button
         onClick={() => onChange(current - 1)}
         disabled={current === 1}
-        className="w-7 h-7 rounded-[6px] text-[12px] border border-[#e5e7eb] bg-white text-[#374151] disabled:opacity-40 hover:border-[#00B4B4] transition-colors"
+        className="w-7 h-7 rounded-[6px] text-[12px] border border-[#e5e7eb] bg-white text-[#374151] disabled:opacity-40 hover:border-[#016050] transition-colors"
       >
         ‹
       </button>
@@ -77,8 +77,8 @@ function Pagination({
             onClick={() => onChange(p as number)}
             className="w-7 h-7 rounded-[6px] text-[12px] font-medium transition-colors"
             style={{
-              background: p === current ? "#00B4B4" : "#fff",
-              border: `1px solid ${p === current ? "#00B4B4" : "#e5e7eb"}`,
+              background: p === current ? "#016050" : "#fff",
+              border: `1px solid ${p === current ? "#016050" : "#e5e7eb"}`,
               color: p === current ? "#fff" : "#374151",
             }}
           >
@@ -89,7 +89,7 @@ function Pagination({
       <button
         onClick={() => onChange(current + 1)}
         disabled={current === total}
-        className="w-7 h-7 rounded-[6px] text-[12px] border border-[#e5e7eb] bg-white text-[#374151] disabled:opacity-40 hover:border-[#00B4B4] transition-colors"
+        className="w-7 h-7 rounded-[6px] text-[12px] border border-[#e5e7eb] bg-white text-[#374151] disabled:opacity-40 hover:border-[#016050] transition-colors"
       >
         ›
       </button>
@@ -100,7 +100,7 @@ function Pagination({
 /* ── Carte replay ────────────────────────────────────────────── */
 function ReplayCard({ replay: r }: { replay: Replay }) {
   return (
-    <div className="bg-white border border-[#e5e7eb] rounded-[8px] overflow-hidden hover:border-[#00B4B4] transition-colors">
+    <div className="bg-white border border-[#e5e7eb] rounded-[8px] overflow-hidden hover:border-[#016050] transition-colors">
       {/* Image ou bannière icône */}
       {r.image_url ? (
         /* eslint-disable-next-line @next/next/no-img-element */
@@ -110,7 +110,7 @@ function ReplayCard({ replay: r }: { replay: Replay }) {
           className="w-full h-[140px] object-cover"
         />
       ) : (
-        <div className="w-full h-[100px] bg-gradient-to-br from-[#e6f7f7] to-[#f0fdf4] flex items-center justify-center text-4xl">
+        <div className="w-full h-[100px] bg-gradient-to-br from-[#e6f2ef] to-[#f0fdf4] flex items-center justify-center text-4xl">
           {EVENT_ICONS[r.type_event] ?? "🎬"}
         </div>
       )}
@@ -143,7 +143,7 @@ function ReplayCard({ replay: r }: { replay: Replay }) {
           href={r.lien_replay}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
+          className="inline-flex items-center gap-1.5 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
         >
           ▶ Voir le replay
         </a>
@@ -203,7 +203,7 @@ export default function ReplaysClient({ replays }: { replays: Replay[] }) {
             className={[
               "px-[14px] py-[6px] rounded-[6px] text-[12px] font-semibold transition-colors",
               activeTab === tab
-                ? "bg-[#00B4B4] text-white"
+                ? "bg-[#016050] text-white"
                 : "bg-white border border-[#e5e7eb] text-[#374151] hover:bg-[#f5f6f8]",
             ].join(" ")}
           >
@@ -243,7 +243,7 @@ export default function ReplaysClient({ replays }: { replays: Replay[] }) {
           </p>
           <button
             onClick={() => switchTab("Tout")}
-            className="mt-2 text-[12px] text-[#00B4B4] font-medium hover:underline"
+            className="mt-2 text-[12px] text-[#016050] font-medium hover:underline"
           >
             Voir tous les replays
           </button>

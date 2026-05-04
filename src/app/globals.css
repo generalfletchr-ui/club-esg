@@ -8,10 +8,10 @@
 @theme inline {
 
   /* ── Couleurs marque ─────────────────────────────────── */
-  --color-teal:           #00B4B4;
-  --color-teal-hover:     #009898;
-  --color-teal-light:     #e6f7f7;
-  --color-teal-mid:       #b2e8e8;
+  --color-teal:           #016050;
+  --color-teal-hover:     #014d40;
+  --color-teal-light:     #e6f2ef;
+  --color-teal-mid:       #99cec8;
 
   /* ── Surfaces ────────────────────────────────────────── */
   --color-bg:             #f5f6f8;
@@ -48,7 +48,7 @@
   --color-navy-teal:      #0a3a3a;
 
   /* ── Palette avatars ─────────────────────────────────── */
-  --color-avatar-1:       #00B4B4;
+  --color-avatar-1:       #016050;
   --color-avatar-2:       #1A365D;
   --color-avatar-3:       #7c6ea0;
   --color-avatar-4:       #e07040;
@@ -104,5 +104,5 @@
 
 /* Barre de progression */
 .progress-bar {
-  background: linear-gradient(90deg, var(--color-teal), #00d4d4);
+  background: linear-gradient(90deg, var(--color-teal), #02a080);
 }

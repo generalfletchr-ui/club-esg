@@ -214,7 +214,7 @@ export default function AdminMembresClient({ members }: { members: Member[] }) {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-          className="h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#00B4B4] cursor-pointer"
+          className="h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#016050] cursor-pointer"
         >
           <option value="">Tous les statuts</option>
           <option value="pending">En attente</option>
@@ -225,7 +225,7 @@ export default function AdminMembresClient({ members }: { members: Member[] }) {
         <select
           value={roleFilter}
           onChange={(e) => setRoleFilter(e.target.value as RoleFilter)}
-          className="h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#00B4B4] cursor-pointer"
+          className="h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#016050] cursor-pointer"
         >
           <option value="">Tous les rôles</option>
           <option value="admin">Admin</option>

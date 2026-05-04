@@ -43,7 +43,7 @@ export async function sendApprovalEmail(email: string, prenom: string) {
             </p>
             <div style="text-align:center;margin:32px 0;">
               <a href="https://club.fletchr.fr/connexion"
-                 style="display:inline-block;padding:14px 32px;background:#00B4B4;color:#fff;
+                 style="display:inline-block;padding:14px 32px;background:#016050;color:#fff;
                         font-size:15px;font-weight:700;text-decoration:none;border-radius:8px;">
                 Accéder au Club →
               </a>

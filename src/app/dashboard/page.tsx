@@ -72,7 +72,7 @@ export default async function DashboardPage() {
 
         {/* ── En-tête bienvenue ─────────────────────────────── */}
         <div>
-          <p className="text-[13px] font-medium text-[#00B4B4] mb-0.5">
+          <p className="text-[13px] font-medium text-[#016050] mb-0.5">
             Bonjour, {member.prenom},
           </p>
           <h1 className="text-[24px] font-bold text-[#111827]">
@@ -91,7 +91,7 @@ export default async function DashboardPage() {
                   <span className="text-[13px] font-semibold text-[#374151]">
                     Complétion du profil
                   </span>
-                  <span className="text-[13px] font-bold text-[#00B4B4]">
+                  <span className="text-[13px] font-bold text-[#016050]">
                     {completion}%
                   </span>
                 </div>
@@ -110,7 +110,7 @@ export default async function DashboardPage() {
               </div>
               <Link
                 href="/mon-profil"
-                className="flex-shrink-0 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors whitespace-nowrap"
+                className="flex-shrink-0 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors whitespace-nowrap"
               >
                 Compléter mon profil →
               </Link>
@@ -129,7 +129,7 @@ export default async function DashboardPage() {
               </span>
               <Link
                 href="/agenda"
-                className="text-[11px] font-semibold text-[#00B4B4] hover:underline"
+                className="text-[11px] font-semibold text-[#016050] hover:underline"
               >
                 Voir tout →
               </Link>
@@ -143,7 +143,7 @@ export default async function DashboardPage() {
                     className="flex gap-2.5 py-2.5"
                     style={{ borderTop: i > 0 ? "1px solid #e5e7eb" : undefined }}
                   >
-                    <div className="w-[34px] h-[34px] rounded-[8px] bg-[#e6f7f7] flex items-center justify-center flex-shrink-0 text-base">
+                    <div className="w-[34px] h-[34px] rounded-[8px] bg-[#e6f2ef] flex items-center justify-center flex-shrink-0 text-base">
                       {EVENT_ICONS[ev.type_event] ?? "📅"}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -161,7 +161,7 @@ export default async function DashboardPage() {
                       href={ev.lien_inscription}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-shrink-0 self-center px-3 py-1.5 rounded-[6px] text-[11px] font-semibold text-white bg-[#00B4B4] hover:bg-[#009898] transition-colors"
+                      className="flex-shrink-0 self-center px-3 py-1.5 rounded-[6px] text-[11px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
                     >
                       S&apos;inscrire
                     </a>
@@ -183,7 +183,7 @@ export default async function DashboardPage() {
               </span>
               <Link
                 href="/annuaire"
-                className="text-[11px] font-semibold text-[#00B4B4] hover:underline"
+                className="text-[11px] font-semibold text-[#016050] hover:underline"
               >
                 Annuaire →
               </Link>
@@ -213,7 +213,7 @@ export default async function DashboardPage() {
                     </div>
                     <Link
                       href={`/annuaire/${m.id}`}
-                      className="flex-shrink-0 text-[11px] font-medium text-[#00B4B4] hover:underline"
+                      className="flex-shrink-0 text-[11px] font-medium text-[#016050] hover:underline"
                     >
                       Voir →
                     </Link>

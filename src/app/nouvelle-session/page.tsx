@@ -93,7 +93,7 @@ function NouvelleSessionForm() {
               {!ready && (
                 <Link
                   href="/mot-de-passe-oublie"
-                  className="text-[12px] text-[#00B4B4] font-semibold hover:underline mt-1 block"
+                  className="text-[12px] text-[#016050] font-semibold hover:underline mt-1 block"
                 >
                   Demander un nouveau lien →
                 </Link>

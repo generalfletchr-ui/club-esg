@@ -25,7 +25,7 @@ function FilterSelect({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#00B4B4] transition-colors cursor-pointer"
+      className="h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#016050] transition-colors cursor-pointer"
     >
       <option value="">{label} ▾</option>
       {options.map((o) => (
@@ -117,7 +117,7 @@ function Pagination({
       <button
         onClick={() => onChange(current - 1)}
         disabled={current === 1}
-        className="w-7 h-7 rounded-[6px] text-[12px] border border-[#e5e7eb] bg-white text-[#374151] disabled:opacity-40 hover:border-[#00B4B4] transition-colors"
+        className="w-7 h-7 rounded-[6px] text-[12px] border border-[#e5e7eb] bg-white text-[#374151] disabled:opacity-40 hover:border-[#016050] transition-colors"
       >
         ‹
       </button>
@@ -132,8 +132,8 @@ function Pagination({
             onClick={() => onChange(p as number)}
             className="w-7 h-7 rounded-[6px] text-[12px] font-medium transition-colors"
             style={{
-              background: p === current ? "#00B4B4" : "#fff",
-              border:     `1px solid ${p === current ? "#00B4B4" : "#e5e7eb"}`,
+              background: p === current ? "#016050" : "#fff",
+              border:     `1px solid ${p === current ? "#016050" : "#e5e7eb"}`,
               color:      p === current ? "#fff" : "#374151",
             }}
           >
@@ -144,7 +144,7 @@ function Pagination({
       <button
         onClick={() => onChange(current + 1)}
         disabled={current === total}
-        className="w-7 h-7 rounded-[6px] text-[12px] border border-[#e5e7eb] bg-white text-[#374151] disabled:opacity-40 hover:border-[#00B4B4] transition-colors"
+        className="w-7 h-7 rounded-[6px] text-[12px] border border-[#e5e7eb] bg-white text-[#374151] disabled:opacity-40 hover:border-[#016050] transition-colors"
       >
         ›
       </button>
@@ -197,7 +197,7 @@ export default function AnnuaireClient({ members }: { members: Member[] }) {
           <p className="text-[12px] text-[#6b7280] mt-0.5">
             {members.length} membre{members.length > 1 ? "s" : ""}
             {filtered.length !== members.length && (
-              <> · <span className="text-[#00B4B4] font-medium">{filtered.length} résultat{filtered.length > 1 ? "s" : ""}</span></>
+              <> · <span className="text-[#016050] font-medium">{filtered.length} résultat{filtered.length > 1 ? "s" : ""}</span></>
             )}
           </p>
         </div>
@@ -281,7 +281,7 @@ export default function AnnuaireClient({ members }: { members: Member[] }) {
           </p>
           <button
             onClick={() => { setSearch(""); setTypeFilter(""); setSecteurFilter(""); setExpertiseFilter(""); setPage(1); }}
-            className="mt-2 text-[12px] text-[#00B4B4] font-medium hover:underline"
+            className="mt-2 text-[12px] text-[#016050] font-medium hover:underline"
           >
             Réinitialiser les filtres
           </button>

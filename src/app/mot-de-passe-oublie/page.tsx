@@ -64,7 +64,7 @@ export default function MotDePasseOubliePage() {
               </p>
               <Link
                 href="/connexion"
-                className="text-[12px] text-[#00B4B4] font-semibold hover:underline"
+                className="text-[12px] text-[#016050] font-semibold hover:underline"
               >
                 ← Retour à la connexion
               </Link>

@@ -24,7 +24,8 @@
       "Bash(unzip -o \"C:/Users/ThomasPERRIEN/Downloads/Club ESG.zip\" -d C:/Users/ThomasPERRIEN/club-esg/.design-review/mockups)",
       "Bash(npx tsc *)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
