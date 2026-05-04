@@ -104,6 +104,8 @@ export async function createEvent(formData: FormData) {
     type_event: formData.get("type_event") as string,
     lien_inscription: formData.get("lien_inscription") as string,
     image_url: (formData.get("image_url") as string) || null,
+    intervenants: JSON.parse((formData.get("intervenants") as string) || "[]"),
+    adresse: (formData.get("adresse") as string) || null,
     cree_par: adminId,
   });
 
@@ -124,6 +126,8 @@ export async function updateEvent(eventId: string, formData: FormData) {
       type_event: formData.get("type_event") as string,
       lien_inscription: formData.get("lien_inscription") as string,
       image_url: (formData.get("image_url") as string) || null,
+      intervenants: JSON.parse((formData.get("intervenants") as string) || "[]"),
+      adresse: (formData.get("adresse") as string) || null,
     })
     .eq("id", eventId);
 

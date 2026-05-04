@@ -45,6 +45,11 @@ export interface Member {
   approuve_le: string | null;
 }
 
+export interface Intervenant {
+  nom: string;
+  url: string;
+}
+
 export interface Event {
   id: string;
   titre: string;
@@ -53,6 +58,8 @@ export interface Event {
   type_event: EventType;
   lien_inscription: string;
   image_url: string | null;
+  intervenants: Intervenant[] | null;
+  adresse: string | null;
   cree_par: string;
   created_at: string;
 }

@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Tag from "@/components/ui/Tag";
 import { EVENT_TYPES } from "@/lib/constants";
-import type { Event, EventType } from "@/types";
+import type { Event, EventType, Intervenant } from "@/types";
 
 const EVENT_ICONS: Record<string, string> = {
   Webinaire: "🎙",
@@ -75,7 +75,7 @@ export default function AgendaClient({ events }: { events: Event[] }) {
   }, [events]);
 
   return (
-    <div>
+    <div className="max-w-[70%]">
       {/* ── En-tête ──────────────────────────────────────────── */}
       <div className="mb-4">
         <h1 className="text-[22px] font-bold text-[#111827]">Agenda</h1>
@@ -188,6 +188,32 @@ function EventCard({ event: ev }: { event: Event }) {
             <p className="text-[12px] text-[#6b7280] line-clamp-2 leading-relaxed">
               {ev.description}
             </p>
+            {ev.intervenants && ev.intervenants.length > 0 && (
+              <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-1.5">
+                {(ev.intervenants as Intervenant[]).map((it, idx) => (
+                  <span key={idx} className="text-[11px] text-[#6b7280]">
+                    👤{" "}
+                    {it.url ? (
+                      <a
+                        href={it.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#00B4B4] hover:underline"
+                      >
+                        {it.nom}
+                      </a>
+                    ) : (
+                      it.nom
+                    )}
+                  </span>
+                ))}
+              </div>
+            )}
+            {ev.type_event === "Afterwork" && ev.adresse && (
+              <p className="text-[11px] text-[#6b7280] mt-1">
+                📍 {ev.adresse}
+              </p>
+            )}
           </div>
           <a
             href={ev.lien_inscription}

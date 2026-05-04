@@ -6,7 +6,7 @@ import Tag from "@/components/ui/Tag";
 import Button from "@/components/ui/Button";
 import { createEvent, updateEvent, deleteEvent } from "@/app/admin/actions";
 import { EVENT_TYPES } from "@/lib/constants";
-import type { Event, EventType } from "@/types";
+import type { Event, EventType, Intervenant } from "@/types";
 
 /* ── Helpers ─────────────────────────────────────────────────── */
 
@@ -74,6 +74,8 @@ const EMPTY: {
   type_event: EventType;
   lien_inscription: string;
   image_url: string;
+  intervenants: Intervenant[];
+  adresse: string;
 } = {
   titre: "",
   date_heure: "",
@@ -81,6 +83,8 @@ const EMPTY: {
   type_event: "Webinaire",
   lien_inscription: "",
   image_url: "",
+  intervenants: [],
+  adresse: "",
 };
 
 function EventModal({
@@ -94,24 +98,45 @@ function EventModal({
   const [form, setForm] = useState(
     isEditing
       ? {
-          titre:           event.titre,
-          date_heure:      toDateTimeLocal(event.date_heure),
-          description:     event.description,
-          type_event:      event.type_event as EventType,
+          titre:            event.titre,
+          date_heure:       toDateTimeLocal(event.date_heure),
+          description:      event.description,
+          type_event:       event.type_event as EventType,
           lien_inscription: event.lien_inscription,
-          image_url:       event.image_url ?? "",
+          image_url:        event.image_url ?? "",
+          intervenants:     event.intervenants ?? [],
+          adresse:          event.adresse ?? "",
         }
       : { ...EMPTY }
   );
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
-  function set<K extends keyof typeof form>(field: K) {
+  function set<K extends Exclude<keyof typeof form, "intervenants">>(field: K) {
     return (
       e: React.ChangeEvent<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >
-    ) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
+    ) => setForm((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+      ...(field === "type_event" && e.target.value !== "Afterwork" ? { adresse: "" } : {}),
+    }));
+  }
+
+  function addIntervenant() {
+    setForm((prev) => ({ ...prev, intervenants: [...prev.intervenants, { nom: "", url: "" }] }));
+  }
+
+  function removeIntervenant(idx: number) {
+    setForm((prev) => ({ ...prev, intervenants: prev.intervenants.filter((_, i) => i !== idx) }));
+  }
+
+  function setIntervenant(idx: number, field: keyof Intervenant, value: string) {
+    setForm((prev) => {
+      const updated = prev.intervenants.map((it, i) => i === idx ? { ...it, [field]: value } : it);
+      return { ...prev, intervenants: updated };
+    });
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -122,7 +147,14 @@ function EventModal({
     }
     setError(null);
     const fd = new FormData();
-    Object.entries(form).forEach(([k, v]) => fd.set(k, v));
+    fd.set("titre", form.titre);
+    fd.set("date_heure", form.date_heure);
+    fd.set("description", form.description);
+    fd.set("type_event", form.type_event);
+    fd.set("lien_inscription", form.lien_inscription);
+    fd.set("image_url", form.image_url);
+    fd.set("intervenants", JSON.stringify(form.intervenants.filter((i) => i.nom.trim())));
+    fd.set("adresse", form.type_event === "Afterwork" ? form.adresse : "");
 
     startTransition(async () => {
       if (isEditing) {
@@ -217,6 +249,61 @@ function EventModal({
               className={inputCls}
             />
           </Field>
+
+          {/* Intervenants */}
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center justify-between">
+              <label className="text-[12px] font-medium text-[#374151]">
+                Intervenant(s) <span className="text-[#9ca3af] font-normal">(optionnel)</span>
+              </label>
+              <button
+                type="button"
+                onClick={addIntervenant}
+                className="text-[11px] font-semibold text-[#00B4B4] hover:text-[#009898] transition-colors"
+              >
+                + Ajouter
+              </button>
+            </div>
+            {form.intervenants.length > 0 && (
+              <div className="flex flex-col gap-2 mt-1">
+                {form.intervenants.map((it, idx) => (
+                  <div key={idx} className="flex gap-2 items-center">
+                    <input
+                      value={it.nom}
+                      onChange={(e) => setIntervenant(idx, "nom", e.target.value)}
+                      placeholder="Nom"
+                      className={inputCls + " flex-1"}
+                    />
+                    <input
+                      value={it.url}
+                      onChange={(e) => setIntervenant(idx, "url", e.target.value)}
+                      placeholder="URL LinkedIn ou profil"
+                      className={inputCls + " flex-[2]"}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeIntervenant(idx)}
+                      className="text-[#9ca3af] hover:text-[#ef4444] text-[18px] leading-none flex-shrink-0 transition-colors"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Adresse (Afterwork uniquement) */}
+          {form.type_event === "Afterwork" && (
+            <Field label="Adresse">
+              <input
+                value={form.adresse}
+                onChange={set("adresse")}
+                placeholder="ex. 15 rue de Rivoli, 75001 Paris"
+                className={inputCls}
+              />
+            </Field>
+          )}
 
           <div className="flex justify-end gap-2 pt-2 border-t border-[#f3f4f6]">
             <Button type="button" variant="outline" onClick={onClose} disabled={pending}>
