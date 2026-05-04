@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 
-export default function MotDePasseOubliePage() {
+function MotDePasseOublieForm() {
+  const searchParams = useSearchParams();
+  const lienExpire = searchParams.get("lien") === "expire";
   const supabase = createClient();
 
   const [email,   setEmail]   = useState("");
@@ -48,6 +51,15 @@ export default function MotDePasseOubliePage() {
         </div>
 
         <div className="px-7 py-6">
+          {lienExpire && !sent && (
+            <div className="mb-5 px-3 py-3 rounded-[6px] bg-[#fffbeb] border border-[#fde68a]">
+              <p className="text-[12px] text-[#92400e] font-semibold mb-0.5">Ton lien a expiré</p>
+              <p className="text-[12px] text-[#92400e]">
+                Les liens de réinitialisation sont à usage unique et peuvent être consommés par les filtres anti-spam. Saisis ton email ci-dessous pour en recevoir un nouveau.
+              </p>
+            </div>
+          )}
+
           {sent ? (
             /* ── Confirmation envoi ── */
             <div className="text-center py-4">
@@ -115,5 +127,13 @@ export default function MotDePasseOubliePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MotDePasseOubliePage() {
+  return (
+    <Suspense>
+      <MotDePasseOublieForm />
+    </Suspense>
   );
 }

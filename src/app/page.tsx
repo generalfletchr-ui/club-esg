@@ -1,271 +1,288 @@
 import Link from "next/link";
 import Image from "next/image";
-
-const EVENT_ICONS: Record<string, string> = {
-  Webinaire: "🎙",
-  Afterwork: "🤝",
-  Workshop:  "📋",
-};
-
-const HERO_STATS = [
-  ["40+",  "Membres actifs"],
-  ["12",   "Webinaires / an"],
-  ["8",    "Replays disponibles"],
-  ["3",    "Événements / mois"],
-];
-
-const BENEFITS = [
-  {
-    icon: "🎓",
-    title: "Formez-vous en continu",
-    desc: "12 webinaires experts par an sur CSRD, bilan carbone, stratégie RSE — animés par des praticiens.",
-  },
-  {
-    icon: "🤝",
-    title: "Développez votre réseau",
-    desc: "Échangez avec 40+ professionnels ESG triés sur le volet : consultants, responsables RSE, experts-comptables.",
-  },
-  {
-    icon: "📋",
-    title: "Accédez aux replays",
-    desc: "Retrouvez toutes les sessions passées en vidéo et restez à jour même si vous ne pouvez pas assister en direct.",
-  },
-  {
-    icon: "🌿",
-    title: "Partagez en confiance",
-    desc: "Une communauté privée avec charte d'engagement : échanges bienveillants, confidentialité respectée.",
-  },
-];
-
-const PREVIEW_MEMBERS = [
-  { photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEs3F0Aw5nYmYFrvk03O3GQdFR2a5GOR-5zg&s", name: "Sophie L.",  role: "Consultante RSE",  tags: ["CSRD", "Stratégie RSE"] },
-  { photo: "https://images.generated.photos/A7p_Zekk5uUp-tuD-6vrPEwse0z_cNHDzqbmOnZNVBU/g:no/rs:fill:256:384/czM6Ly9yMi1ncGhvdG9zLXByb2QtaHVtYW4tZ2FsbGVyeS80OTU1LzU0N2U1MGYxLTg0ZjQtNGNhYS1iZTk4LTU2YzIwMjVkMDY1MC0xLmpwZw.jpg", name: "Marc K.",    role: "Responsable RSE",  tags: ["Bilan carbone"] },
-  { photo: "https://images.generated.photos/8NOXTi9siuCx9xwsGkurQ-QPloebtZkZ9imYD35znbc/g:no/rs:fill:256:384/czM6Ly9ncGhvdG9zLXByb2QtaHVtYW4tZ2FsbGVyeS80NzY4LzhkZTI3ZjA2LWEzMjUtNDQyOC04MWY3LThlM2EzMGY5ZjAyYy0xLmpwZw.jpg", name: "Aïcha B.",   role: "Expert-comptable", tags: ["Finance durable"] },
-  { photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJuv-hx6x9XGmis-zfl5VcLE6jfb1e99k5iw&s", name: "Rémi P.",    role: "Consultant RSE",   tags: ["Audit & Certif."] },
-];
-
-const PREVIEW_EVENTS = [
-  { type: "Webinaire", title: "CSRD : comment se préparer ?",  date: "3 juin 2026 · 12h00" },
-  { type: "Afterwork", title: "Networking ESG Paris",           date: "10 septembre 2026 · 18h30" },
-  { type: "Workshop",  title: "Bilan carbone pratique",         date: "24 septembre 2026 · 14h00" },
-];
-
+import { Suspense } from "react";
+import HashErrorRedirect from "./_hash-error-redirect";
 
 const PRIMARY_CTA_HREF = "/inscription";
 const PRIMARY_CTA_TEXT = "Rejoindre gratuitement →";
 
+const STATS = [
+  ["40+",  "Membres actifs"],
+  ["12",   "Webinaires / an"],
+  ["8+",   "Replays disponibles"],
+  ["3",    "Événements / mois"],
+];
+
+const FEATURES = [
+  {
+    icon: "🎙",
+    tag: "Savoir",
+    title: "Webinaires mensuels animés par des praticiens",
+    desc: "CSRD, bilan carbone, stratégie RSE, due diligence ESG — des sessions opérationnelles sur les sujets qui comptent vraiment pour votre métier.",
+    detail: "12 webinaires par an · replay disponible sous 24h",
+  },
+  {
+    icon: "🎞",
+    tag: "Bibliothèque",
+    title: "Accès à toutes les sessions en replay",
+    desc: "Toute la bibliothèque vidéo des sessions passées, accessible à tout moment. Restez à jour à votre rythme, même quand votre agenda ne le permet pas.",
+    detail: "Sessions indexées et searchables",
+  },
+  {
+    icon: "🤝",
+    tag: "Réseau",
+    title: "Un réseau de professionnels ESG triés sur le volet",
+    desc: "Consultants, responsables RSE, experts-comptables, juristes — tous engagés et sélectionnés. Échangez avec des pairs qui comprennent vos enjeux.",
+    detail: "Annuaire membres · DMs directs · Afterworks",
+  },
+  {
+    icon: "🌿",
+    tag: "Confiance",
+    title: "Une communauté privée avec charte d'engagement",
+    desc: "Pas de démarchage, pas de vente. Chaque membre signe une charte de bienveillance et de confidentialité. Les échanges restent entre professionnels.",
+    detail: "Accès modéré · Charte signée",
+  },
+];
+
+const STEPS = [
+  {
+    num: "01",
+    title: "Vous candidatez",
+    desc: "Remplissez le formulaire d'inscription en moins de 5 minutes. Profil professionnel, secteur, expertises.",
+  },
+  {
+    num: "02",
+    title: "Votre demande est examinée",
+    desc: "L'équipe Fletchr vérifie votre profil sous 48h pour garantir la qualité de la communauté.",
+  },
+  {
+    num: "03",
+    title: "Vous accédez à tout",
+    desc: "Annuaire, replays, agenda des événements à venir, et espace d'échange — tout est accessible immédiatement.",
+  },
+];
+
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white font-[Inter,sans-serif]">
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+      <Suspense><HashErrorRedirect /></Suspense>
 
       {/* ── Navigation ──────────────────────────────────────── */}
-      <nav className="sticky top-0 z-10 bg-white border-b border-[#e5e7eb] px-4 sm:px-10 py-3 flex items-center justify-between gap-3">
+      <nav className="sticky top-0 z-20 bg-white border-b border-[#e5e7eb] px-4 sm:px-10 py-3 flex items-center justify-between gap-3">
         <a href="https://club.fletchr.fr/dashboard">
           <Image src="/logo.svg" alt="Club ESG" width={130} height={43} priority />
         </a>
-        <div className="flex gap-2 flex-shrink-0">
+        <div className="flex items-center gap-2 flex-shrink-0">
           <Link
             href="/connexion"
-            className="hidden sm:inline-flex px-[14px] py-[9px] rounded-[6px] text-[13px] font-semibold text-[#374151] bg-white border border-[#e5e7eb] hover:bg-[#f5f6f8] transition-colors"
+            className="hidden sm:inline-flex px-[14px] py-[8px] rounded-[6px] text-[13px] font-medium text-[#374151] hover:text-[#111827] transition-colors"
           >
-            Se connecter
+            Déjà membre
           </Link>
           <Link
             href={PRIMARY_CTA_HREF}
-            className="inline-flex px-[14px] py-[9px] rounded-[6px] text-[13px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors whitespace-nowrap"
+            className="inline-flex px-[16px] py-[9px] rounded-[6px] text-[13px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors whitespace-nowrap"
           >
             Rejoindre le Club
           </Link>
         </div>
       </nav>
 
-      {/* ── Héro ────────────────────────────────────────────── */}
-      <section
-        className="px-4 sm:px-10 pt-20 pb-16 text-center"
-        style={{ background: "linear-gradient(135deg,#0a2a4a 0%,#1a4a6a 60%,#0a3a3a 100%)" }}
-      >
-        {/* Badge */}
-        <div className="inline-flex items-center gap-1.5 bg-[rgba(0,180,180,0.15)] border border-[rgba(0,180,180,0.3)] rounded-[20px] px-[14px] py-1 mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#016050] inline-block" />
-          <span className="text-[#016050] text-[12px] font-semibold">
-            Communauté privée · Accès 100% gratuit
-          </span>
-        </div>
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="bg-[#016050] px-4 sm:px-10 pt-20 pb-16">
+        <div className="max-w-[760px] mx-auto text-center">
 
-        {/* Titre */}
-        <h1
-          className="text-[28px] sm:text-[36px] font-bold text-white leading-tight max-w-[600px] mx-auto mb-4"
-          style={{ fontFamily: "'DM Sans',sans-serif" }}
-        >
-          Le réseau privé des{" "}
-          <span className="text-[#016050]">experts ESG</span>{" "}
-          qui font avancer la transition RSE
-        </h1>
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#e4f7f3] inline-block" />
+            <span className="text-white/80 text-[12px] font-medium tracking-wide">
+              Communauté privée · Accès 100% gratuit
+            </span>
+          </div>
 
-        <p className="text-[15px] text-white/80 max-w-[460px] mx-auto mb-8 leading-relaxed">
-          Webinaires experts, replays, networking et entraide — rejoignez les
-          professionnels ESG les plus engagés de France.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-          <Link
-            href={PRIMARY_CTA_HREF}
-            className="inline-flex px-6 py-[11px] rounded-[6px] text-[14px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
+          {/* Headline */}
+          <h1
+            className="text-[32px] sm:text-[44px] font-bold text-white leading-[1.15] mb-5"
+            style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: "-0.02em" }}
           >
-            {PRIMARY_CTA_TEXT}
-          </Link>
-          <Link
-            href="/connexion"
-            className="inline-flex px-6 py-[11px] rounded-[6px] text-[14px] font-semibold border border-white/30 text-white/80 bg-transparent hover:bg-white/10 transition-colors"
-          >
-            Déjà membre ? Se connecter
-          </Link>
-        </div>
+            Le réseau des professionnels ESG
+            <br />
+            <span className="text-[#e4f7f3]">qui font avancer la transition RSE</span>
+          </h1>
 
-        {/* Statistiques */}
-        <div className="flex flex-wrap justify-center gap-8 sm:gap-10 mt-12 pt-8 border-t border-white/10">
-          {HERO_STATS.map(([num, label]) => (
-            <div key={label} className="text-center min-w-[80px]">
-              <div className="text-[24px] font-bold text-[#016050]">{num}</div>
-              <div className="text-[12px] text-white/70 mt-0.5">{label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+          <p className="text-[16px] text-white/75 max-w-[500px] mx-auto mb-9 leading-relaxed">
+            Webinaires experts, bibliothèque de replays, networking — une communauté privée
+            pour les praticiens ESG les plus engagés.
+          </p>
 
-      {/* ── Bénéfices ────────────────────────────────────────── */}
-      <section className="px-4 sm:px-10 py-14 bg-white">
-        <p className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.08em] text-center mb-2">
-          Ce que vous obtenez
-        </p>
-        <h2
-          className="text-[22px] font-bold text-[#111827] text-center mb-10"
-          style={{ fontFamily: "'DM Sans',sans-serif" }}
-        >
-          Tout ce dont vous avez besoin pour progresser en ESG
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-[960px] mx-auto">
-          {BENEFITS.map((b) => (
-            <div
-              key={b.title}
-              className="bg-[#f5f6f8] border border-[#e5e7eb] rounded-[8px] p-5"
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Link
+              href={PRIMARY_CTA_HREF}
+              className="inline-flex items-center px-7 py-3 rounded-[6px] text-[14px] font-semibold text-[#016050] bg-white hover:bg-[#f0faf7] transition-colors"
             >
-              <span className="text-[24px] mb-3 block">{b.icon}</span>
-              <p className="text-[14px] font-semibold text-[#111827] mb-1.5">{b.title}</p>
-              <p className="text-[13px] text-[#6b7280] leading-relaxed">{b.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Membres ──────────────────────────────────────────── */}
-      <section className="px-4 sm:px-10 py-14 bg-[#f5f6f8]">
-        <p className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.08em] text-center mb-2">
-          La communauté
-        </p>
-        <h2
-          className="text-[20px] font-bold text-[#111827] mb-8 text-center"
-          style={{ fontFamily: "'DM Sans',sans-serif" }}
-        >
-          Quelques membres de la communauté
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-[840px] mx-auto">
-          {PREVIEW_MEMBERS.map((m) => (
-            <div
-              key={m.name}
-              className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 text-center"
+              {PRIMARY_CTA_TEXT}
+            </Link>
+            <Link
+              href="/connexion"
+              className="inline-flex items-center px-7 py-3 rounded-[6px] text-[14px] font-medium border border-white/25 text-white/80 hover:bg-white/10 transition-colors"
             >
-              <Image
-                src={m.photo}
-                alt={m.name}
-                width={44}
-                height={44}
-                className="rounded-full object-cover mx-auto"
-                unoptimized
-              />
-              <p className="text-[13px] font-semibold text-[#111827] mt-2 mb-0.5">{m.name}</p>
-              <p className="text-[12px] text-[#6b7280] mb-2">{m.role}</p>
-              <div className="flex flex-wrap gap-1 justify-center">
-                {m.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="px-[8px] py-[2px] rounded-[20px] bg-[#f5f6f8] text-[#6b7280] text-[11px] font-semibold"
-                  >
-                    {t}
-                  </span>
-                ))}
+              Se connecter
+            </Link>
+          </div>
+
+        </div>
+
+        {/* Stats strip */}
+        <div className="max-w-[640px] mx-auto mt-14 pt-10 border-t border-white/15 grid grid-cols-2 sm:grid-cols-4 gap-6">
+          {STATS.map(([num, label]) => (
+            <div key={label} className="text-center">
+              <div
+                className="text-[30px] font-bold text-white mb-0.5"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                {num}
               </div>
+              <div className="text-[12px] text-white/55 font-medium">{label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── Événements ───────────────────────────────────────── */}
-      <section className="px-4 sm:px-10 py-14 bg-white">
-        <p className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.08em] text-center mb-2">
-          Agenda
-        </p>
-        <h2
-          className="text-[20px] font-bold text-[#111827] mb-8 text-center"
-          style={{ fontFamily: "'DM Sans',sans-serif" }}
-        >
-          Prochains événements
-        </h2>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-[900px] mx-auto">
-          {PREVIEW_EVENTS.map((ev) => (
+      {/* ── Trust bar ───────────────────────────────────────── */}
+      <div className="bg-[#f5f6f8] border-b border-[#e5e7eb] px-4 py-3">
+        <div className="max-w-[760px] mx-auto flex flex-wrap justify-center gap-x-8 gap-y-1.5">
+          {[
+            "✓  Par Fletchr, spécialiste ESG",
+            "✓  Accès gratuit, sans engagement",
+            "✓  Demande examinée sous 48h",
+            "✓  Communauté modérée",
+          ].map((item) => (
+            <span key={item} className="text-[12px] text-[#6b7280] font-medium">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Valeur de proposition ────────────────────────────── */}
+      <section className="px-4 sm:px-10 py-16 bg-white">
+        <div className="max-w-[640px] mx-auto text-center">
+          <p className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.1em] mb-3">
+            Pourquoi le Club ESG
+          </p>
+          <h2
+            className="text-[26px] sm:text-[30px] font-bold text-[#111827] mb-4 leading-tight"
+            style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: "-0.01em" }}
+          >
+            Le lieu où les praticiens ESG progressent ensemble
+          </h2>
+          <p className="text-[15px] text-[#6b7280] leading-relaxed">
+            Le Club ESG rassemble des professionnels — consultants, responsables RSE,
+            experts-comptables — pour apprendre, partager et collaborer autour des enjeux
+            de la transition environnementale et sociale.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Features ─────────────────────────────────────────── */}
+      <section className="px-4 sm:px-10 pb-16 bg-white">
+        <div className="max-w-[900px] mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {FEATURES.map((f) => (
             <div
-              key={ev.title}
-              className="bg-white border border-[#e5e7eb] rounded-[8px] p-5 flex-1 min-w-0"
+              key={f.title}
+              className="group border border-[#e5e7eb] rounded-[10px] p-6 hover:border-[#016050] hover:shadow-[0_2px_16px_rgba(1,96,80,0.08)] transition-all duration-200"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-base">{EVENT_ICONS[ev.type]}</span>
-                <span className="px-[10px] py-[2px] rounded-[20px] bg-[#e6f2ef] text-[#016050] text-[11px] font-semibold">
-                  {ev.type}
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-[22px]">{f.icon}</span>
+                <span className="px-2.5 py-0.5 rounded-full bg-[#e4f7f3] text-[#016050] text-[11px] font-semibold">
+                  {f.tag}
                 </span>
               </div>
-              <p className="text-[14px] font-semibold text-[#111827] mb-1">{ev.title}</p>
-              <p className="text-[12px] text-[#6b7280] mb-4">{ev.date}</p>
-              <Link
-                href={PRIMARY_CTA_HREF}
-                className="inline-flex px-4 py-2 rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
+              <h3
+                className="text-[15px] font-bold text-[#111827] mb-2 leading-snug"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
               >
-                S&apos;inscrire →
-              </Link>
+                {f.title}
+              </h3>
+              <p className="text-[13px] text-[#6b7280] leading-relaxed mb-3">{f.desc}</p>
+              <p className="text-[11px] text-[#016050] font-medium">{f.detail}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── Comment ça marche ────────────────────────────────── */}
+      <section className="px-4 sm:px-10 py-16 bg-[#f5f6f8]">
+        <div className="max-w-[760px] mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.1em] mb-3">
+              Comment ça marche
+            </p>
+            <h2
+              className="text-[24px] font-bold text-[#111827]"
+              style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: "-0.01em" }}
+            >
+              Rejoindre le Club en 3 étapes
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {STEPS.map((step, i) => (
+              <div key={step.num} className="relative">
+                {/* Connector line */}
+                {i < STEPS.length - 1 && (
+                  <div className="hidden sm:block absolute top-5 left-[calc(50%+28px)] right-[-50%] h-[1px] bg-[#d1d5db]" />
+                )}
+                <div className="flex flex-col items-center text-center sm:items-start sm:text-left">
+                  <div
+                    className="w-10 h-10 rounded-full bg-[#016050] flex items-center justify-center mb-4 flex-shrink-0"
+                  >
+                    <span className="text-[12px] font-bold text-white">{step.num}</span>
+                  </div>
+                  <h3
+                    className="text-[14px] font-bold text-[#111827] mb-1.5"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="text-[13px] text-[#6b7280] leading-relaxed">{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── CTA final ────────────────────────────────────────── */}
-      <section className="px-4 sm:px-10 py-14 bg-[#0a2a4a] text-center">
-        <p
-          className="text-[11px] font-semibold text-[#016050] uppercase tracking-[0.08em] mb-3"
+      <section className="px-4 sm:px-10 py-16 bg-white">
+        <div
+          className="max-w-[640px] mx-auto text-center rounded-[12px] px-8 py-12"
+          style={{ background: "#016050" }}
         >
-          Accès gratuit · Sur invitation
-        </p>
-        <h2
-          className="text-[24px] font-bold text-white mb-3"
-          style={{ fontFamily: "'DM Sans',sans-serif" }}
-        >
-          Prêt·e à rejoindre la communauté ?
-        </h2>
-        <p className="text-[14px] text-white/70 mb-6 max-w-[400px] mx-auto">
-          Votre demande est examinée sous 48h. L&apos;accès est entièrement gratuit.
-        </p>
-        <Link
-          href={PRIMARY_CTA_HREF}
-          className="inline-flex px-8 py-[12px] bg-[#016050] rounded-[6px] text-[14px] font-bold text-white hover:bg-[#014d40] transition-colors"
-        >
-          {PRIMARY_CTA_TEXT}
-        </Link>
+          <h2
+            className="text-[24px] sm:text-[28px] font-bold text-white mb-3"
+            style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: "-0.01em" }}
+          >
+            Prêt·e à rejoindre la communauté ?
+          </h2>
+          <p className="text-[14px] text-white/70 mb-7 max-w-[360px] mx-auto leading-relaxed">
+            Candidatez en 5 minutes. Accès gratuit, examiné sous 48h.
+          </p>
+          <Link
+            href={PRIMARY_CTA_HREF}
+            className="inline-flex items-center px-8 py-3 rounded-[6px] text-[14px] font-semibold text-[#016050] bg-white hover:bg-[#f0faf7] transition-colors"
+          >
+            {PRIMARY_CTA_TEXT}
+          </Link>
+        </div>
       </section>
 
       {/* ── Pied de page ─────────────────────────────────────── */}
-      <footer className="px-4 sm:px-10 py-5 bg-white border-t border-[#e5e7eb] flex flex-col sm:flex-row items-center justify-between gap-3">
+      <footer className="px-4 sm:px-10 py-5 bg-[#f5f6f8] border-t border-[#e5e7eb] flex flex-col sm:flex-row items-center justify-between gap-3">
         <a href="https://club.fletchr.fr/dashboard">
           <Image src="/logo.svg" alt="Club ESG" width={110} height={36} />
         </a>
-        <p className="text-[12px] text-[#6b7280]">
+        <p className="text-[12px] text-[#9ca3af]">
           © {new Date().getFullYear()} Fletchr · Ensemble, accélérons la transition RSE
         </p>
         <Link
