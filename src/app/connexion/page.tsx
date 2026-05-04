@@ -53,7 +53,7 @@ export default function ConnexionPage() {
       >
         {/* En-tête */}
         <div className="bg-white px-7 py-5 border-b border-[#e5e7eb]">
-          <Link href="/">
+          <Link href="https://club.fletchr.fr/dashboard">
             <Image src="/logo.svg" alt="Club ESG" width={130} height={43} priority />
           </Link>
         </div>

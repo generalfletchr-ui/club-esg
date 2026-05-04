@@ -323,7 +323,7 @@ export default function InscriptionPage() {
       >
         {/* En-tête */}
         <div className="bg-white px-7 py-4 border-b border-[#e5e7eb]">
-          <Link href="/">
+          <Link href="https://club.fletchr.fr/dashboard">
             <Image src="/logo.svg" alt="Club ESG" width={120} height={40} priority />
           </Link>
         </div>

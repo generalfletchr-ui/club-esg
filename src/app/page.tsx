@@ -60,7 +60,9 @@ export default function HomePage() {
 
       {/* ── Navigation ──────────────────────────────────────── */}
       <nav className="sticky top-0 z-10 bg-white border-b border-[#e5e7eb] px-4 sm:px-10 py-3 flex items-center justify-between gap-3">
-        <Image src="/logo.svg" alt="Club ESG" width={130} height={43} priority />
+        <a href="https://club.fletchr.fr/dashboard">
+          <Image src="/logo.svg" alt="Club ESG" width={130} height={43} priority />
+        </a>
         <div className="flex gap-2 flex-shrink-0">
           <Link
             href="/connexion"
@@ -260,7 +262,9 @@ export default function HomePage() {
 
       {/* ── Pied de page ─────────────────────────────────────── */}
       <footer className="px-4 sm:px-10 py-5 bg-white border-t border-[#e5e7eb] flex flex-col sm:flex-row items-center justify-between gap-3">
-        <Image src="/logo.svg" alt="Club ESG" width={110} height={36} />
+        <a href="https://club.fletchr.fr/dashboard">
+          <Image src="/logo.svg" alt="Club ESG" width={110} height={36} />
+        </a>
         <p className="text-[12px] text-[#6b7280]">
           © {new Date().getFullYear()} Fletchr · Ensemble, accélérons la transition RSE
         </p>

@@ -8,7 +8,7 @@ interface LogoProps {
   className?: string;
 }
 
-export default function Logo({ href = "/", width = 140, className = "" }: LogoProps) {
+export default function Logo({ href = "https://club.fletchr.fr/dashboard", width = 140, className = "" }: LogoProps) {
   const logo = (
     <Image
       src="/logo.svg"
