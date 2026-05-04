@@ -48,7 +48,7 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
           "flex items-center gap-2.5 px-3 py-2 rounded-[8px] text-[13px] font-medium",
           "transition-colors duration-150",
           isActive
-            ? "bg-[#e6f2ef] text-[#016050] border-l-2 border-[#016050] pl-[10px]"
+            ? "bg-[#e4f7f3] text-[#016050] border-l-2 border-[#016050] pl-[10px]"
             : "text-[#111827] hover:bg-[#f5f6f8]",
         ].join(" ")}
       >

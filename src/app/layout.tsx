@@ -1,18 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, DM_Sans } from "next/font/google";
+import { Work_Sans } from "next/font/google";
 import "./globals.css";
 
-/* Police principale — Inter (UI, corps de texte) */
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-/* Police display — DM Sans (titres, logo wordmark) */
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+/* Police principale — Work Sans (charte Fletchr sept. 2025) */
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -32,7 +24,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${inter.variable} ${dmSans.variable} h-full antialiased`}
+      className={`${workSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#f5f6f8] text-[#111827]">
         {children}

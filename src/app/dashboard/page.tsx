@@ -143,7 +143,7 @@ export default async function DashboardPage() {
                     className="flex gap-2.5 py-2.5"
                     style={{ borderTop: i > 0 ? "1px solid #e5e7eb" : undefined }}
                   >
-                    <div className="w-[34px] h-[34px] rounded-[8px] bg-[#e6f2ef] flex items-center justify-center flex-shrink-0 text-base">
+                    <div className="w-[34px] h-[34px] rounded-[8px] bg-[#e4f7f3] flex items-center justify-center flex-shrink-0 text-base">
                       {EVENT_ICONS[ev.type_event] ?? "📅"}
                     </div>
                     <div className="flex-1 min-w-0">

@@ -18,7 +18,7 @@ export default function ConfirmationPage() {
 
         <div className="px-8 py-10">
           {/* Icône succès */}
-          <div className="w-16 h-16 rounded-full bg-[#e6f2ef] flex items-center justify-center mx-auto mb-5 text-2xl">
+          <div className="w-16 h-16 rounded-full bg-[#e4f7f3] flex items-center justify-center mx-auto mb-5 text-2xl">
             🎉
           </div>
 

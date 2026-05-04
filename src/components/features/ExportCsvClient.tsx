@@ -57,7 +57,7 @@ export default function ExportCsvClient({
 
         {/* Icône + infos */}
         <div className="flex items-start gap-4 mb-5">
-          <div className="w-[48px] h-[48px] rounded-[10px] bg-[#e6f2ef] flex items-center justify-center text-2xl flex-shrink-0">
+          <div className="w-[48px] h-[48px] rounded-[10px] bg-[#e4f7f3] flex items-center justify-center text-2xl flex-shrink-0">
             ↓
           </div>
           <div>

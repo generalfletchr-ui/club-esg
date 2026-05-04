@@ -139,7 +139,7 @@ function ExpertiseChip({
       className="px-[10px] py-[3px] rounded-[20px] text-[11px] transition-colors cursor-pointer"
       style={{
         border:     `1px solid ${selected ? "#016050" : "#e5e7eb"}`,
-        background: selected ? "#e6f2ef" : "#fff",
+        background: selected ? "#e4f7f3" : "#fff",
         color:      selected ? "#016050" : "#374151",
         fontWeight: selected ? 600 : 400,
       }}

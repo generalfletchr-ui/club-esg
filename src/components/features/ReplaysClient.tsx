@@ -110,7 +110,7 @@ function ReplayCard({ replay: r }: { replay: Replay }) {
           className="w-full h-[140px] object-cover"
         />
       ) : (
-        <div className="w-full h-[100px] bg-gradient-to-br from-[#e6f2ef] to-[#f0fdf4] flex items-center justify-center text-4xl">
+        <div className="w-full h-[100px] bg-gradient-to-br from-[#e4f7f3] to-[#f0fdf4] flex items-center justify-center text-4xl">
           {EVENT_ICONS[r.type_event] ?? "🎬"}
         </div>
       )}

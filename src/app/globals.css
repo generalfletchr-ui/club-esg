@@ -1,33 +1,45 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Club ESG — Design Tokens (Design System V2)
-   Source : Club ESG Design System.zip / colors_and_type.css
+   Club ESG — Design Tokens
+   Source : Fletchr-CharteGraphique septembre 2025
    ============================================================ */
 
 @theme inline {
 
-  /* ── Couleurs marque ─────────────────────────────────── */
+  /* ── Palette Fletchr (charte sept. 2025) ────────────────── */
+  --color-brand:          #016050;   /* Vert Fletchr */
+  --color-brand-hover:    #014d40;
+  --color-brand-2:        #008254;   /* Vert Fletchr 2 */
+  --color-brand-light:    #e4f7f3;   /* Vert Fletchr 3 */
+  --color-onyx:           #142832;   /* Onyx */
+  --color-sable:          #ebebe6;   /* Sable */
+  --color-argente:        #bdccd4;   /* Argenté */
+
+  /* Alias pour compatibilité avec les composants existants */
   --color-teal:           #016050;
   --color-teal-hover:     #014d40;
-  --color-teal-light:     #e6f2ef;
+  --color-teal-light:     #e4f7f3;
   --color-teal-mid:       #99cec8;
 
-  /* ── Surfaces ────────────────────────────────────────── */
+  /* ── Surfaces ────────────────────────────────────────────── */
   --color-bg:             #f5f6f8;
-  --color-sidebar:        #ebebe6;
+  --color-sidebar:        #ebebe6;   /* Sable */
   --color-surface:        #ffffff;
   --color-border:         #e5e7eb;
   --color-border-mid:     #d1d5db;
 
-  /* ── Texte ───────────────────────────────────────────── */
+  /* ── Texte ───────────────────────────────────────────────── */
   --color-text:           #111827;
   --color-text-mid:       #374151;
   --color-text-muted:     #6b7280;
   --color-text-light:     #9ca3af;
 
-  /* ── Statuts ─────────────────────────────────────────── */
-  --color-orange:         #f97316;
+  /* ── Statuts ─────────────────────────────────────────────── */
+  --color-orange:         #ff640f;   /* Orange Fletchr */
+  --color-sunset:         #ffa000;   /* Sunset Fletchr */
+  --color-corail:         #ff006e;   /* Corail Fletchr */
+  --color-violet:         #6900c2;   /* Violet Fletchr */
   --color-orange-light:   #fff4ee;
   --color-yellow:         #eab308;
   --color-yellow-light:   #fefce8;
@@ -38,28 +50,23 @@
   --color-green-dark:     #16a34a;
   --color-green-border:   #bbf7d0;
 
-  /* ── Accent événements ───────────────────────────────── */
+  /* ── Accent événements ───────────────────────────────────── */
   --color-purple:         #7c3aed;
   --color-purple-light:   #f5f3ff;
 
-  /* ── Hero (landing) ──────────────────────────────────── */
-  --color-navy-deep:      #0a2a4a;
-  --color-navy-mid:       #1a4a6a;
-  --color-navy-teal:      #0a3a3a;
-
-  /* ── Palette avatars ─────────────────────────────────── */
+  /* ── Palette avatars ─────────────────────────────────────── */
   --color-avatar-1:       #016050;
-  --color-avatar-2:       #1A365D;
+  --color-avatar-2:       #142832;
   --color-avatar-3:       #7c6ea0;
-  --color-avatar-4:       #e07040;
-  --color-avatar-5:       #2563eb;
+  --color-avatar-4:       #ff640f;
+  --color-avatar-5:       #008254;
   --color-avatar-6:       #16a34a;
 
-  /* ── Typographie ─────────────────────────────────────── */
-  --font-sans:            'Inter', system-ui, sans-serif;
-  --font-display:         'DM Sans', 'Inter', system-ui, sans-serif;
+  /* ── Typographie (Work Sans — charte Fletchr) ────────────── */
+  --font-sans:            var(--font-work-sans), 'Work Sans', system-ui, sans-serif;
+  --font-display:         var(--font-work-sans), 'Work Sans', system-ui, sans-serif;
 
-  /* ── Border radius ───────────────────────────────────── */
+  /* ── Border radius ───────────────────────────────────────── */
   --radius-sm:            4px;
   --radius-md:            6px;
   --radius-lg:            8px;
@@ -67,11 +74,11 @@
   --radius-pill:          20px;
   --radius-full:          9999px;
 
-  /* ── Ombres ──────────────────────────────────────────── */
+  /* ── Ombres ──────────────────────────────────────────────── */
   --shadow-card:          0 2px 16px rgba(0, 0, 0, 0.08);
   --shadow-modal:         0 4px 24px rgba(0, 0, 0, 0.12);
 
-  /* ── Layout ──────────────────────────────────────────── */
+  /* ── Layout ──────────────────────────────────────────────── */
   --sidebar-width:        220px;
   --topbar-height:        48px;
 }
@@ -104,5 +111,5 @@
 
 /* Barre de progression */
 .progress-bar {
-  background: linear-gradient(90deg, var(--color-teal), #02a080);
+  background: linear-gradient(90deg, var(--color-brand), var(--color-brand-2));
 }

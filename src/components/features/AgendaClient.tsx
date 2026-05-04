@@ -165,7 +165,7 @@ function EventCard({ event: ev }: { event: Event }) {
           className="w-[72px] h-[56px] rounded-[6px] object-cover flex-shrink-0"
         />
       ) : (
-        <div className="w-[56px] h-[56px] rounded-[8px] bg-[#e6f2ef] flex items-center justify-center flex-shrink-0 text-2xl">
+        <div className="w-[56px] h-[56px] rounded-[8px] bg-[#e4f7f3] flex items-center justify-center flex-shrink-0 text-2xl">
           {EVENT_ICONS[ev.type_event] ?? "📅"}
         </div>
       )}

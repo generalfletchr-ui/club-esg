@@ -457,7 +457,7 @@ export default function MonProfilClient({ member }: { member: Member }) {
                       "px-[10px] py-[5px] rounded-[20px] text-[11px] font-semibold transition-colors cursor-pointer",
                       selected
                         ? "bg-[#016050] text-white"
-                        : "bg-[#f5f6f8] text-[#6b7280] hover:bg-[#e6f2ef] hover:text-[#016050]",
+                        : "bg-[#f5f6f8] text-[#6b7280] hover:bg-[#e4f7f3] hover:text-[#016050]",
                     ].join(" ")}
                   >
                     {selected && <span className="mr-1">✓</span>}
