@@ -51,7 +51,7 @@ export default async function FicheMembrePage({
 
   if (!profileData) notFound();
 
-  const profile = profileData as Member;
+  const profile = profileData as unknown as Member;
 
   /* Construit le lien WhatsApp avec préfill si téléphone dispo */
   const whatsappMsg = encodeURIComponent(
