@@ -70,6 +70,240 @@ export async function sendApprovalEmail(email: string, prenom: string) {
   });
 }
 
+/* ── Missions ──────────────────────────────────────────────── */
+
+/** Email envoyé au posteur quand sa fiche est publiée par un admin */
+export async function sendMissionPublishedEmail(
+  email: string,
+  prenom: string,
+  missionTitre: string
+) {
+  return resend.emails.send({
+    from: FROM,
+    to: email,
+    subject: "Club ESG : ta mission est en ligne ! 🚀",
+    html: `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f5f6f8;font-family:'Work Sans',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f6f8;padding:40px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+        <tr>
+          <td style="background:#1A365D;padding:32px;text-align:center;">
+            <img src="https://146612565.fs1.hubspotusercontent-eu1.net/hubfs/146612565/Fletchr/Logo%20Club%20ESG.png"
+                 alt="Club ESG" width="160" style="display:block;margin:0 auto;">
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:40px 48px;">
+            <h1 style="margin:0 0 16px;font-size:24px;font-weight:700;color:#111827;">
+              Ta mission est en ligne, ${prenom} ! 🎉
+            </h1>
+            <p style="margin:0 0 16px;font-size:15px;color:#374151;line-height:1.6;">
+              Ta fiche <strong>« ${missionTitre} »</strong> vient d'être validée et publiée
+              sur le job board du Club ESG. Les membres peuvent désormais la consulter
+              et te contacter.
+            </p>
+            <p style="margin:0 0 24px;font-size:15px;color:#374151;line-height:1.6;">
+              Rendez-vous dans <strong>Mes missions</strong> pour suivre les réponses
+              et gérer ta fiche.
+            </p>
+            <div style="text-align:center;margin:32px 0;">
+              <a href="https://club.fletchr.fr/mes-missions"
+                 style="display:inline-block;padding:14px 32px;background:#016050;color:#fff;
+                        font-size:15px;font-weight:700;text-decoration:none;border-radius:8px;">
+                Voir mes missions →
+              </a>
+            </div>
+            <p style="margin:0;font-size:13px;color:#6b7280;line-height:1.6;">
+              Bonne mission !<br>
+              <strong style="color:#374151;">L'équipe Club ESG</strong>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f6f8;padding:20px 48px;border-top:1px solid #e5e7eb;">
+            <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">
+              Ensemble, accélérons la transition RSE · club.fletchr.fr
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+  });
+}
+
+/** Email envoyé au posteur quand sa fiche est rejetée par un admin */
+export async function sendMissionRejectedEmail(
+  email: string,
+  prenom: string,
+  missionTitre: string
+) {
+  return resend.emails.send({
+    from: FROM,
+    to: email,
+    subject: "Club ESG : suite à ta fiche mission",
+    html: `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f5f6f8;font-family:'Work Sans',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f6f8;padding:40px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+        <tr>
+          <td style="background:#1A365D;padding:32px;text-align:center;">
+            <img src="https://146612565.fs1.hubspotusercontent-eu1.net/hubfs/146612565/Fletchr/Logo%20Club%20ESG.png"
+                 alt="Club ESG" width="160" style="display:block;margin:0 auto;">
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:40px 48px;">
+            <h1 style="margin:0 0 16px;font-size:24px;font-weight:700;color:#111827;">
+              Bonjour ${prenom},
+            </h1>
+            <p style="margin:0 0 16px;font-size:15px;color:#374151;line-height:1.6;">
+              Ta fiche <strong>« ${missionTitre} »</strong> n'a pas pu être publiée
+              en l'état. Notre équipe a besoin que tu la révises avant de la mettre en ligne.
+            </p>
+            <p style="margin:0 0 24px;font-size:15px;color:#374151;line-height:1.6;">
+              Connecte-toi à ta page <strong>Mes missions</strong> pour modifier
+              la fiche et la soumettre à nouveau.
+            </p>
+            <div style="text-align:center;margin:32px 0;">
+              <a href="https://club.fletchr.fr/mes-missions"
+                 style="display:inline-block;padding:14px 32px;background:#016050;color:#fff;
+                        font-size:15px;font-weight:700;text-decoration:none;border-radius:8px;">
+                Modifier ma fiche →
+              </a>
+            </div>
+            <p style="margin:0;font-size:13px;color:#6b7280;line-height:1.6;">
+              Cordialement,<br>
+              <strong style="color:#374151;">L'équipe Club ESG</strong>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f6f8;padding:20px 48px;border-top:1px solid #e5e7eb;">
+            <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">
+              Ensemble, accélérons la transition RSE · club.fletchr.fr
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+  });
+}
+
+/** Email envoyé au posteur quand un membre répond à sa fiche */
+export interface MissionRepondant {
+  prenom: string;
+  nom: string;
+  entreprise: string;
+  expertises: string[];
+  linkedin?: string | null;
+  profil_url: string;
+}
+
+export async function sendMissionInterestEmail(
+  email: string,
+  prenom: string,
+  missionTitre: string,
+  repondant: MissionRepondant
+) {
+  const expertisesHtml = repondant.expertises
+    .slice(0, 5)
+    .map(
+      (e) =>
+        `<span style="display:inline-block;padding:3px 10px;background:#e4f7f3;color:#016050;border-radius:20px;font-size:11px;font-weight:600;margin:2px;">${e}</span>`
+    )
+    .join(" ");
+
+  const linkedinBtn = repondant.linkedin
+    ? `<a href="${repondant.linkedin}" style="display:inline-block;margin-top:8px;padding:8px 16px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;color:#374151;text-decoration:none;">Voir LinkedIn →</a>`
+    : "";
+
+  return resend.emails.send({
+    from: FROM,
+    to: email,
+    subject: `Club ESG : ${repondant.prenom} ${repondant.nom} est intéressé(e) par ta mission`,
+    html: `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f5f6f8;font-family:'Work Sans',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f6f8;padding:40px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+        <tr>
+          <td style="background:#1A365D;padding:32px;text-align:center;">
+            <img src="https://146612565.fs1.hubspotusercontent-eu1.net/hubfs/146612565/Fletchr/Logo%20Club%20ESG.png"
+                 alt="Club ESG" width="160" style="display:block;margin:0 auto;">
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:40px 48px;">
+            <h1 style="margin:0 0 16px;font-size:24px;font-weight:700;color:#111827;">
+              Nouvelle réponse à ta mission, ${prenom} ! 👋
+            </h1>
+            <p style="margin:0 0 24px;font-size:15px;color:#374151;line-height:1.6;">
+              Un membre est intéressé(e) par ta fiche <strong>« ${missionTitre} »</strong>.
+              Voici son profil :
+            </p>
+
+            <!-- Carte répondant -->
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:20px;margin-bottom:24px;">
+              <tr>
+                <td style="padding:20px;">
+                  <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:#111827;">
+                    ${repondant.prenom} ${repondant.nom}
+                  </p>
+                  <p style="margin:0 0 12px;font-size:13px;color:#6b7280;">
+                    ${repondant.entreprise}
+                  </p>
+                  <div style="margin-bottom:12px;">${expertisesHtml}</div>
+                  ${linkedinBtn}
+                </td>
+              </tr>
+            </table>
+
+            <div style="text-align:center;margin:8px 0 24px;">
+              <a href="${repondant.profil_url}"
+                 style="display:inline-block;padding:14px 32px;background:#016050;color:#fff;
+                        font-size:15px;font-weight:700;text-decoration:none;border-radius:8px;">
+                Voir le profil complet →
+              </a>
+            </div>
+            <p style="margin:0;font-size:13px;color:#6b7280;line-height:1.6;">
+              Bonne collaboration !<br>
+              <strong style="color:#374151;">L'équipe Club ESG</strong>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f6f8;padding:20px 48px;border-top:1px solid #e5e7eb;">
+            <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">
+              Ensemble, accélérons la transition RSE · club.fletchr.fr
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+  });
+}
+
 /** Email envoyé quand une demande est refusée */
 export async function sendRejectionEmail(email: string, prenom: string) {
   return resend.emails.send({

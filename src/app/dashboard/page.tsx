@@ -9,7 +9,7 @@ import Tag from "@/components/ui/Tag";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import ProfileCompletionWidget from "@/components/dashboard/ProfileCompletionWidget";
 import { WHATSAPP_LINK } from "@/lib/constants";
-import type { Event, Member } from "@/types";
+import type { Event, Member, Mission } from "@/types";
 
 /* Icônes par type d'événement */
 const EVENT_ICONS: Record<string, string> = {
@@ -64,6 +64,15 @@ export default async function DashboardPage() {
     .eq("statut", "approved")
     .neq("id", user.id)
     .order("date_inscription", { ascending: false })
+    .limit(3);
+
+  /* 3 dernières missions publiées */
+  const { data: latestMissions } = await supabase
+    .from("missions")
+    .select("id, type_mission, titre, domaine, expertises_requises, budget, created_at")
+    .eq("statut", "published")
+    .gt("expire_le", new Date().toISOString())
+    .order("created_at", { ascending: false })
     .limit(3);
 
   const completion = calcProfileCompletion(member);
@@ -215,6 +224,59 @@ export default async function DashboardPage() {
             )}
           </Card>
         </div>
+
+        {/* ── Dernières missions ───────────────────────────── */}
+        <Card>
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[13px] font-semibold text-[#111827]">
+              Opportunités de missions
+            </span>
+            <Link
+              href="/missions"
+              className="text-[11px] font-medium text-[#016050] hover:underline"
+            >
+              Voir tout →
+            </Link>
+          </div>
+
+          {latestMissions && latestMissions.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {(latestMissions as Partial<Mission>[]).map((m, i) => (
+                <Link
+                  key={m.id}
+                  href={`/missions/${m.id}`}
+                  className="flex items-start gap-3 py-2.5 hover:bg-[#f5f6f8] rounded-[6px] px-1 -mx-1 transition-colors"
+                  style={{ borderTop: i > 0 ? "1px solid #f5f6f8" : undefined }}
+                >
+                  <div className="w-[32px] h-[32px] rounded-[6px] bg-[#e4f7f3] flex items-center justify-center flex-shrink-0 text-sm">
+                    {m.type_mission === "binome" ? "🤝" : "🎁"}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[12px] font-semibold text-[#111827] truncate">{m.titre}</p>
+                    <div className="flex flex-wrap gap-1 mt-0.5">
+                      <Tag variant="neutral" className="text-[10px]">{m.domaine}</Tag>
+                      {m.budget && (
+                        <span className="text-[10px] text-[#9ca3af]">💶 {m.budget}</span>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-4">
+              <p className="text-[12px] text-[#9ca3af] mb-2">
+                Aucune mission disponible pour l&apos;instant.
+              </p>
+              <Link
+                href="/missions/nouvelle"
+                className="text-[11px] font-semibold text-[#016050] hover:underline"
+              >
+                Publier la première →
+              </Link>
+            </div>
+          )}
+        </Card>
 
         {/* ── Groupe WhatsApp ───────────────────────────────── */}
         <div className="rounded-[8px] bg-[#f0fdf4] px-5 py-4 flex items-center justify-between gap-4">

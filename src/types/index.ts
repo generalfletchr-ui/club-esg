@@ -76,3 +76,33 @@ export interface Replay {
   cree_par: string;
   created_at: string;
 }
+
+/* ── Missions (Job Board) ──────────────────────────────────── */
+
+export type MissionStatut = "pending" | "published" | "rejected" | "pourvue" | "expired";
+export type MissionType   = "binome" | "cession";
+export type MissionDomaine = "Environnement" | "Social" | "Gouvernance" | "Multi";
+
+export interface Mission {
+  id: string;
+  poste_par: string;
+  type_mission: MissionType;
+  titre: string;
+  description: string;
+  domaine: MissionDomaine;
+  secteur_client: string | null;
+  expertises_requises: string[];
+  type_prestation: string | null;
+  duree_estimee: string | null;
+  modalite: string | null;
+  localisation: string | null;
+  budget: string | null;
+  statut: MissionStatut;
+  expire_le: string;
+  valide_par: string | null;
+  valide_le: string | null;
+  created_at: string;
+  updated_at: string;
+  /** Champ joint — profil du posteur */
+  membre?: Pick<Member, "id" | "prenom" | "nom" | "photo_url" | "entreprise" | "expertises">;
+}

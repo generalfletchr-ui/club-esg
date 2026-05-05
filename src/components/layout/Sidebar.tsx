@@ -1,25 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { usePathname } from "next/navigation";
 import Logo from "@/components/ui/Logo";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { WHATSAPP_LINK } from "@/lib/constants";
 
 /* Navigation membre */
 const MEMBER_NAV = [
-  { label: "Tableau de bord", href: "/dashboard",  icon: "⊞" },
-  { label: "Annuaire",        href: "/annuaire",    icon: "◫" },
-  { label: "Agenda",          href: "/agenda",      icon: "◷" },
-  { label: "Replays",         href: "/replays",     icon: "▶" },
-  { label: "Mon profil",      href: "/mon-profil",  icon: "◉" },
+  { label: "Tableau de bord", href: "/dashboard",    icon: "⊞" },
+  { label: "Annuaire",        href: "/annuaire",      icon: "◫" },
+  { label: "Missions",        href: "/missions",      icon: "◈" },
+  { label: "Mes missions",    href: "/mes-missions",  icon: "◇" },
+  { label: "Agenda",          href: "/agenda",        icon: "◷" },
+  { label: "Replays",         href: "/replays",       icon: "▶" },
+  { label: "Mon profil",      href: "/mon-profil",    icon: "◉" },
 ];
 
 /* Navigation admin */
 const ADMIN_NAV = [
   { label: "Demandes",    href: "/admin/demandes",    icon: "⏳" },
   { label: "Membres",     href: "/admin/membres",     icon: "≡" },
+  { label: "Missions",    href: "/admin/missions",    icon: "◈" },
   { label: "Événements",  href: "/admin/evenements",  icon: "✦" },
   { label: "Replays",     href: "/admin/replays",     icon: "▤" },
   { label: "Export CSV",  href: "/admin/export-csv",  icon: "↓" },
@@ -31,14 +33,6 @@ interface SidebarProps {
 
 export default function Sidebar({ isAdmin = false }: SidebarProps) {
   const pathname = usePathname();
-  const router   = useRouter();
-  const supabase = createClient();
-
-  async function handleLogout() {
-    await supabase.auth.signOut();
-    router.push("/connexion");
-    router.refresh();
-  }
 
   function NavItem({ label, href, icon }: { label: string; href: string; icon: string }) {
     const isActive = pathname === href || pathname.startsWith(href + "/");
@@ -46,14 +40,14 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
       <Link
         href={href}
         className={[
-          "flex items-center gap-2.5 px-3 py-2 rounded-[8px] text-[13px] font-medium",
+          "flex items-center gap-2.5 px-3 py-2.5 rounded-[8px] text-[14px] font-semibold",
           "transition-colors duration-150",
           isActive
             ? "bg-[#e4f7f3] text-[#016050]"
-            : "text-[#111827] hover:bg-[#f5f6f8]",
+            : "text-[#142832] hover:bg-[#f5f6f8]",
         ].join(" ")}
       >
-        <span className={`text-[14px] ${isActive ? "text-[#016050]" : "text-[#9ca3af]"}`}>
+        <span className={`text-[15px] ${isActive ? "text-[#016050]" : "text-[#142832]"}`}>
           {icon}
         </span>
         {label}
@@ -65,15 +59,14 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
     <aside
       className="flex flex-col h-screen sticky top-0 overflow-y-auto"
       style={{
-        width: "var(--sidebar-width, 220px)",
+        width: "var(--sidebar-width, 240px)",
         background: "#ebebe6",
-        borderRight: "1px solid #e5e7eb",
         flexShrink: 0,
       }}
     >
       {/* Logo */}
-      <div className="px-4 py-4 border-b border-[#e5e7eb]">
-        <Logo width={130} />
+      <div className="px-4 py-4">
+        <Logo width={160} />
       </div>
 
       {/* Navigation admin */}
@@ -106,8 +99,7 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
       </nav>
 
       {/* Pied de sidebar */}
-      <div className="px-3 pb-4 flex flex-col gap-2">
-        {/* Lien WhatsApp */}
+      <div className="px-3 pb-4">
         <a
           href={WHATSAPP_LINK}
           target="_blank"
@@ -117,15 +109,6 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
           <WhatsAppIcon size={18} />
           Groupe WhatsApp
         </a>
-
-        {/* Déconnexion */}
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#6b7280] hover:text-[#374151] hover:bg-[#f5f6f8] rounded-[8px] transition-colors text-left"
-        >
-          <span className="text-[14px]">⏻</span>
-          Déconnexion
-        </button>
       </div>
     </aside>
   );

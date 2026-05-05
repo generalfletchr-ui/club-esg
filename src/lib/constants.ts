@@ -68,6 +68,20 @@ export const EVENT_TYPES = [
   "Workshop",
 ] as const;
 
+/* ── Missions (Job Board) ──────────────────────────────────── */
+
+/** Types de mission */
+export const MISSION_TYPES = ["binome", "cession"] as const;
+
+/** Domaines ESG */
+export const MISSION_DOMAINES = ["Environnement", "Social", "Gouvernance", "Multi"] as const;
+
+/** Types de prestation */
+export const MISSION_PRESTATIONS = ["Conseil", "Audit", "Formation", "Reporting", "Autre"] as const;
+
+/** Modalités de travail */
+export const MISSION_MODALITES = ["Présentiel", "Distanciel", "Hybride"] as const;
+
 /** Lien WhatsApp communautaire */
 export const WHATSAPP_LINK =
   "https://chat.whatsapp.com/DxE8kxJSu2KJegWwPBGoXs";

@@ -4,7 +4,12 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthUser, getMemberProfile } from "@/lib/auth";
-import { sendApprovalEmail, sendRejectionEmail } from "@/lib/resend";
+import {
+  sendApprovalEmail,
+  sendRejectionEmail,
+  sendMissionPublishedEmail,
+  sendMissionRejectedEmail,
+} from "@/lib/resend";
 
 /** Vérifie que l'appelant est admin — lève une erreur sinon */
 async function requireAdmin() {
@@ -191,4 +196,70 @@ export async function deleteReplay(replayId: string) {
 
   revalidatePath("/admin/replays");
   revalidatePath("/replays");
+}
+
+/* ── Missions ──────────────────────────────────────────────── */
+
+export async function publishMission(missionId: string) {
+  const { supabase, adminId } = await requireAdmin();
+
+  const { data: mission } = await supabase
+    .from("missions")
+    .select("titre, poste_par")
+    .eq("id", missionId)
+    .single();
+
+  await supabase
+    .from("missions")
+    .update({
+      statut:    "published",
+      valide_par: adminId,
+      valide_le:  new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", missionId);
+
+  if (mission) {
+    const { data: posteur } = await supabase
+      .from("members")
+      .select("email, prenom")
+      .eq("id", mission.poste_par)
+      .single();
+
+    if (posteur?.email && posteur?.prenom) {
+      await sendMissionPublishedEmail(posteur.email, posteur.prenom, mission.titre).catch(() => {});
+    }
+  }
+
+  revalidatePath("/admin/missions");
+  revalidatePath("/missions");
+}
+
+export async function rejectMissionAdmin(missionId: string) {
+  const { supabase } = await requireAdmin();
+
+  const { data: mission } = await supabase
+    .from("missions")
+    .select("titre, poste_par")
+    .eq("id", missionId)
+    .single();
+
+  await supabase
+    .from("missions")
+    .update({ statut: "rejected", updated_at: new Date().toISOString() })
+    .eq("id", missionId);
+
+  if (mission) {
+    const { data: posteur } = await supabase
+      .from("members")
+      .select("email, prenom")
+      .eq("id", mission.poste_par)
+      .single();
+
+    if (posteur?.email && posteur?.prenom) {
+      await sendMissionRejectedEmail(posteur.email, posteur.prenom, mission.titre).catch(() => {});
+    }
+  }
+
+  revalidatePath("/admin/missions");
 }
