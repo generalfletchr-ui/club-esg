@@ -17,7 +17,7 @@ const FEATURES = [
     icon: "🎙",
     tag: "Formation",
     title: "Webinaires mensuels animés par des praticiens",
-    desc: "CSRD, bilan carbone, stratégie RSE, due diligence ESG — des sessions opérationnelles sur les sujets qui comptent vraiment pour votre métier.",
+    desc: "CSRD, bilan carbone, stratégie RSE, due diligence ESG : des sessions opérationnelles sur les sujets qui comptent vraiment pour votre métier.",
     detail: "12 sessions / an · replay disponible sous 24h",
   },
   {
@@ -31,7 +31,7 @@ const FEATURES = [
     icon: "🤝",
     tag: "Réseau",
     title: "Des professionnels ESG triés sur le volet",
-    desc: "Consultants, responsables RSE, experts-comptables, juristes — tous sélectionnés et engagés. Des pairs qui comprennent vraiment vos enjeux.",
+    desc: "Consultants, responsables RSE, experts-comptables, juristes : tous sélectionnés et engagés, des pairs qui comprennent vraiment vos enjeux.",
     detail: "Annuaire · DMs directs · Afterworks",
   },
   {
@@ -52,12 +52,12 @@ const STEPS = [
   {
     num: "02",
     title: "Votre demande est examinée",
-    desc: "L'équipe Fletchr vérifie votre profil sous 48h pour garantir la qualité de la communauté.",
+    desc: "Une équipe vérifie votre profil sous 48h pour garantir la qualité de la communauté.",
   },
   {
     num: "03",
     title: "Vous accédez à tout",
-    desc: "Annuaire, replays, agenda des événements, espace d'échange — accès immédiat et complet.",
+    desc: "Annuaire, replays, agenda des événements, espace d'échange : accès immédiat et complet.",
   },
 ];
 
@@ -104,7 +104,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-[16px] sm:text-[17px] text-white/60 max-w-[480px] mx-auto mb-10 leading-relaxed">
-            Webinaires experts, bibliothèque de replays et networking — pour les praticiens
+            Webinaires experts, bibliothèque de replays et networking, pour les praticiens
             ESG les plus engagés de France.
           </p>
 
@@ -140,7 +140,6 @@ export default function HomePage() {
       <div className="bg-[#142832] px-4 py-3.5">
         <div className="max-w-[800px] mx-auto flex flex-wrap justify-center gap-x-10 gap-y-2">
           {[
-            "✦  Par Fletchr, spécialiste ESG",
             "✦  Accès 100% gratuit",
             "✦  Demande examinée sous 48h",
             "✦  Communauté modérée",
@@ -163,8 +162,7 @@ export default function HomePage() {
             progressent ensemble
           </h2>
           <p className="text-[15px] leading-relaxed" style={{ color: "#6b7280" }}>
-            Le Club ESG rassemble des professionnels engagés — consultants, responsables RSE,
-            experts-comptables — pour apprendre, partager et collaborer sur les enjeux concrets
+            Le Club ESG rassemble des professionnels engagés : consultants, responsables RSE, experts-comptables, pour apprendre, partager et collaborer sur les enjeux concrets
             de la transition environnementale et sociale.
           </p>
         </div>
@@ -213,7 +211,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {STEPS.map((step, i) => (
-              <div key={step.num} className="relative flex flex-col items-center sm:items-start text-center sm:text-left">
+              <div key={step.num} className="relative flex flex-col items-center text-center">
                 {i < STEPS.length - 1 && (
                   <div className="hidden sm:block absolute top-5 left-[calc(50%+24px)] right-[-50%] h-px bg-[#bdccd4]" />
                 )}
