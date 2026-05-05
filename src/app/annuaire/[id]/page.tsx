@@ -40,7 +40,7 @@ export default async function FicheMembrePage({
   /* Récupère le profil demandé — siret exclu pour les non-admins */
   const fields = isAdmin
     ? "*"
-    : "id,prenom,nom,photo_url,type_membre,fonction,entreprise,secteur,taille_entreprise,zone_geo,ville,site_web,linkedin,telephone,biographie,expertises,date_inscription,statut";
+    : "id,prenom,nom,photo_url,type_membre,fonction,entreprise,secteur,taille_entreprise,zone_geo,ville,site_web,linkedin,telephone,biographie,expertises,date_inscription,statut,disponible_mission";
 
   const { data: profileData } = await supabase
     .from("members")
@@ -97,6 +97,9 @@ export default async function FicheMembrePage({
                 {profile.fonction} · {profile.entreprise}
               </p>
               <Tag variant="teal">{profile.type_membre}</Tag>
+              {profile.disponible_mission && (
+                <Tag variant="green" className="mt-1.5">Disponible pour une mission</Tag>
+              )}
 
               {/* Infos compactes */}
               <div className="mt-4 flex flex-col gap-1.5">

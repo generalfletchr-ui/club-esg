@@ -43,6 +43,7 @@ export interface Member {
   derniere_connexion: string | null;
   approuve_par: string | null;
   approuve_le: string | null;
+  disponible_mission?: boolean;
 }
 
 export interface Intervenant {

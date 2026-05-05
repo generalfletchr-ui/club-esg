@@ -62,6 +62,9 @@ function MemberCard({ member }: { member: Member }) {
         <p className="text-[11px] text-[#6b7280] my-1">
           📍 {member.ville} · {member.secteur}
         </p>
+        {member.disponible_mission && (
+          <Tag variant="green" className="text-[10px] mb-1">Disponible pour une mission</Tag>
+        )}
         <div className="flex flex-wrap gap-1 mb-2">
           {member.expertises.slice(0, 3).map((exp) => (
             <Tag key={exp} variant="neutral" className="text-[10px]">

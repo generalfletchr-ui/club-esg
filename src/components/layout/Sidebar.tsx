@@ -10,10 +10,10 @@ import { WHATSAPP_LINK } from "@/lib/constants";
 const MEMBER_NAV = [
   { label: "Tableau de bord", href: "/dashboard",    icon: "⊞" },
   { label: "Annuaire",        href: "/annuaire",      icon: "◫" },
-  { label: "Missions",        href: "/missions",      icon: "◈" },
-  { label: "Mes missions",    href: "/mes-missions",  icon: "◇" },
   { label: "Agenda",          href: "/agenda",        icon: "◷" },
   { label: "Replays",         href: "/replays",       icon: "▶" },
+  { label: "Missions",        href: "/missions",      icon: "◈" },
+  { label: "Mes missions",    href: "/mes-missions",  icon: "◇" },
 ];
 
 /* Navigation admin */

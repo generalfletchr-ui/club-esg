@@ -125,6 +125,7 @@ export default function MonProfilClient({ member }: { member: Member }) {
   const [expertises, setExpertises] = useState<string[]>(member.expertises);
   const [linkedin, setLinkedin] = useState(member.linkedin ?? "");
   const [telephone, setTelephone] = useState(member.telephone ?? "");
+  const [disponibleMission, setDisponibleMission] = useState(member.disponible_mission ?? false);
 
   /* ── Photo ───────────────────────────────────────────────── */
   const [photoUrl, setPhotoUrl] = useState<string | null>(member.photo_url);
@@ -223,6 +224,7 @@ export default function MonProfilClient({ member }: { member: Member }) {
           expertises,
           linkedin: linkedin || null,
           telephone: telephone || null,
+          disponible_mission: disponibleMission,
         })
         .eq("id", member.id);
 
@@ -472,6 +474,28 @@ export default function MonProfilClient({ member }: { member: Member }) {
               </p>
             )}
           </div>
+
+          {/* Disponibilité mission */}
+          <label className="flex items-start gap-3 cursor-pointer select-none">
+            <div
+              className="mt-0.5 w-4 h-4 rounded-[4px] flex-shrink-0 flex items-center justify-center transition-colors"
+              style={{
+                border:     `1.5px solid ${disponibleMission ? "#016050" : "#d1d5db"}`,
+                background: disponibleMission ? "#016050" : "#fff",
+              }}
+              onClick={() => setDisponibleMission((v) => !v)}
+            >
+              {disponibleMission && <span className="text-white text-[10px]">✓</span>}
+            </div>
+            <div>
+              <p className="text-[12px] font-medium text-[#374151]">
+                Disponible pour une mission
+              </p>
+              <p className="text-[11px] text-[#6b7280] mt-0.5">
+                Un tag vert sera affiché sur ton profil dans l'annuaire.
+              </p>
+            </div>
+          </label>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Input

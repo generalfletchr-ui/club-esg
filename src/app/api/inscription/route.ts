@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { sendAdminNewMemberEmail } from "@/lib/resend";
 
 function serviceClient() {
   return createClient(
@@ -42,6 +43,18 @@ export async function POST(req: NextRequest) {
     console.error("[api/inscription] insertError:", error.message, error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  /* Notification email aux admins */
+  const { data: admins } = await supabase
+    .from("members")
+    .select("email")
+    .eq("role", "admin")
+    .eq("statut", "approved");
+
+  const adminEmails = (admins ?? []).map((a: { email: string }) => a.email).filter(Boolean);
+  await sendAdminNewMemberEmail(adminEmails, prenom, nom, email, entreprise, fonction).catch(
+    (err) => console.error("[api/inscription] emailError:", err)
+  );
 
   return NextResponse.json({ ok: true });
 }

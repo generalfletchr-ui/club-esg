@@ -18,7 +18,7 @@ export default async function AnnuairePage() {
   const { data: members } = await supabase
     .from("members")
     .select(
-      "id, prenom, nom, photo_url, type_membre, fonction, entreprise, secteur, ville, expertises, date_inscription"
+      "id, prenom, nom, photo_url, type_membre, fonction, entreprise, secteur, ville, expertises, date_inscription, disponible_mission"
     )
     .eq("statut", "approved")
     .order("date_inscription", { ascending: false });

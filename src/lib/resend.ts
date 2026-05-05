@@ -304,6 +304,140 @@ export async function sendMissionInterestEmail(
   });
 }
 
+/** Notification aux admins : nouvelle demande d'inscription */
+export async function sendAdminNewMemberEmail(
+  adminEmails: string[],
+  prenom: string,
+  nom: string,
+  email: string,
+  entreprise: string,
+  fonction: string,
+) {
+  if (!adminEmails.length) return;
+  return resend.emails.send({
+    from: FROM,
+    to: adminEmails,
+    subject: `Club ESG : nouvelle demande de ${prenom} ${nom}`,
+    html: `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f5f6f8;font-family:'Work Sans',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f6f8;padding:40px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+        <tr>
+          <td style="background:#1A365D;padding:32px;text-align:center;">
+            <img src="https://146612565.fs1.hubspotusercontent-eu1.net/hubfs/146612565/Fletchr/Logo%20Club%20ESG.png"
+                 alt="Club ESG" width="160" style="display:block;margin:0 auto;">
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:40px 48px;">
+            <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;color:#111827;">
+              Nouvelle demande d'adhésion
+            </h1>
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:24px;">
+              <tr><td style="padding:20px;">
+                <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#111827;">${prenom} ${nom}</p>
+                <p style="margin:0 0 4px;font-size:13px;color:#6b7280;">${fonction} · ${entreprise}</p>
+                <p style="margin:0;font-size:13px;color:#6b7280;">${email}</p>
+              </td></tr>
+            </table>
+            <div style="text-align:center;">
+              <a href="https://club.fletchr.fr/admin/demandes"
+                 style="display:inline-block;padding:14px 32px;background:#016050;color:#fff;
+                        font-size:15px;font-weight:700;text-decoration:none;border-radius:8px;">
+                Examiner la demande →
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f6f8;padding:20px 48px;border-top:1px solid #e5e7eb;">
+            <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">
+              Ensemble, accélérons la transition RSE · club.fletchr.fr
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+  });
+}
+
+/** Notification aux admins : proposition d'animation */
+export async function sendAdminAnimationProposal(
+  adminEmails: string[],
+  prenom: string,
+  nom: string,
+  email: string,
+  type: string,
+  sujet: string,
+  description: string,
+) {
+  if (!adminEmails.length) return;
+  return resend.emails.send({
+    from: FROM,
+    to: adminEmails,
+    subject: `Club ESG : proposition d'animation de ${prenom} ${nom}`,
+    html: `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f5f6f8;font-family:'Work Sans',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f6f8;padding:40px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+        <tr>
+          <td style="background:#1A365D;padding:32px;text-align:center;">
+            <img src="https://146612565.fs1.hubspotusercontent-eu1.net/hubfs/146612565/Fletchr/Logo%20Club%20ESG.png"
+                 alt="Club ESG" width="160" style="display:block;margin:0 auto;">
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:40px 48px;">
+            <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;color:#111827;">
+              Nouvelle proposition d'animation
+            </h1>
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:24px;">
+              <tr><td style="padding:20px;">
+                <p style="margin:0 0 8px;font-size:13px;color:#6b7280;">
+                  <strong style="color:#374151;">Membre :</strong> ${prenom} ${nom} (${email})
+                </p>
+                <p style="margin:0 0 8px;font-size:13px;color:#6b7280;">
+                  <strong style="color:#374151;">Type :</strong> ${type}
+                </p>
+                <p style="margin:0 0 8px;font-size:13px;color:#6b7280;">
+                  <strong style="color:#374151;">Sujet :</strong> ${sujet}
+                </p>
+                <p style="margin:0;font-size:13px;color:#374151;white-space:pre-line;">${description}</p>
+              </td></tr>
+            </table>
+            <p style="margin:0;font-size:13px;color:#6b7280;line-height:1.6;">
+              L'équipe Club ESG
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f6f8;padding:20px 48px;border-top:1px solid #e5e7eb;">
+            <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">
+              Ensemble, accélérons la transition RSE · club.fletchr.fr
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+  });
+}
+
 /** Email envoyé quand une demande est refusée */
 export async function sendRejectionEmail(email: string, prenom: string) {
   return resend.emails.send({

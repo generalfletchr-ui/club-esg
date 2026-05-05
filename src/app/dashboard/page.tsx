@@ -83,9 +83,6 @@ export default async function DashboardPage() {
 
         {/* ── En-tête bienvenue ─────────────────────────────── */}
         <div>
-          <p className="text-[13px] font-medium text-[#016050] mb-0.5">
-            Bonjour, {member.prenom},
-          </p>
           <h1 className="text-[24px] font-bold text-[#111827]">
             {isFirstVisit
               ? "Bienvenue dans le Club ! 🎉"
