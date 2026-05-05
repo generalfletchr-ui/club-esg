@@ -18,6 +18,7 @@ function NouvelleSessionForm() {
   const [error,     setError]     = useState("");
   const [loading,   setLoading]   = useState(false);
   const [ready,     setReady]     = useState(false);
+  const [success,   setSuccess]   = useState(false);
 
   /* Le middleware SSR peut avoir déjà échangé le code.
      On tente d'abord de récupérer la session existante,
@@ -63,7 +64,8 @@ function NouvelleSessionForm() {
       return;
     }
 
-    router.push("/connexion?reset=ok");
+    setSuccess(true);
+    setTimeout(() => router.push("/connexion"), 2500);
   }
 
   return (
@@ -86,6 +88,17 @@ function NouvelleSessionForm() {
           <p className="text-[12px] text-[#6b7280] mb-6">
             Choisis un nouveau mot de passe pour ton compte.
           </p>
+
+          {success && (
+            <div className="mb-4 px-3 py-2.5 rounded-[6px] bg-[#f0fdf4] border border-[#bbf7d0]">
+              <p className="text-[12px] font-semibold text-[#166534]">
+                ✓ Mot de passe modifié avec succès !
+              </p>
+              <p className="text-[11px] text-[#16a34a] mt-0.5">
+                Tu vas être redirigé vers la connexion…
+              </p>
+            </div>
+          )}
 
           {error && (
             <div className="mb-4 px-3 py-2.5 rounded-[6px] bg-[#fef2f2] border border-[#fecaca]">
