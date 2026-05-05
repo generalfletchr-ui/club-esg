@@ -14,7 +14,6 @@ const MEMBER_NAV = [
   { label: "Mes missions",    href: "/mes-missions",  icon: "◇" },
   { label: "Agenda",          href: "/agenda",        icon: "◷" },
   { label: "Replays",         href: "/replays",       icon: "▶" },
-  { label: "Mon profil",      href: "/mon-profil",    icon: "◉" },
 ];
 
 /* Navigation admin */

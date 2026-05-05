@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -53,9 +54,12 @@ export default function Topbar({ userName }: TopbarProps) {
 
       {/* Droite : nom utilisateur + déconnexion */}
       <div className="flex items-center gap-3">
-        <span className="text-[13px] font-medium text-[#142832]">
+        <Link
+          href="/mon-profil"
+          className="text-[13px] font-medium text-[#142832] hover:text-[#016050] hover:underline transition-colors"
+        >
           {userName}
-        </span>
+        </Link>
         <button
           onClick={handleLogout}
           title="Déconnexion"
