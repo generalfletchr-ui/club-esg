@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Logo from "@/components/ui/Logo";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { WHATSAPP_LINK } from "@/lib/constants";
 
 /* Navigation membre */
@@ -48,7 +49,7 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
           "flex items-center gap-2.5 px-3 py-2 rounded-[8px] text-[13px] font-medium",
           "transition-colors duration-150",
           isActive
-            ? "bg-[#e4f7f3] text-[#016050] border-l-2 border-[#016050] pl-[10px]"
+            ? "bg-[#e4f7f3] text-[#016050]"
             : "text-[#111827] hover:bg-[#f5f6f8]",
         ].join(" ")}
       >
@@ -111,9 +112,9 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
           href={WHATSAPP_LINK}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-3 py-2.5 rounded-[8px] bg-[#f0fdf4] border border-[#bbf7d0] text-[12px] text-[#16a34a] font-medium hover:bg-[#dcfce7] transition-colors"
+          className="flex items-center gap-2 px-3 py-2.5 rounded-[8px] bg-[#f0fdf4] text-[12px] text-[#16a34a] font-medium hover:bg-[#dcfce7] transition-colors"
         >
-          <span className="text-base">💬</span>
+          <WhatsAppIcon size={18} />
           Groupe WhatsApp
         </a>
 

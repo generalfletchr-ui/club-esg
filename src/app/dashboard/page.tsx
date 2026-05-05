@@ -6,6 +6,8 @@ import AppLayout from "@/components/layout/AppLayout";
 import Avatar from "@/components/ui/Avatar";
 import Card from "@/components/ui/Card";
 import Tag from "@/components/ui/Tag";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import ProfileCompletionWidget from "@/components/dashboard/ProfileCompletionWidget";
 import { WHATSAPP_LINK } from "@/lib/constants";
 import type { Event, Member } from "@/types";
 
@@ -47,13 +49,13 @@ export default async function DashboardPage() {
       .eq("id", user.id);
   }
 
-  /* 2 prochains événements */
+  /* 3 prochains événements */
   const { data: events } = await supabase
     .from("events")
     .select("*")
     .gte("date_heure", new Date().toISOString())
     .order("date_heure", { ascending: true })
-    .limit(2);
+    .limit(3);
 
   /* 3 derniers membres approuvés (hors soi-même) */
   const { data: newMembers } = await supabase
@@ -83,91 +85,70 @@ export default async function DashboardPage() {
         </div>
 
         {/* ── Barre de complétion du profil ────────────────── */}
-        {completion < 100 && (
-          <Card>
-            <div className="flex items-center gap-5">
-              <div className="flex-1">
-                <div className="flex justify-between items-center mb-1.5">
-                  <span className="text-[13px] font-semibold text-[#374151]">
-                    Complétion du profil
-                  </span>
-                  <span className="text-[13px] font-bold text-[#016050]">
-                    {completion}%
-                  </span>
-                </div>
-                <div className="h-[5px] bg-[#e5e7eb] rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full progress-bar transition-all duration-500"
-                    style={{ width: `${completion}%` }}
-                  />
-                </div>
-                <p className="text-[11px] text-[#6b7280] mt-1.5">
-                  {!member.photo_url && "Ajoute ta photo de profil · "}
-                  {!member.linkedin && "LinkedIn · "}
-                  {!member.telephone && "Téléphone"}
-                  {" "}pour compléter ton profil.
-                </p>
-              </div>
-              <Link
-                href="/mon-profil"
-                className="flex-shrink-0 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors whitespace-nowrap"
-              >
-                Compléter mon profil →
-              </Link>
-            </div>
-          </Card>
-        )}
+        <ProfileCompletionWidget
+          completion={completion}
+          hasPhoto={!!member.photo_url}
+          hasLinkedin={!!member.linkedin}
+          hasTelephone={!!member.telephone}
+        />
 
         {/* ── Grille 2 colonnes ─────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* Prochains événements */}
           <Card>
-            <div className="flex justify-between items-center mb-3">
-              <span className="text-[13px] font-semibold text-[#111827]">
-                Prochains événements
-              </span>
-              <Link
-                href="/agenda"
-                className="text-[11px] font-semibold text-[#016050] hover:underline"
-              >
-                Voir tout →
-              </Link>
-            </div>
+            <span className="text-[13px] font-semibold text-[#111827]">
+              Prochains événements
+            </span>
 
             {events && events.length > 0 ? (
-              <div className="flex flex-col">
-                {(events as Event[]).map((ev, i) => (
-                  <div
-                    key={ev.id}
-                    className="flex gap-2.5 py-2.5"
-                    style={{ borderTop: i > 0 ? "1px solid #e5e7eb" : undefined }}
-                  >
-                    <div className="w-[34px] h-[34px] rounded-[8px] bg-[#e4f7f3] flex items-center justify-center flex-shrink-0 text-base">
-                      {EVENT_ICONS[ev.type_event] ?? "📅"}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="mb-0.5">
-                        <Tag variant="teal">{ev.type_event}</Tag>
+              <>
+                <div className="relative mt-3" style={{ maxHeight: 170, overflow: "hidden" }}>
+                  <div className="flex flex-col">
+                    {(events as Event[]).map((ev, i) => (
+                      <div
+                        key={ev.id}
+                        className="flex gap-2.5 py-2.5"
+                        style={{ borderTop: i > 0 ? "1px solid #e5e7eb" : undefined }}
+                      >
+                        <div className="w-[34px] h-[34px] rounded-[8px] bg-[#e4f7f3] flex items-center justify-center flex-shrink-0 text-base">
+                          {EVENT_ICONS[ev.type_event] ?? "📅"}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="mb-0.5">
+                            <Tag variant="teal">{ev.type_event}</Tag>
+                          </div>
+                          <p className="text-[12px] font-semibold text-[#111827] truncate">
+                            {ev.titre}
+                          </p>
+                          <p className="text-[11px] text-[#6b7280]">
+                            {formatEventDate(ev.date_heure)}
+                          </p>
+                        </div>
+                        <a
+                          href={ev.lien_inscription}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-shrink-0 self-center px-3 py-1.5 rounded-[6px] text-[11px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
+                        >
+                          S&apos;inscrire
+                        </a>
                       </div>
-                      <p className="text-[12px] font-semibold text-[#111827] truncate">
-                        {ev.titre}
-                      </p>
-                      <p className="text-[11px] text-[#6b7280]">
-                        {formatEventDate(ev.date_heure)}
-                      </p>
-                    </div>
-                    <a
-                      href={ev.lien_inscription}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-shrink-0 self-center px-3 py-1.5 rounded-[6px] text-[11px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
-                    >
-                      S&apos;inscrire
-                    </a>
+                    ))}
                   </div>
-                ))}
-              </div>
+                  {/* Gradient de transparence */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 pointer-events-none"
+                    style={{ height: 60, background: "linear-gradient(to top, white, transparent)" }}
+                  />
+                </div>
+                <Link
+                  href="/agenda"
+                  className="mt-3 block w-full text-center py-2 rounded-[6px] text-[12px] font-semibold text-[#016050] border border-[#016050] hover:bg-[#e4f7f3] transition-colors"
+                >
+                  Voir tout →
+                </Link>
+              </>
             ) : (
               <p className="text-[12px] text-[#9ca3af] py-4 text-center">
                 Aucun événement à venir pour l&apos;instant.
@@ -177,49 +158,56 @@ export default async function DashboardPage() {
 
           {/* Nouveaux membres */}
           <Card>
-            <div className="flex justify-between items-center mb-3">
-              <span className="text-[13px] font-semibold text-[#111827]">
-                Nouveaux membres
-              </span>
-              <Link
-                href="/annuaire"
-                className="text-[11px] font-semibold text-[#016050] hover:underline"
-              >
-                Annuaire →
-              </Link>
-            </div>
+            <span className="text-[13px] font-semibold text-[#111827]">
+              Nouveaux membres
+            </span>
 
             {newMembers && newMembers.length > 0 ? (
-              <div className="flex flex-col">
-                {(newMembers as Partial<Member>[]).map((m, i) => (
-                  <div
-                    key={m.id}
-                    className="flex items-center gap-2.5 py-2.5"
-                    style={{ borderTop: i > 0 ? "1px solid #e5e7eb" : undefined }}
-                  >
-                    <Avatar
-                      prenom={m.prenom}
-                      nom={m.nom}
-                      photoUrl={m.photo_url}
-                      size={30}
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[12px] font-semibold text-[#111827] truncate">
-                        {m.prenom} {m.nom}
-                      </p>
-                      <p className="text-[11px] text-[#6b7280] truncate">
-                        {m.type_membre} · {m.entreprise}
-                      </p>
-                    </div>
-                    <Link
-                      href={`/annuaire/${m.id}`}
-                      className="flex-shrink-0 text-[11px] font-medium text-[#016050] hover:underline"
-                    >
-                      Voir →
-                    </Link>
+              <>
+                <div className="relative mt-3" style={{ maxHeight: 135, overflow: "hidden" }}>
+                  <div className="flex flex-col">
+                    {(newMembers as Partial<Member>[]).map((m, i) => (
+                      <div
+                        key={m.id}
+                        className="flex items-center gap-2.5 py-2.5"
+                        style={{ borderTop: i > 0 ? "1px solid #e5e7eb" : undefined }}
+                      >
+                        <Avatar
+                          prenom={m.prenom}
+                          nom={m.nom}
+                          photoUrl={m.photo_url}
+                          size={30}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[12px] font-semibold text-[#111827] truncate">
+                            {m.prenom} {m.nom}
+                          </p>
+                          <p className="text-[11px] text-[#6b7280] truncate">
+                            {m.type_membre} · {m.entreprise}
+                          </p>
+                        </div>
+                        <Link
+                          href={`/annuaire/${m.id}`}
+                          className="flex-shrink-0 text-[11px] font-medium text-[#016050] hover:underline"
+                        >
+                          Voir →
+                        </Link>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                  {/* Gradient de transparence */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 pointer-events-none"
+                    style={{ height: 50, background: "linear-gradient(to top, white, transparent)" }}
+                  />
+                </div>
+                <Link
+                  href="/annuaire"
+                  className="mt-3 block w-full text-center py-2 rounded-[6px] text-[12px] font-semibold text-[#016050] border border-[#016050] hover:bg-[#e4f7f3] transition-colors"
+                >
+                  Voir tout →
+                </Link>
+              </>
             ) : (
               <p className="text-[12px] text-[#9ca3af] py-4 text-center">
                 Tu es l&apos;un des premiers membres !
@@ -229,9 +217,11 @@ export default async function DashboardPage() {
         </div>
 
         {/* ── Groupe WhatsApp ───────────────────────────────── */}
-        <div className="rounded-[8px] bg-[#f0fdf4] border border-[#bbf7d0] px-5 py-4 flex items-center justify-between gap-4">
+        <div className="rounded-[8px] bg-[#f0fdf4] px-5 py-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <span className="text-[22px]">💬</span>
+            <span className="text-[#25D366]">
+              <WhatsAppIcon size={24} />
+            </span>
             <div>
               <p className="text-[13px] font-semibold text-[#166534]">
                 Groupe WhatsApp communautaire
