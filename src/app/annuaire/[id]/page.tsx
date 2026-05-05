@@ -37,10 +37,14 @@ export default async function FicheMembrePage({
   const isOwn    = viewer.id === id;
   const supabase = await createClient();
 
-  /* Récupère le profil demandé */
+  /* Récupère le profil demandé — siret exclu pour les non-admins */
+  const fields = isAdmin
+    ? "*"
+    : "id,prenom,nom,photo_url,type_membre,fonction,entreprise,secteur,taille_entreprise,zone_geo,ville,site_web,linkedin,telephone,biographie,expertises,date_inscription,statut";
+
   const { data: profileData } = await supabase
     .from("members")
-    .select("*")
+    .select(fields)
     .eq("id", id)
     .eq("statut", "approved")
     .single();
