@@ -25,7 +25,7 @@ export default async function MesMissionsPage() {
 
   return (
     <AppLayout isAdmin={isAdmin}>
-      <MesMissionsClient missions={(missions ?? []) as Mission[]} />
+      <MesMissionsClient missions={(missions ?? []) as unknown as Mission[]} />
     </AppLayout>
   );
 }

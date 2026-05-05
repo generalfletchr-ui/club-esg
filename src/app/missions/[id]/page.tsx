@@ -50,7 +50,7 @@ export default async function MissionDetailPage({ params }: Props) {
   return (
     <AppLayout isAdmin={isAdmin}>
       <MissionDetailClient
-        mission={mission as Mission}
+        mission={mission as unknown as Mission}
         currentUserId={user.id}
         isOwner={isOwner}
       />
