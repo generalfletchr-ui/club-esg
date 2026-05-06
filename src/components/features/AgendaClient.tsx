@@ -211,7 +211,7 @@ export default function AgendaClient({ events }: { events: Event[] }) {
         </div>
         <button
           onClick={() => setShowProposeModal(true)}
-          className="flex-shrink-0 px-[14px] py-[9px] rounded-[6px] text-[13px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
+          className="flex-shrink-0 px-[14px] py-[9px] rounded-[6px] text-[13px] font-semibold text-[#016050] bg-[#e4f7f3] hover:bg-[#c8f0e8] transition-colors"
         >
           + Proposer une animation
         </button>

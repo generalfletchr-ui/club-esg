@@ -271,12 +271,15 @@ export default function MonProfilClient({ member }: { member: Member }) {
         </p>
       </div>
 
-      {/* ── Feedback sauvegarde ───────────────────────────────── */}
+      {/* ── Toast de succès (fixe bas-droite) ───────────────────── */}
       {saveSuccess && (
-        <div className="rounded-[8px] bg-[#f0fdf4] border border-[#bbf7d0] px-4 py-3 text-[13px] font-medium text-[#166534]">
-          ✓ Profil mis à jour avec succès.
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 rounded-[8px] bg-[#016050] text-white px-4 py-3 text-[13px] font-semibold shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
+          <span>✓</span>
+          Profil mis à jour avec succès.
         </div>
       )}
+
+      {/* ── Erreur sauvegarde ────────────────────────────────────── */}
       {saveError && (
         <div className="rounded-[8px] bg-[#fef2f2] border border-[#fecaca] px-4 py-3 text-[13px] font-medium text-[#991b1b]">
           {saveError}
