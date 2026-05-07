@@ -24,6 +24,7 @@ const ADMIN_NAV = [
   { label: "Événements",  href: "/admin/evenements",  icon: "✦" },
   { label: "Replays",     href: "/admin/replays",     icon: "▤" },
   { label: "Export CSV",  href: "/admin/export-csv",  icon: "↓" },
+  { label: "Manuel",      href: "/admin/manuel",      icon: "?" },
 ];
 
 interface SidebarProps {
