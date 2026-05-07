@@ -677,14 +677,14 @@ export default function AdminManuelClient() {
               <div>
                 <H3>Comment savoir combien de membres la plateforme compte actuellement ?</H3>
                 <p className="text-[14px] text-[#374151]">
-                  Rendez-vous dans Admin > Export CSV : la page affiche le nombre de membres actifs avant de télécharger le fichier. Pour voir le total tous statuts confondus, consultez Admin > Membres.
+                  Rendez-vous dans Admin &gt; Export CSV : la page affiche le nombre de membres actifs avant de télécharger le fichier. Pour voir le total tous statuts confondus, consultez Admin &gt; Membres.
                 </p>
               </div>
 
               <div>
                 <H3>Peut-on avoir plusieurs administrateurs ?</H3>
                 <p className="text-[14px] text-[#374151]">
-                  Oui. Vous pouvez promouvoir autant de membres que nécessaire au rôle d&apos;admin via Admin > Membres > Promouvoir en admin. Tous les admins reçoivent les notifications d&apos;inscription et de proposition d&apos;animation.
+                  Oui. Vous pouvez promouvoir autant de membres que nécessaire au rôle d&apos;admin via Admin &gt; Membres &gt; Promouvoir en admin. Tous les admins reçoivent les notifications d&apos;inscription et de proposition d&apos;animation.
                 </p>
               </div>
 
@@ -705,7 +705,7 @@ export default function AdminManuelClient() {
               <div>
                 <H3>Un membre a publié des informations inappropriées dans son profil. Comment intervenir ?</H3>
                 <p className="text-[14px] text-[#374151]">
-                  Vous pouvez suspendre son compte via Admin > Membres pour lui couper l&apos;accès dans l&apos;immédiat. Pour modifier directement le contenu de son profil, contactez l&apos;équipe technique qui peut intervenir directement en base de données.
+                  Vous pouvez suspendre son compte via Admin &gt; Membres pour lui couper l&apos;accès dans l&apos;immédiat. Pour modifier directement le contenu de son profil, contactez l&apos;équipe technique qui peut intervenir directement en base de données.
                 </p>
               </div>
 
