@@ -65,7 +65,7 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
       }}
     >
       {/* Logo */}
-      <div className="px-4 py-4">
+      <div className="flex items-center h-[48px] pl-6">
         <Logo width={160} />
       </div>
 
