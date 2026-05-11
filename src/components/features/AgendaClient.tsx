@@ -141,23 +141,28 @@ const EVENT_TAG_VARIANTS: Record<string, "teal" | "purple" | "orange"> = {
 
 function formatEventDate(iso: string): string {
   const d = new Date(iso);
-  const day = d.getDate();
-  const month = d.toLocaleDateString("fr-FR", { month: "long" });
-  const year = d.getFullYear();
-  const hours = String(d.getHours()).padStart(2, "0");
-  const mins = String(d.getMinutes()).padStart(2, "0");
-  return `${day} ${month} ${year} · ${hours}h${mins}`;
+  const parts = new Intl.DateTimeFormat('fr-FR', {
+    timeZone: 'Europe/Paris',
+    day: 'numeric', month: 'long', year: 'numeric',
+    hour: '2-digit', minute: '2-digit',
+    hour12: false,
+  }).formatToParts(d);
+  const get = (t: string) => parts.find(p => p.type === t)?.value ?? '';
+  return `${get('day')} ${get('month')} ${get('year')} · ${get('hour')}h${get('minute')}`;
 }
 
 function getMonthKey(iso: string): string {
-  const d = new Date(iso);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+  const fmt = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Paris',
+    year: 'numeric', month: '2-digit',
+  });
+  return fmt.format(new Date(iso)).slice(0, 7);
 }
 
 function getMonthLabel(iso: string): string {
   const d = new Date(iso);
-  const month = d.toLocaleDateString("fr-FR", { month: "long" });
-  const year = d.getFullYear();
+  const month = d.toLocaleDateString("fr-FR", { month: "long", timeZone: "Europe/Paris" });
+  const year = new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', year: 'numeric' }).format(d);
   return `${month.charAt(0).toUpperCase() + month.slice(1)} ${year}`;
 }
 

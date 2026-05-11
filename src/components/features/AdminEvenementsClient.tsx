@@ -24,17 +24,20 @@ const EVENT_ICONS: Record<string, string> = {
 
 function formatDate(iso: string): string {
   const d = new Date(iso);
-  const date = d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
-  const h    = String(d.getHours()).padStart(2, "0");
-  const m    = String(d.getMinutes()).padStart(2, "0");
-  return `${date} · ${h}h${m}`;
+  const date = d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Paris" });
+  const time = d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Paris" });
+  return `${date} · ${time}`;
 }
 
-/* Convertit un ISO en valeur datetime-local (YYYY-MM-DDTHH:mm) */
+/* Convertit un ISO en valeur datetime-local (YYYY-MM-DDTHH:mm) en heure Paris */
 function toDateTimeLocal(iso: string): string {
-  const d = new Date(iso);
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  const fmt = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Paris',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit',
+    hour12: false,
+  });
+  return fmt.format(new Date(iso)).replace(' ', 'T');
 }
 
 /* ── Styles partagés ─────────────────────────────────────────── */

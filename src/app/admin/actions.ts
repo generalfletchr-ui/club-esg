@@ -99,12 +99,22 @@ export async function suspendMember(memberId: string) {
 
 /* ── Événements ────────────────────────────────────────────── */
 
+/** Interprète une chaîne datetime-local comme heure Europe/Paris et retourne l'ISO UTC */
+function parisLocalToISO(localStr: string): string {
+  const tempUTC = new Date(localStr + ':00.000Z');
+  const utcStr   = tempUTC.toLocaleString('sv-SE', { timeZone: 'UTC' });
+  const parisStr = tempUTC.toLocaleString('sv-SE', { timeZone: 'Europe/Paris' });
+  const offsetMs = new Date(parisStr.replace(' ', 'T') + 'Z').getTime()
+                 - new Date(utcStr.replace(' ', 'T') + 'Z').getTime();
+  return new Date(tempUTC.getTime() - offsetMs).toISOString();
+}
+
 export async function createEvent(formData: FormData) {
   const { supabase, adminId } = await requireAdmin();
 
   await supabase.from("events").insert({
     titre: formData.get("titre") as string,
-    date_heure: formData.get("date_heure") as string,
+    date_heure: parisLocalToISO(formData.get("date_heure") as string),
     description: formData.get("description") as string,
     type_event: formData.get("type_event") as string,
     lien_inscription: formData.get("lien_inscription") as string,
@@ -126,7 +136,7 @@ export async function updateEvent(eventId: string, formData: FormData) {
     .from("events")
     .update({
       titre: formData.get("titre") as string,
-      date_heure: formData.get("date_heure") as string,
+      date_heure: parisLocalToISO(formData.get("date_heure") as string),
       description: formData.get("description") as string,
       type_event: formData.get("type_event") as string,
       lien_inscription: formData.get("lien_inscription") as string,
