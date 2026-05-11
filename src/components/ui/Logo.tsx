@@ -18,7 +18,7 @@ export default function Logo({ href = "https://club.fletchr.fr/dashboard", width
       aria-label="Club ESG"
       className={className}
     >
-      <text x="195" y="42" fontFamily="'DM Sans','Inter',sans-serif" fontSize="36" fontWeight="700" fill="#016050" letterSpacing="-0.8" textAnchor="end">CLUB ESG</text>
+      <text x="0" y="42" fontFamily="'DM Sans','Inter',sans-serif" fontSize="36" fontWeight="700" fill="#016050" letterSpacing="-0.8" textAnchor="start">CLUB ESG</text>
     </svg>
   );
 
