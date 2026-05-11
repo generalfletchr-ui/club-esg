@@ -1,7 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
 
-/* Logo Club ESG — nœud réseau + wordmark (option C du design system) */
 interface LogoProps {
   href?: string;
   width?: number;
@@ -9,15 +7,19 @@ interface LogoProps {
 }
 
 export default function Logo({ href = "https://club.fletchr.fr/dashboard", width = 140, className = "" }: LogoProps) {
+  const height = Math.round(width * 0.25);
   const logo = (
-    <Image
-      src="/logo.svg"
-      alt="Club ESG"
+    <svg
       width={width}
-      height={Math.round(width * 0.33)}
-      priority
+      height={height}
+      viewBox="0 0 200 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Club ESG"
       className={className}
-    />
+    >
+      <text x="155" y="42" fontFamily="'DM Sans','Inter',sans-serif" fontSize="36" fontWeight="700" fill="#016050" letterSpacing="-0.8" textAnchor="end">CLUB ESG</text>
+    </svg>
   );
 
   if (href) {
