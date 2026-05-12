@@ -11,6 +11,7 @@ const TOC = [
   { id: "experience",  label: "8. Expérience des membres" },
   { id: "emails",      label: "9. Emails automatiques" },
   { id: "faq",         label: "10. Questions fréquentes" },
+  { id: "outils",      label: "11. Outils & infrastructure" },
 ];
 
 function H2({ id, icon, children }: { id: string; icon: string; children: React.ReactNode }) {
@@ -102,6 +103,73 @@ function Badge({ children, color }: { children: React.ReactNode; color: string }
     <span className={`inline-block px-2 py-0.5 rounded text-[12px] font-semibold ${color}`}>
       {children}
     </span>
+  );
+}
+
+function ArchDiagram() {
+  const box = { rx: 8, fill: "#ffffff", stroke: "#e2e8f0", strokeWidth: 1.5 };
+  const appBox = { rx: 8, fill: "#e4f7f3", stroke: "#016050", strokeWidth: 1.5 };
+  const arrow = { stroke: "#94a3b8", strokeWidth: 1.5, fill: "none", markerEnd: "url(#arrowhead)" };
+  const labelStyle: React.CSSProperties = { fontSize: 11, fill: "#9ca3af", fontFamily: "inherit" };
+  const titleStyle: React.CSSProperties = { fontSize: 13, fontWeight: 700, fill: "#0f2830", fontFamily: "inherit" };
+  const subStyle: React.CSSProperties = { fontSize: 11, fill: "#6b7280", fontFamily: "inherit" };
+
+  return (
+    <div className="overflow-x-auto my-6">
+      <svg viewBox="0 0 680 320" width="100%" style={{ maxWidth: 680, display: "block", margin: "0 auto" }} aria-label="Diagramme d'architecture">
+        <defs>
+          <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#94a3b8" />
+          </marker>
+        </defs>
+
+        {/* GitHub */}
+        <rect x="20" y="120" width="120" height="64" {...box} />
+        <text x="80" y="148" textAnchor="middle" style={titleStyle}>GitHub</text>
+        <text x="80" y="165" textAnchor="middle" style={subStyle}>Code source</text>
+        <text x="80" y="179" textAnchor="middle" style={subStyle}>& historique</text>
+
+        {/* Vercel */}
+        <rect x="200" y="120" width="120" height="64" {...box} />
+        <text x="260" y="148" textAnchor="middle" style={titleStyle}>Vercel</text>
+        <text x="260" y="165" textAnchor="middle" style={subStyle}>Déploiement</text>
+        <text x="260" y="179" textAnchor="middle" style={subStyle}>& hébergement</text>
+
+        {/* Club ESG app */}
+        <rect x="390" y="60" width="150" height="64" {...appBox} />
+        <text x="465" y="88" textAnchor="middle" style={{ ...titleStyle, fill: "#016050" }}>Club ESG</text>
+        <text x="465" y="105" textAnchor="middle" style={{ ...subStyle, fill: "#016050" }}>Application Next.js</text>
+        <text x="465" y="119" textAnchor="middle" style={{ ...subStyle, fill: "#016050" }}>(frontend + API)</text>
+
+        {/* Supabase */}
+        <rect x="390" y="180" width="150" height="64" {...box} />
+        <text x="465" y="208" textAnchor="middle" style={titleStyle}>Supabase</text>
+        <text x="465" y="225" textAnchor="middle" style={subStyle}>Base de données</text>
+        <text x="465" y="239" textAnchor="middle" style={subStyle}>Auth · PostgreSQL</text>
+
+        {/* Resend */}
+        <rect x="570" y="180" width="100" height="64" {...box} />
+        <text x="620" y="208" textAnchor="middle" style={titleStyle}>Resend</text>
+        <text x="620" y="225" textAnchor="middle" style={subStyle}>Emails</text>
+        <text x="620" y="239" textAnchor="middle" style={subStyle}>transactionnels</text>
+
+        {/* GitHub → Vercel */}
+        <line x1="140" y1="152" x2="198" y2="152" {...arrow} />
+        <text x="169" y="146" textAnchor="middle" style={labelStyle}>push</text>
+
+        {/* Vercel → Club ESG */}
+        <path d="M320 140 Q355 140 390 92" {...arrow} />
+        <text x="357" y="126" textAnchor="middle" style={labelStyle}>deploy</text>
+
+        {/* Club ESG ↔ Supabase */}
+        <line x1="465" y1="124" x2="465" y2="178" {...arrow} />
+        <text x="480" y="155" style={labelStyle}>read/write</text>
+
+        {/* Supabase → Resend */}
+        <line x1="540" y1="212" x2="568" y2="212" {...arrow} />
+        <text x="554" y="207" textAnchor="middle" style={labelStyle}>trigger</text>
+      </svg>
+    </div>
   );
 }
 
@@ -710,6 +778,57 @@ export default function AdminManuelClient() {
               </div>
 
             </div>
+          </section>
+
+          {/* ─────────────────────────────────────────────
+              11. OUTILS & INFRASTRUCTURE
+          ───────────────────────────────────────────── */}
+          <section id="outils">
+            <H2 id="outils" icon="⚙">11. Outils &amp; infrastructure</H2>
+
+            <p className="text-[14px] text-[#374151] leading-relaxed mb-4">
+              La plateforme Club ESG repose sur quatre services tiers qui travaillent ensemble. Comprendre leur rôle vous permet de savoir où chercher en cas d&apos;incident et qui contacter si quelque chose ne fonctionne pas.
+            </p>
+
+            <ArchDiagram />
+
+            <H3>GitHub — stockage du code source</H3>
+            <Bullet items={[
+              "Contient l'intégralité du code de la plateforme (frontend, logique métier, configuration).",
+              "Chaque modification est versionnée : on peut voir qui a changé quoi et revenir en arrière si besoin.",
+              "Un push sur la branche principale déclenche automatiquement un déploiement sur Vercel.",
+              "Accès : github.com — demandez l'accès au dépôt à l'équipe technique.",
+            ]} />
+
+            <H3>Vercel — déploiement & hébergement</H3>
+            <Bullet items={[
+              "Héberge l'application Next.js et la sert aux utilisateurs dans le monde entier via un CDN.",
+              "Dès qu'un push arrive sur GitHub (branche main), Vercel reconstruit et redéploie la plateforme automatiquement en quelques minutes.",
+              "Fournit des logs en temps réel pour diagnostiquer les erreurs de build ou de runtime.",
+              "Chaque pull request génère aussi une URL de prévisualisation pour tester les changements avant mise en production.",
+              "Accès : vercel.com — connexion via le compte GitHub de l'équipe.",
+            ]} />
+
+            <H3>Supabase — base de données & authentification</H3>
+            <Bullet items={[
+              "Stocke toutes les données : membres, missions, événements, replays, demandes d'adhésion.",
+              "Gère l'authentification email/mot de passe des membres (connexion, réinitialisation de mot de passe).",
+              "Expose une API REST auto-générée que l'application Next.js utilise pour lire et écrire les données.",
+              "Le tableau de bord Supabase permet de consulter la base directement en cas de besoin (ex. corriger une donnée impossible à modifier via l'interface).",
+              "Accès : supabase.com — demandez les identifiants du projet à l'équipe technique.",
+            ]} />
+
+            <H3>Resend — emails transactionnels</H3>
+            <Bullet items={[
+              "Envoie tous les emails automatiques de la plateforme : confirmation d'inscription, approbation ou refus d'adhésion, notifications admin à chaque nouvelle demande.",
+              "Les emails sont déclenchés par l'application (via des Server Actions Next.js) à chaque événement métier.",
+              "Le tableau de bord Resend garde un historique des envois : utile pour vérifier qu'un email a bien été délivré.",
+              "Accès : resend.com — connexion via l'email de l'équipe technique.",
+            ]} />
+
+            <Note color="orange">
+              <strong>Variables d&apos;environnement :</strong> les clés d&apos;API de Supabase et Resend sont stockées en variables d&apos;environnement sur Vercel (onglet Settings {'>'} Environment Variables du projet). Ne les partagez jamais dans un message ou un email.
+            </Note>
           </section>
 
           {/* Pied de page */}
