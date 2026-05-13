@@ -41,44 +41,48 @@ export default async function DashboardPage() {
   const isAdmin       = member.role === "admin";
   const isFirstVisit  = !member.premiere_connexion;
 
-  /* Marquer la première connexion */
+  /* Marquer la première connexion (fire-and-forget, ne bloque pas le rendu) */
   if (isFirstVisit) {
-    await supabase
+    void supabase
       .from("members")
       .update({ premiere_connexion: new Date().toISOString() })
       .eq("id", user.id);
   }
 
-  /* 3 prochains événements */
-  const { data: events } = await supabase
-    .from("events")
-    .select("*")
-    .gte("date_heure", new Date().toISOString())
-    .order("date_heure", { ascending: true })
-    .limit(3);
+  const now = new Date().toISOString();
 
-  /* 3 derniers membres approuvés (hors soi-même) */
-  const { data: newMembers } = await supabase
-    .from("members")
-    .select("id, prenom, nom, photo_url, type_membre, fonction, entreprise")
-    .eq("statut", "approved")
-    .neq("id", user.id)
-    .order("date_inscription", { ascending: false })
-    .limit(3);
-
-  /* 3 dernières missions publiées */
-  const { data: latestMissions } = await supabase
-    .from("missions")
-    .select("id, type_mission, titre, domaine, expertises_requises, budget, created_at")
-    .eq("statut", "published")
-    .gt("expire_le", new Date().toISOString())
-    .order("created_at", { ascending: false })
-    .limit(3);
+  /* 3 prochains événements + 3 derniers membres + 3 dernières missions en parallèle */
+  const [
+    { data: events },
+    { data: newMembers },
+    { data: latestMissions },
+  ] = await Promise.all([
+    supabase
+      .from("events")
+      .select("*")
+      .gte("date_heure", now)
+      .order("date_heure", { ascending: true })
+      .limit(3),
+    supabase
+      .from("members")
+      .select("id, prenom, nom, photo_url, type_membre, fonction, entreprise")
+      .eq("statut", "approved")
+      .neq("id", user.id)
+      .order("date_inscription", { ascending: false })
+      .limit(3),
+    supabase
+      .from("missions")
+      .select("id, type_mission, titre, domaine, expertises_requises, budget, created_at")
+      .eq("statut", "published")
+      .gt("expire_le", now)
+      .order("created_at", { ascending: false })
+      .limit(3),
+  ]);
 
   const completion = calcProfileCompletion(member);
 
   return (
-    <AppLayout isAdmin={isAdmin}>
+    <AppLayout isAdmin={isAdmin} userName={`${member.prenom} ${member.nom}`}>
       <div className="space-y-4">
 
         {/* ── En-tête bienvenue ─────────────────────────────── */}
