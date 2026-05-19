@@ -126,6 +126,7 @@ export default function MonProfilClient({ member }: { member: Member }) {
   const [linkedin, setLinkedin] = useState(member.linkedin ?? "");
   const [telephone, setTelephone] = useState(member.telephone ?? "");
   const [disponibleMission, setDisponibleMission] = useState(member.disponible_mission ?? false);
+  const [referencesClients, setReferencesClients] = useState(member.references_clients ?? "");
 
   /* ── Photo ───────────────────────────────────────────────── */
   const [photoUrl, setPhotoUrl] = useState<string | null>(member.photo_url);
@@ -225,6 +226,7 @@ export default function MonProfilClient({ member }: { member: Member }) {
           linkedin: linkedin || null,
           telephone: telephone || null,
           disponible_mission: disponibleMission,
+          references_clients: referencesClients,
         })
         .eq("id", member.id);
 
@@ -477,6 +479,16 @@ export default function MonProfilClient({ member }: { member: Member }) {
               </p>
             )}
           </div>
+
+          <Textarea
+            label="Références clients"
+            value={referencesClients}
+            onChange={setReferencesClients}
+            placeholder="Ex : Groupe OCP, Société Générale, Schneider Electric…"
+            maxLength={500}
+            rows={3}
+            hint="Vos principales références clients (visible sur votre fiche)."
+          />
 
           {/* Disponibilité mission */}
           <label className="flex items-start gap-3 cursor-pointer select-none">

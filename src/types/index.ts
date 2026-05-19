@@ -44,6 +44,7 @@ export interface Member {
   approuve_par: string | null;
   approuve_le: string | null;
   disponible_mission?: boolean;
+  references_clients?: string;
 }
 
 export interface Intervenant {

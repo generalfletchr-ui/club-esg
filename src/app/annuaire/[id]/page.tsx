@@ -189,6 +189,16 @@ export default async function FicheMembrePage({
               </div>
             </Card>
 
+            {/* Références clients */}
+            {profile.references_clients && (
+              <Card>
+                <p className="label-caps mb-2.5">Références clients</p>
+                <p className="text-[13px] text-[#111827] whitespace-pre-line">
+                  {profile.references_clients}
+                </p>
+              </Card>
+            )}
+
             {/* Infos entreprise — SIRET masqué pour les non-admins */}
             <Card>
               <p className="label-caps mb-2.5">Entreprise</p>
