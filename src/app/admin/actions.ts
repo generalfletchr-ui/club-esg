@@ -126,6 +126,7 @@ export async function createEvent(formData: FormData) {
 
   revalidatePath("/admin/evenements");
   revalidatePath("/agenda");
+  revalidatePath("/dashboard");
 }
 
 export async function updateEvent(eventId: string, formData: FormData) {
@@ -148,6 +149,7 @@ export async function updateEvent(eventId: string, formData: FormData) {
 
   revalidatePath("/admin/evenements");
   revalidatePath("/agenda");
+  revalidatePath("/dashboard");
 }
 
 export async function deleteEvent(eventId: string) {
@@ -157,6 +159,7 @@ export async function deleteEvent(eventId: string) {
 
   revalidatePath("/admin/evenements");
   revalidatePath("/agenda");
+  revalidatePath("/dashboard");
 }
 
 /* ── Replays ───────────────────────────────────────────────── */
