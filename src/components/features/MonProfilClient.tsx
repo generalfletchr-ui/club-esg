@@ -487,7 +487,7 @@ export default function MonProfilClient({ member }: { member: Member }) {
             placeholder="Ex : Groupe OCP, Société Générale, Schneider Electric…"
             maxLength={500}
             rows={3}
-            hint="Séparez chaque référence par une virgule. Chaque client apparaîtra dans son propre cadre vert sur votre fiche."
+            hint="Séparez chaque référence client par une virgule."
           />
 
           {/* Disponibilité mission */}
