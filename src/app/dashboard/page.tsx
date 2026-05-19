@@ -21,11 +21,14 @@ const EVENT_ICONS: Record<string, string> = {
 /* Formate une date ISO en "12 mai · 12h00" */
 function formatEventDate(iso: string): string {
   const d = new Date(iso);
-  const day   = d.getDate();
-  const month = d.toLocaleDateString("fr-FR", { month: "long" });
-  const hours = String(d.getHours()).padStart(2, "0");
-  const mins  = String(d.getMinutes()).padStart(2, "0");
-  return `${day} ${month} · ${hours}h${mins}`;
+  const parts = new Intl.DateTimeFormat('fr-FR', {
+    timeZone: 'Europe/Paris',
+    day: 'numeric', month: 'long',
+    hour: '2-digit', minute: '2-digit',
+    hour12: false,
+  }).formatToParts(d);
+  const get = (t: string) => parts.find(p => p.type === t)?.value ?? '';
+  return `${get('day')} ${get('month')} · ${get('hour')}h${get('minute')}`;
 }
 
 export default async function DashboardPage() {
