@@ -193,9 +193,15 @@ export default async function FicheMembrePage({
             {profile.references_clients && (
               <Card>
                 <p className="label-caps mb-2.5">Références clients</p>
-                <p className="text-[13px] text-[#111827] whitespace-pre-line">
-                  {profile.references_clients}
-                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {profile.references_clients
+                    .split(",")
+                    .map((ref) => ref.trim())
+                    .filter(Boolean)
+                    .map((ref) => (
+                      <Tag key={ref} variant="teal">{ref}</Tag>
+                    ))}
+                </div>
               </Card>
             )}
 
