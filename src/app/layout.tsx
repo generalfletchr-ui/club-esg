@@ -14,6 +14,21 @@ export const metadata: Metadata = {
   title: "Club ESG — Ensemble, accélérons la transition RSE",
   description:
     "Le Club ESG est un portail communautaire privé pour les professionnels engagés dans la transition ESG.",
+  openGraph: {
+    title: "Club ESG — Ensemble, accélérons la transition RSE",
+    description:
+      "Le Club ESG est un portail communautaire privé pour les professionnels engagés dans la transition ESG.",
+    url: "https://club.fletchr.fr",
+    siteName: "Club ESG",
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Club ESG — Ensemble, accélérons la transition RSE",
+    description:
+      "Le Club ESG est un portail communautaire privé pour les professionnels engagés dans la transition ESG.",
+  },
 };
 
 export default function RootLayout({
