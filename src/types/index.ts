@@ -1,5 +1,15 @@
 /* Types TypeScript pour le Club ESG */
 
+export interface EventRegistrant {
+  event_id:   string;
+  created_at: string;
+  prenom:     string;
+  nom:        string;
+  email:      string;
+  entreprise: string;
+  photo_url:  string | null;
+}
+
 export type MemberStatus = "pending" | "approved" | "rejected";
 export type MemberRole = "pending" | "member" | "admin";
 export type MemberType =

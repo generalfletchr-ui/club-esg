@@ -4,9 +4,10 @@
 import { useState, useTransition } from "react";
 import Tag from "@/components/ui/Tag";
 import Button from "@/components/ui/Button";
+import Avatar from "@/components/ui/Avatar";
 import { createEvent, updateEvent, deleteEvent } from "@/app/admin/actions";
 import { EVENT_TYPES } from "@/lib/constants";
-import type { Event, EventType, Intervenant } from "@/types";
+import type { Event, EventType, Intervenant, EventRegistrant } from "@/types";
 
 /* ── Helpers ─────────────────────────────────────────────────── */
 
@@ -322,16 +323,88 @@ function EventModal({
   );
 }
 
+/* ── Modale liste des inscrits ───────────────────────────────── */
+function InscritsModal({
+  event,
+  registrants,
+  onClose,
+}: {
+  event: Event;
+  registrants: EventRegistrant[];
+  onClose: () => void;
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div className="bg-white rounded-[10px] shadow-xl w-full max-w-[520px] max-h-[80vh] flex flex-col">
+        {/* En-tête */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[#e5e7eb] flex-shrink-0">
+          <div>
+            <h2 className="text-[15px] font-bold text-[#111827]">Inscrits</h2>
+            <p className="text-[12px] text-[#6b7280] mt-0.5 truncate max-w-[340px]">{event.titre}</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-[12px] font-semibold text-[#016050] bg-[#e4f7f3] px-2.5 py-1 rounded-full">
+              {registrants.length} inscrit{registrants.length > 1 ? "s" : ""}
+            </span>
+            <button
+              onClick={onClose}
+              className="text-[#9ca3af] hover:text-[#374151] text-[22px] leading-none"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        {/* Liste */}
+        <div className="overflow-y-auto flex-1 px-4 py-3">
+          {registrants.length === 0 ? (
+            <div className="py-12 text-center">
+              <p className="text-2xl mb-2">👥</p>
+              <p className="text-[13px] text-[#6b7280]">Aucun inscrit pour le moment.</p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {registrants.map((r, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-[8px] bg-[#fafafa] border border-[#f3f4f6]"
+                >
+                  <Avatar prenom={r.prenom} nom={r.nom} photoUrl={r.photo_url} size={32} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[12px] font-semibold text-[#111827] truncate">
+                      {r.prenom} {r.nom}
+                    </p>
+                    <p className="text-[11px] text-[#6b7280] truncate">{r.entreprise} · {r.email}</p>
+                  </div>
+                  <span className="text-[10px] text-[#9ca3af] flex-shrink-0">
+                    {new Date(r.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── Carte événement ─────────────────────────────────────────── */
 function EventCard({
   event,
+  registrants,
   onEdit,
 }: {
   event: Event;
+  registrants: EventRegistrant[];
   onEdit: (ev: Event) => void;
 }) {
   const [pending, startTransition] = useTransition();
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [showInscrits, setShowInscrits]   = useState(false);
   const isPast = new Date(event.date_heure) < new Date();
 
   function handleDelete() {
@@ -340,76 +413,110 @@ function EventCard({
   }
 
   return (
-    <div
-      className={[
-        "bg-white border rounded-[8px] p-4 flex gap-4",
-        isPast ? "border-[#f3f4f6] opacity-60" : "border-[#e5e7eb] hover:border-[#016050]",
-        "transition-colors",
-      ].join(" ")}
-    >
-      {/* Vignette */}
-      {event.image_url ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={event.image_url}
-          alt=""
-          className="w-[64px] h-[48px] rounded-[6px] object-cover flex-shrink-0"
+    <>
+      {showInscrits && (
+        <InscritsModal
+          event={event}
+          registrants={registrants}
+          onClose={() => setShowInscrits(false)}
         />
-      ) : (
-        <div className="w-[48px] h-[48px] rounded-[8px] bg-[#e4f7f3] flex items-center justify-center flex-shrink-0 text-xl">
-          {EVENT_ICONS[event.type_event] ?? "📅"}
-        </div>
       )}
 
-      {/* Infos */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-1">
-          <Tag variant={EVENT_TAG_VARIANTS[event.type_event] ?? "teal"}>
-            {event.type_event}
-          </Tag>
-          {isPast && <Tag variant="neutral">Passé</Tag>}
-          <span className="text-[11px] text-[#6b7280]">{formatDate(event.date_heure)}</span>
-        </div>
-        <p className="text-[13px] font-semibold text-[#111827] truncate">{event.titre}</p>
-        <p className="text-[12px] text-[#6b7280] line-clamp-1 mt-0.5">{event.description}</p>
-      </div>
+      <div
+        className={[
+          "bg-white border rounded-[8px] p-4 flex gap-4",
+          isPast ? "border-[#f3f4f6] opacity-60" : "border-[#e5e7eb] hover:border-[#016050]",
+          "transition-colors",
+        ].join(" ")}
+      >
+        {/* Vignette */}
+        {event.image_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={event.image_url}
+            alt=""
+            className="w-[64px] h-[48px] rounded-[6px] object-cover flex-shrink-0"
+          />
+        ) : (
+          <div className="w-[48px] h-[48px] rounded-[8px] bg-[#e4f7f3] flex items-center justify-center flex-shrink-0 text-xl">
+            {EVENT_ICONS[event.type_event] ?? "📅"}
+          </div>
+        )}
 
-      {/* Boutons action */}
-      <div className="flex-shrink-0 flex items-center gap-1.5">
-        {confirmDelete && (
+        {/* Infos */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            <Tag variant={EVENT_TAG_VARIANTS[event.type_event] ?? "teal"}>
+              {event.type_event}
+            </Tag>
+            {isPast && <Tag variant="neutral">Passé</Tag>}
+            <span className="text-[11px] text-[#6b7280]">{formatDate(event.date_heure)}</span>
+          </div>
+          <p className="text-[13px] font-semibold text-[#111827] truncate">{event.titre}</p>
+          <p className="text-[12px] text-[#6b7280] line-clamp-1 mt-0.5">{event.description}</p>
+        </div>
+
+        {/* Boutons action */}
+        <div className="flex-shrink-0 flex items-center gap-1.5">
+          {/* Badge + bouton inscrits */}
+          <button
+            onClick={() => setShowInscrits(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[11px] font-semibold border border-[#e5e7eb] bg-white text-[#374151] hover:bg-[#f5f6f8] transition-colors whitespace-nowrap"
+          >
+            👥
+            <span
+              className={[
+                "inline-flex items-center justify-center min-w-[18px] h-[18px] rounded-full text-[10px] font-bold px-1",
+                registrants.length > 0
+                  ? "bg-[#016050] text-white"
+                  : "bg-[#f5f6f8] text-[#6b7280]",
+              ].join(" ")}
+            >
+              {registrants.length}
+            </span>
+          </button>
+
+          {confirmDelete && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setConfirmDelete(false)}
+              disabled={pending}
+            >
+              Annuler
+            </Button>
+          )}
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setConfirmDelete(false)}
+            onClick={() => { setConfirmDelete(false); onEdit(event); }}
             disabled={pending}
           >
-            Annuler
+            Modifier
           </Button>
-        )}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => { setConfirmDelete(false); onEdit(event); }}
-          disabled={pending}
-        >
-          Modifier
-        </Button>
-        <Button
-          variant="danger"
-          size="sm"
-          loading={pending}
-          onClick={handleDelete}
-          disabled={pending}
-        >
-          {confirmDelete ? "Confirmer ?" : "Supprimer"}
-        </Button>
+          <Button
+            variant="danger"
+            size="sm"
+            loading={pending}
+            onClick={handleDelete}
+            disabled={pending}
+          >
+            {confirmDelete ? "Confirmer ?" : "Supprimer"}
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
 /* ── Composant principal ─────────────────────────────────────── */
-export default function AdminEvenementsClient({ events }: { events: Event[] }) {
+export default function AdminEvenementsClient({
+  events,
+  registrations = [],
+}: {
+  events: Event[];
+  registrations?: EventRegistrant[];
+}) {
   const [modalEvent, setModalEvent] = useState<Event | null | "new">(null);
 
   const now = new Date();
@@ -422,6 +529,19 @@ export default function AdminEvenementsClient({ events }: { events: Event[] }) {
 
   const ordered = [...upcoming, ...past];
 
+  /* Grouper les inscrits par event_id */
+  const registrantsByEvent = registrations.reduce<Record<string, EventRegistrant[]>>(
+    (acc, r) => {
+      if (!acc[r.event_id]) acc[r.event_id] = [];
+      acc[r.event_id].push(r);
+      return acc;
+    },
+    {}
+  );
+
+  /* Total inscrits tous events confondus */
+  const totalInscrits = registrations.length;
+
   return (
     <div>
       {/* En-tête */}
@@ -429,7 +549,7 @@ export default function AdminEvenementsClient({ events }: { events: Event[] }) {
         <div>
           <h1 className="text-[22px] font-bold text-[#111827]">Événements</h1>
           <p className="text-[12px] text-[#6b7280] mt-0.5">
-            {upcoming.length} à venir · {past.length} passé{past.length > 1 ? "s" : ""}
+            {upcoming.length} à venir · {past.length} passé{past.length > 1 ? "s" : ""} · {totalInscrits} inscription{totalInscrits > 1 ? "s" : ""} au total
           </p>
         </div>
         <Button variant="primary" onClick={() => setModalEvent("new")}>
@@ -449,6 +569,7 @@ export default function AdminEvenementsClient({ events }: { events: Event[] }) {
             <EventCard
               key={ev.id}
               event={ev}
+              registrants={registrantsByEvent[ev.id] ?? []}
               onEdit={(e) => setModalEvent(e)}
             />
           ))}

@@ -42,12 +42,11 @@ export default async function FicheMembrePage({
     ? "*"
     : "id,prenom,nom,photo_url,type_membre,fonction,entreprise,secteur,taille_entreprise,zone_geo,ville,site_web,linkedin,telephone,biographie,expertises,date_inscription,statut,disponible_mission";
 
-  const { data: profileData } = await supabase
-    .from("members")
-    .select(fields)
-    .eq("id", id)
-    .eq("statut", "approved")
-    .single();
+  let query = supabase.from("members").select(fields).eq("id", id);
+  /* Les non-admins ne peuvent voir que les profils approuvés */
+  if (!isAdmin) query = query.eq("statut", "approved");
+
+  const { data: profileData } = await query.single();
 
   if (!profileData) notFound();
 

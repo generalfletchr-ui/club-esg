@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useTransition } from "react";
 import Tag from "@/components/ui/Tag";
 import { EVENT_TYPES } from "@/lib/constants";
+import { registerForEvent, unregisterFromEvent } from "@/app/agenda/actions";
 import type { Event, EventType, Intervenant } from "@/types";
 
 /* ── Modale Proposer une Animation ──────────────────────────── */
@@ -180,7 +181,13 @@ function groupByMonth(events: Event[]): { key: string; label: string; items: Eve
 
 type TabValue = "Tout" | EventType;
 
-export default function AgendaClient({ events }: { events: Event[] }) {
+export default function AgendaClient({
+  events,
+  myRegistrations = [],
+}: {
+  events: Event[];
+  myRegistrations?: string[];
+}) {
   const [activeTab, setActiveTab] = useState<TabValue>("Tout");
   const [showProposeModal, setShowProposeModal] = useState(false);
 
@@ -280,7 +287,11 @@ export default function AgendaClient({ events }: { events: Event[] }) {
               </div>
               <div className="space-y-2.5">
                 {items.map((ev) => (
-                  <EventCard key={ev.id} event={ev} />
+                  <EventCard
+                    key={ev.id}
+                    event={ev}
+                    isRegistered={myRegistrations.includes(ev.id)}
+                  />
                 ))}
               </div>
             </div>
@@ -291,7 +302,23 @@ export default function AgendaClient({ events }: { events: Event[] }) {
   );
 }
 
-function EventCard({ event: ev }: { event: Event }) {
+function EventCard({ event: ev, isRegistered }: { event: Event; isRegistered: boolean }) {
+  const [registered, setRegistered] = useState(isRegistered);
+  const [pending, startTransition]  = useTransition();
+
+  function handleRegister() {
+    /* Ouvre le lien externe immédiatement */
+    window.open(ev.lien_inscription, "_blank", "noopener,noreferrer");
+    /* Enregistre le clic en base */
+    setRegistered(true);
+    startTransition(() => registerForEvent(ev.id));
+  }
+
+  function handleUnregister() {
+    setRegistered(false);
+    startTransition(() => unregisterFromEvent(ev.id));
+  }
+
   return (
     <div className="bg-white border border-[#e5e7eb] rounded-[8px] p-4 flex gap-4 hover:border-[#016050] transition-colors group">
       {/* Icône ou image */}
@@ -353,14 +380,32 @@ function EventCard({ event: ev }: { event: Event }) {
               </p>
             )}
           </div>
-          <a
-            href={ev.lien_inscription}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-shrink-0 self-start px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors whitespace-nowrap"
-          >
-            S&apos;inscrire →
-          </a>
+
+          {/* Bouton inscription */}
+          <div className="flex-shrink-0 self-start flex flex-col items-end gap-1">
+            {registered ? (
+              <>
+                <span className="inline-flex items-center gap-1 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-[#16a34a] bg-[#f0fdf4] border border-[#bbf7d0] whitespace-nowrap">
+                  ✓ Inscrit
+                </span>
+                <button
+                  onClick={handleUnregister}
+                  disabled={pending}
+                  className="text-[10px] text-[#9ca3af] hover:text-[#ef4444] transition-colors disabled:opacity-50"
+                >
+                  Se désinscrire
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={handleRegister}
+                disabled={pending}
+                className="px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors whitespace-nowrap disabled:opacity-60"
+              >
+                {pending ? "…" : "S'inscrire →"}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

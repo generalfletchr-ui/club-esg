@@ -103,8 +103,8 @@ function MemberRow({ member }: { member: Member }) {
             Voir
           </Link>
 
-          {/* Approuver si pending */}
-          {member.statut === "pending" && (
+          {/* Approuver si pending ou rejected (ré-activation) */}
+          {(member.statut === "pending" || member.statut === "rejected") && (
             <Button
               variant="primary"
               size="sm"
