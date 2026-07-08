@@ -14,11 +14,10 @@ export default async function AgendaPage() {
   const isAdmin  = member.role === "admin";
   const supabase = await createClient();
 
-  /* Événements à venir uniquement */
+  /* Tous les événements — à venir et passés */
   const { data: events } = await supabase
     .from("events")
     .select("*")
-    .gte("date_heure", new Date().toISOString())
     .order("date_heure", { ascending: true });
 
   /* Inscriptions de ce membre */

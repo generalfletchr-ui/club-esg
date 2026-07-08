@@ -188,26 +188,39 @@ export default function AgendaClient({
   events: Event[];
   myRegistrations?: string[];
 }) {
-  const [activeTab, setActiveTab] = useState<TabValue>("Tout");
+  const [activeTab, setActiveTab]       = useState<TabValue>("Tout");
   const [showProposeModal, setShowProposeModal] = useState(false);
+  const [showPast, setShowPast]         = useState(false);
 
-  const filtered = useMemo(() => {
-    if (activeTab === "Tout") return events;
-    return events.filter((ev) => ev.type_event === activeTab);
-  }, [events, activeTab]);
+  const now = new Date();
 
-  const groups = useMemo(() => groupByMonth(filtered), [filtered]);
+  const upcoming = useMemo(() => events.filter((ev) => new Date(ev.date_heure) >= now), [events]);
+  const past     = useMemo(() => events.filter((ev) => new Date(ev.date_heure) <  now)
+    .sort((a, b) => new Date(b.date_heure).getTime() - new Date(a.date_heure).getTime()), [events]);
+
+  const filteredUpcoming = useMemo(() => {
+    if (activeTab === "Tout") return upcoming;
+    return upcoming.filter((ev) => ev.type_event === activeTab);
+  }, [upcoming, activeTab]);
+
+  const filteredPast = useMemo(() => {
+    if (activeTab === "Tout") return past;
+    return past.filter((ev) => ev.type_event === activeTab);
+  }, [past, activeTab]);
+
+  const groups     = useMemo(() => groupByMonth(filteredUpcoming), [filteredUpcoming]);
+  const pastGroups = useMemo(() => groupByMonth(filteredPast),     [filteredPast]);
 
   const tabs: TabValue[] = ["Tout", ...EVENT_TYPES];
 
-  /* Comptes par tab */
+  /* Comptes par tab (à venir uniquement) */
   const counts = useMemo(() => {
-    const result: Record<string, number> = { Tout: events.length };
+    const result: Record<string, number> = { Tout: upcoming.length };
     for (const t of EVENT_TYPES) {
-      result[t] = events.filter((ev) => ev.type_event === t).length;
+      result[t] = upcoming.filter((ev) => ev.type_event === t).length;
     }
     return result;
-  }, [events]);
+  }, [upcoming]);
 
   return (
     <div className="max-w-[70%]">
@@ -218,7 +231,7 @@ export default function AgendaClient({
         <div>
           <h1 className="text-[22px] font-bold text-[#111827]">Agenda</h1>
           <p className="text-[12px] text-[#6b7280] mt-0.5">
-            {events.length} événement{events.length !== 1 ? "s" : ""} à venir
+            {upcoming.length} à venir · {past.length} passé{past.length > 1 ? "s" : ""}
           </p>
         </div>
         <button
@@ -260,25 +273,26 @@ export default function AgendaClient({
         ))}
       </div>
 
-      {/* ── Contenu ───────────────────────────────────────────── */}
-      {filtered.length === 0 ? (
-        <div className="py-16 text-center">
+      {/* ── Événements à venir ────────────────────────────────── */}
+      {filteredUpcoming.length === 0 ? (
+        <div className="py-10 text-center">
           <p className="text-2xl mb-2">📅</p>
           <p className="text-[13px] text-[#6b7280]">
-            Aucun événement de ce type pour l&apos;instant.
+            Aucun événement à venir de ce type.
           </p>
-          <button
-            onClick={() => setActiveTab("Tout")}
-            className="mt-2 text-[12px] text-[#016050] font-medium hover:underline"
-          >
-            Voir tous les événements
-          </button>
+          {activeTab !== "Tout" && (
+            <button
+              onClick={() => setActiveTab("Tout")}
+              className="mt-2 text-[12px] text-[#016050] font-medium hover:underline"
+            >
+              Voir tous les événements
+            </button>
+          )}
         </div>
       ) : (
         <div className="space-y-6">
           {groups.map(({ key, label, items }) => (
             <div key={key}>
-              {/* Label mois */}
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-[11px] font-semibold text-[#9ca3af] uppercase tracking-wider">
                   {label}
@@ -298,11 +312,49 @@ export default function AgendaClient({
           ))}
         </div>
       )}
+
+      {/* ── Événements passés ─────────────────────────────────── */}
+      {filteredPast.length > 0 && (
+        <div className="mt-8">
+          <button
+            onClick={() => setShowPast((v) => !v)}
+            className="flex items-center gap-2 text-[12px] font-semibold text-[#6b7280] hover:text-[#374151] transition-colors mb-3"
+          >
+            <span className={`transition-transform ${showPast ? "rotate-90" : ""}`}>▶</span>
+            Événements passés ({filteredPast.length})
+          </button>
+
+          {showPast && (
+            <div className="space-y-6 opacity-60">
+              {pastGroups.map(({ key, label, items }) => (
+                <div key={key}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-[11px] font-semibold text-[#9ca3af] uppercase tracking-wider">
+                      {label}
+                    </span>
+                    <div className="flex-1 h-px bg-[#e5e7eb]" />
+                  </div>
+                  <div className="space-y-2.5">
+                    {items.map((ev) => (
+                      <EventCard
+                        key={ev.id}
+                        event={ev}
+                        isRegistered={myRegistrations.includes(ev.id)}
+                        isPast
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
-function EventCard({ event: ev, isRegistered }: { event: Event; isRegistered: boolean }) {
+function EventCard({ event: ev, isRegistered, isPast = false }: { event: Event; isRegistered: boolean; isPast?: boolean }) {
   const [registered, setRegistered] = useState(isRegistered);
   const [pending, startTransition]  = useTransition();
 
@@ -383,7 +435,11 @@ function EventCard({ event: ev, isRegistered }: { event: Event; isRegistered: bo
 
           {/* Bouton inscription */}
           <div className="flex-shrink-0 self-start flex flex-col items-end gap-1">
-            {registered ? (
+            {isPast ? (
+              <span className="inline-flex items-center px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-[#9ca3af] bg-[#f5f6f8] border border-[#e5e7eb] whitespace-nowrap">
+                Terminé
+              </span>
+            ) : registered ? (
               <>
                 <span className="inline-flex items-center gap-1 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-[#16a34a] bg-[#f0fdf4] border border-[#bbf7d0] whitespace-nowrap">
                   ✓ Inscrit
