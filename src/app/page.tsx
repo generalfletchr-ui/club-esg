@@ -6,7 +6,7 @@ import HashErrorRedirect from "./_hash-error-redirect";
 const PRIMARY_CTA_HREF = "/inscription";
 
 const STATS = [
-  ["40+", "Membres actifs"],
+  ["60+", "Membres actifs"],
   ["12",  "Webinaires / an"],
   ["8+",  "Replays disponibles"],
   ["3",   "Événements / mois"],
