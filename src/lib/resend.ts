@@ -438,6 +438,72 @@ export async function sendAdminAnimationProposal(
   });
 }
 
+/** Notification aux admins : nouvelle mission soumise */
+export async function sendAdminNewMissionEmail(
+  adminEmails: string[],
+  prenom: string,
+  nom: string,
+  titreMission: string,
+  typeMission: string,
+  description: string,
+) {
+  if (!adminEmails.length) return;
+  return resend.emails.send({
+    from: FROM,
+    to: adminEmails,
+    subject: `Club ESG : nouvelle mission soumise par ${prenom} ${nom}`,
+    html: `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f5f6f8;font-family:'Work Sans',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f6f8;padding:40px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+        <tr>
+          <td style="background:#1A365D;padding:32px;text-align:center;">
+            <img src="https://146612565.fs1.hubspotusercontent-eu1.net/hubfs/146612565/Fletchr/Logo%20Club%20ESG.png"
+                 alt="Club ESG" width="160" style="display:block;margin:0 auto;">
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:40px 48px;">
+            <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;color:#111827;">
+              Nouvelle mission à valider
+            </h1>
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:24px;">
+              <tr><td style="padding:20px;">
+                <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#111827;">${titreMission}</p>
+                <p style="margin:0 0 8px;font-size:13px;color:#6b7280;">${typeMission}</p>
+                <p style="margin:0 0 12px;font-size:13px;color:#374151;white-space:pre-line;">${description.length > 300 ? description.slice(0, 300) + "…" : description}</p>
+                <p style="margin:0;font-size:13px;color:#6b7280;">Postée par <strong style="color:#374151;">${prenom} ${nom}</strong></p>
+              </td></tr>
+            </table>
+            <div style="text-align:center;">
+              <a href="https://club.fletchr.fr/admin/missions"
+                 style="display:inline-block;padding:14px 32px;background:#016050;color:#fff;
+                        font-size:15px;font-weight:700;text-decoration:none;border-radius:8px;">
+                Examiner la mission →
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f6f8;padding:20px 48px;border-top:1px solid #e5e7eb;">
+            <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">
+              Ensemble, accélérons la transition RSE · club.fletchr.fr
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+  });
+}
+
 /** Email envoyé quand une demande est refusée */
 export async function sendRejectionEmail(email: string, prenom: string) {
   return resend.emails.send({
