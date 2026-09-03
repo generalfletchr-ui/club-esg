@@ -11,6 +11,9 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
+  /* Base des URLs absolues (aperçus de lien, image Open Graph).
+     Sans elle, Next retombe sur localhost hors environnement Vercel. */
+  metadataBase: new URL("https://club.fletchr.fr"),
   title: "Club ESG — Ensemble, accélérons la transition RSE",
   description:
     "Le Club ESG est un portail communautaire privé pour les professionnels engagés dans la transition ESG.",

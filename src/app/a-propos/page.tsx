@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     siteName: "Club ESG",
     locale: "fr_FR",
     type: "website",
+    // Redeclarer openGraph fait perdre l'image heritee de la racine :
+    // on la remet explicitement pour les apercus de lien.
+    images: ["/opengraph-image.png"],
   },
 };
 
