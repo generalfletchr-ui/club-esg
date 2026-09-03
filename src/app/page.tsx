@@ -1,7 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Suspense } from "react";
 import HashErrorRedirect from "./_hash-error-redirect";
+import PublicNav from "@/components/layout/PublicNav";
+import PublicFooter from "@/components/layout/PublicFooter";
 
 const PRIMARY_CTA_HREF = "/inscription";
 
@@ -67,25 +68,7 @@ export default function HomePage() {
       <Suspense><HashErrorRedirect /></Suspense>
 
       {/* ── Navigation ──────────────────────────────────────── */}
-      <nav className="sticky top-0 z-20 bg-white border-b border-[#e5e7eb] px-4 sm:px-10 py-3 flex items-center justify-between gap-3">
-        <a href="https://club.fletchr.fr/dashboard">
-          <Image src="/logo.svg" alt="Club ESG" width={130} height={43} priority />
-        </a>
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <Link
-            href="/connexion"
-            className="hidden sm:block text-[13px] font-medium text-[#6b7280] hover:text-[#142832] transition-colors"
-          >
-            Se connecter
-          </Link>
-          <Link
-            href={PRIMARY_CTA_HREF}
-            className="inline-flex px-[16px] py-[9px] rounded-[6px] text-[13px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors whitespace-nowrap"
-          >
-            Rejoindre le Club
-          </Link>
-        </div>
-      </nav>
+      <PublicNav />
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="bg-[#016050] px-4 sm:px-10 pt-20 pb-20">
@@ -165,6 +148,12 @@ export default function HomePage() {
             Le Club ESG rassemble des professionnels engagés : consultants, responsables RSE, experts-comptables, pour apprendre, partager et collaborer sur les enjeux concrets
             de la transition environnementale et sociale.
           </p>
+          <Link
+            href="/a-propos"
+            className="inline-flex mt-6 text-[13px] font-semibold text-[#016050] hover:underline"
+          >
+            {"Découvrir le concept et les formats →"}
+          </Link>
         </div>
       </section>
 
@@ -248,21 +237,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────── */}
-      <footer className="px-4 sm:px-10 py-5 bg-[#142832] border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <a href="https://club.fletchr.fr/dashboard">
-          <Image src="/logo.svg" alt="Club ESG" width={110} height={36} />
-        </a>
-        <p className="text-[12px]" style={{ color: "rgba(255,255,255,0.25)" }}>
-          © {new Date().getFullYear()} Fletchr · Ensemble, accélérons la transition RSE
-        </p>
-        <Link
-          href="/connexion"
-          className="text-[12px] font-medium hover:underline"
-          style={{ color: "#e4f7f3", opacity: 0.65 }}
-        >
-          {"Déjà membre ? Se connecter"}
-        </Link>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }
