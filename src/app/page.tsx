@@ -3,11 +3,15 @@ import { Suspense } from "react";
 import HashErrorRedirect from "./_hash-error-redirect";
 import PublicNav from "@/components/layout/PublicNav";
 import PublicFooter from "@/components/layout/PublicFooter";
+import { getActiveMembersLabel } from "@/lib/members-count";
+
+/* Page régénérée au plus toutes les heures (nombre de membres à jour) */
+export const revalidate = 3600;
 
 const PRIMARY_CTA_HREF = "/inscription";
 
-const STATS = [
-  ["60+", "Membres actifs"],
+/* Le nombre de membres actifs est calculé automatiquement (voir HomePage) */
+const OTHER_STATS = [
   ["12",  "Webinaires / an"],
   ["8+",  "Replays disponibles"],
   ["3",   "Événements / mois"],
@@ -62,7 +66,10 @@ const STEPS = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const membersLabel = await getActiveMembersLabel();
+  const STATS = [[membersLabel, "Membres actifs"], ...OTHER_STATS];
+
   return (
     <div className="min-h-screen bg-white">
       <Suspense><HashErrorRedirect /></Suspense>
