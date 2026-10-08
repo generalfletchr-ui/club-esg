@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import HashErrorRedirect from "./_hash-error-redirect";
@@ -78,7 +79,18 @@ export default async function HomePage() {
       <PublicNav />
 
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="bg-[#016050] px-4 sm:px-10 pt-20 pb-20">
+      <section className="relative isolate bg-[#016050] px-4 sm:px-10 pt-20 pb-20">
+        <Image
+          src="/hero-home-parasol.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[center_52%] -z-10"
+        />
+        {/* Voile vert : garde le texte lisible et l'identité Fletchr par-dessus la photo */}
+        <div className="absolute inset-0 -z-10 bg-[#016050]/75" />
+
         <div className="max-w-[720px] mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-[#e4f7f3] inline-block opacity-70" />
