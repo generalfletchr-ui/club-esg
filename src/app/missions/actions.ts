@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getAuthUser, getMemberProfile } from "@/lib/auth";
 import {
   sendMissionInterestEmail,
+  sendAdminNewMissionEmail,
   type MissionRepondant,
 } from "@/lib/resend";
 
@@ -38,7 +39,7 @@ async function requireApproved() {
 /* ── Création ───────────────────────────────────────────────── */
 
 export async function createMission(data: MissionFormData) {
-  const { supabase, userId } = await requireApproved();
+  const { supabase, userId, member } = await requireApproved();
 
   const expireAt = data.expire_le
     ? new Date(data.expire_le).toISOString()
@@ -62,6 +63,22 @@ export async function createMission(data: MissionFormData) {
   });
 
   if (error) throw new Error(error.message);
+
+  const { data: admins } = await supabase
+    .from("members")
+    .select("email")
+    .eq("role", "admin")
+    .eq("statut", "approved");
+
+  const adminEmails = (admins ?? []).map((a: { email: string }) => a.email).filter(Boolean);
+  sendAdminNewMissionEmail(
+    adminEmails,
+    member.prenom,
+    member.nom,
+    data.titre.trim(),
+    data.type_mission,
+    data.description.trim(),
+  ).catch((err) => console.error("[missions/actions] emailError:", err));
 
   revalidatePath("/mes-missions");
   return { success: true };
