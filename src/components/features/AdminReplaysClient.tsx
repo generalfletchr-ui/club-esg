@@ -5,6 +5,7 @@ import { useState, useTransition } from "react";
 import Tag from "@/components/ui/Tag";
 import Button from "@/components/ui/Button";
 import { createReplay, updateReplay, deleteReplay } from "@/app/admin/actions";
+import { createClient } from "@/lib/supabase/client";
 import { EVENT_TYPES } from "@/lib/constants";
 import type { Replay, EventType } from "@/types";
 
@@ -37,6 +38,9 @@ const selectCls =
   "w-full h-[34px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#016050] transition-colors cursor-pointer";
 const textareaCls =
   "w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-[8px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#016050] transition-colors resize-none";
+
+/* Support PDF : même limite que le bucket replay-supports (migration 007) */
+const SUPPORT_MAX_MB = 20;
 
 /* ── Champ de formulaire ─────────────────────────────────────── */
 function Field({
@@ -102,6 +106,33 @@ function ReplayModal({
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
+  /* Support PDF : fichier existant conservé, nouveau fichier choisi, ou retiré */
+  const [supportPath, setSupportPath] = useState<string | null>(
+    replay?.support_path ?? null
+  );
+  const [supportFile, setSupportFile] = useState<File | null>(null);
+
+  function pickSupport(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null;
+    e.target.value = "";
+    if (!file) return;
+    if (file.type !== "application/pdf") {
+      setError("Le support doit être un fichier PDF.");
+      return;
+    }
+    if (file.size > SUPPORT_MAX_MB * 1024 * 1024) {
+      setError(`Le PDF dépasse ${SUPPORT_MAX_MB} Mo.`);
+      return;
+    }
+    setError(null);
+    setSupportFile(file);
+  }
+
+  function removeSupport() {
+    setSupportFile(null);
+    setSupportPath(null);
+  }
+
   function set<K extends keyof typeof form>(field: K) {
     return (
       e: React.ChangeEvent<
@@ -121,6 +152,20 @@ function ReplayModal({
     Object.entries(form).forEach(([k, v]) => fd.set(k, v));
 
     startTransition(async () => {
+      /* Envoi du nouveau PDF avant d'enregistrer le replay */
+      let path = supportPath;
+      if (supportFile) {
+        path = `${crypto.randomUUID()}.pdf`;
+        const { error: uploadError } = await createClient()
+          .storage.from("replay-supports")
+          .upload(path, supportFile, { contentType: "application/pdf" });
+        if (uploadError) {
+          setError("L'envoi du PDF a échoué. Réessaie ou enregistre sans support.");
+          return;
+        }
+      }
+      fd.set("support_path", path ?? "");
+
       if (isEditing) {
         await updateReplay(replay.id, fd);
       } else {
@@ -205,6 +250,34 @@ function ReplayModal({
             />
           </Field>
 
+          <Field label="Support de présentation (PDF, optionnel)">
+            {supportFile || supportPath ? (
+              <div className="flex items-center justify-between gap-2 h-[34px] rounded-[6px] border border-[#e5e7eb] bg-[#f5f6f8] px-[10px]">
+                <span className="text-[12px] text-[#374151] truncate">
+                  📄 {supportFile ? supportFile.name : "Support PDF joint"}
+                </span>
+                <span className="flex items-center gap-2 flex-shrink-0">
+                  <label className="text-[11px] font-semibold text-[#016050] hover:underline cursor-pointer">
+                    Remplacer
+                    <input type="file" accept="application/pdf" onChange={pickSupport} className="hidden" />
+                  </label>
+                  <button
+                    type="button"
+                    onClick={removeSupport}
+                    className="text-[11px] font-semibold text-[#ef4444] hover:underline"
+                  >
+                    Retirer
+                  </button>
+                </span>
+              </div>
+            ) : (
+              <label className="flex items-center h-[34px] rounded-[6px] border border-dashed border-[#d1d5db] bg-white px-[10px] text-[12px] text-[#6b7280] hover:border-[#016050] cursor-pointer transition-colors">
+                + Joindre un PDF ({SUPPORT_MAX_MB} Mo max.)
+                <input type="file" accept="application/pdf" onChange={pickSupport} className="hidden" />
+              </label>
+            )}
+          </Field>
+
           <Field label="Intervenant(s) (optionnel)">
             <input
               value={form.intervenants}
@@ -276,6 +349,9 @@ function ReplayCard({
             {replay.type_event}
           </Tag>
           <span className="text-[11px] text-[#6b7280]">{formatDate(replay.date_event)}</span>
+          {replay.support_path && (
+            <span className="text-[11px] text-[#6b7280]">· 📄 Support PDF</span>
+          )}
         </div>
         <p className="text-[13px] font-semibold text-[#111827] truncate">{replay.titre}</p>
         {replay.intervenants && (

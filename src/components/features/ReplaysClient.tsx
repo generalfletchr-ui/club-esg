@@ -98,7 +98,7 @@ function Pagination({
 }
 
 /* ── Carte replay ────────────────────────────────────────────── */
-function ReplayCard({ replay: r }: { replay: Replay }) {
+function ReplayCard({ replay: r, supportUrl }: { replay: Replay; supportUrl?: string }) {
   return (
     <div className="bg-white border border-[#e5e7eb] rounded-[8px] overflow-hidden hover:border-[#016050] transition-colors">
       {/* Image ou bannière icône */}
@@ -139,21 +139,40 @@ function ReplayCard({ replay: r }: { replay: Replay }) {
           {r.description}
         </p>
 
-        <a
-          href={r.lien_replay}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
-        >
-          ▶ Voir le replay
-        </a>
+        <div className="flex flex-wrap gap-2">
+          <a
+            href={r.lien_replay}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors"
+          >
+            ▶ Voir le replay
+          </a>
+          {supportUrl && (
+            <a
+              href={supportUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-[14px] py-[7px] rounded-[6px] text-[12px] font-semibold text-[#016050] border border-[#016050] hover:bg-[#e4f7f3] transition-colors"
+            >
+              📄 Support PDF
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
 /* ── Composant principal ─────────────────────────────────────── */
-export default function ReplaysClient({ replays }: { replays: Replay[] }) {
+export default function ReplaysClient({
+  replays,
+  supportUrls,
+}: {
+  replays: Replay[];
+  /* Lien temporaire du PDF, par chemin dans le bucket */
+  supportUrls: Record<string, string>;
+}) {
   const [activeTab, setActiveTab] = useState<TabValue>("Tout");
   const [page, setPage] = useState(1);
 
@@ -252,7 +271,11 @@ export default function ReplaysClient({ replays }: { replays: Replay[] }) {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {pageItems.map((r) => (
-              <ReplayCard key={r.id} replay={r} />
+              <ReplayCard
+                key={r.id}
+                replay={r}
+                supportUrl={r.support_path ? supportUrls[r.support_path] : undefined}
+              />
             ))}
           </div>
           <Pagination current={page} total={totalPages} onChange={setPage} />

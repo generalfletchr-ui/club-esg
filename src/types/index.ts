@@ -85,6 +85,8 @@ export interface Replay {
   lien_replay: string;
   image_url: string | null;
   intervenants: string | null;
+  /* Chemin du PDF dans le bucket replay-supports */
+  support_path: string | null;
   cree_par: string;
   created_at: string;
 }

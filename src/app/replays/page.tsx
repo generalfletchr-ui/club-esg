@@ -20,9 +20,24 @@ export default async function ReplaysPage() {
     .select("*")
     .order("date_event", { ascending: false });
 
+  /* Liens temporaires (1 h) vers les supports PDF, bucket privé */
+  const supportPaths = (replays ?? [])
+    .map((r) => r.support_path as string | null)
+    .filter((p): p is string => !!p);
+
+  const supportUrls: Record<string, string> = {};
+  if (supportPaths.length > 0) {
+    const { data: signed } = await supabase.storage
+      .from("replay-supports")
+      .createSignedUrls(supportPaths, 3600);
+    for (const s of signed ?? []) {
+      if (s.path && s.signedUrl) supportUrls[s.path] = s.signedUrl;
+    }
+  }
+
   return (
     <AppLayout isAdmin={isAdmin}>
-      <ReplaysClient replays={(replays ?? []) as Replay[]} />
+      <ReplaysClient replays={(replays ?? []) as Replay[]} supportUrls={supportUrls} />
     </AppLayout>
   );
 }

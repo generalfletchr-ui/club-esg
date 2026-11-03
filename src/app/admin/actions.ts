@@ -175,6 +175,7 @@ export async function createReplay(formData: FormData) {
     lien_replay: formData.get("lien_replay") as string,
     intervenants: (formData.get("intervenants") as string) || null,
     image_url: (formData.get("image_url") as string) || null,
+    support_path: (formData.get("support_path") as string) || null,
     cree_par: adminId,
   });
 
@@ -184,6 +185,14 @@ export async function createReplay(formData: FormData) {
 
 export async function updateReplay(replayId: string, formData: FormData) {
   const { supabase } = await requireAdmin();
+
+  const { data: before } = await supabase
+    .from("replays")
+    .select("support_path")
+    .eq("id", replayId)
+    .single();
+
+  const supportPath = (formData.get("support_path") as string) || null;
 
   await supabase
     .from("replays")
@@ -195,8 +204,14 @@ export async function updateReplay(replayId: string, formData: FormData) {
       lien_replay: formData.get("lien_replay") as string,
       intervenants: (formData.get("intervenants") as string) || null,
       image_url: (formData.get("image_url") as string) || null,
+      support_path: supportPath,
     })
     .eq("id", replayId);
+
+  /* PDF remplacé ou retiré : supprimer l'ancien fichier */
+  if (before?.support_path && before.support_path !== supportPath) {
+    await supabase.storage.from("replay-supports").remove([before.support_path]);
+  }
 
   revalidatePath("/admin/replays");
   revalidatePath("/replays");
@@ -205,7 +220,17 @@ export async function updateReplay(replayId: string, formData: FormData) {
 export async function deleteReplay(replayId: string) {
   const { supabase } = await requireAdmin();
 
+  const { data: replay } = await supabase
+    .from("replays")
+    .select("support_path")
+    .eq("id", replayId)
+    .single();
+
   await supabase.from("replays").delete().eq("id", replayId);
+
+  if (replay?.support_path) {
+    await supabase.storage.from("replay-supports").remove([replay.support_path]);
+  }
 
   revalidatePath("/admin/replays");
   revalidatePath("/replays");
