@@ -69,40 +69,36 @@ function MemberRow({ member }: { member: Member }) {
   return (
     <tr className="border-b border-[#f3f4f6] hover:bg-[#fafafa] transition-colors">
       {/* Identité */}
-      <td className="py-3 px-4">
+      <td className="py-3 px-3">
         <div className="flex items-center gap-2.5">
           <Avatar prenom={member.prenom} nom={member.nom} photoUrl={member.photo_url} size={32} />
-          <div className="min-w-0">
+          <div className="min-w-0 max-w-[200px]">
             <p className="text-[12px] font-semibold text-[#111827] truncate">
               {member.prenom} {member.nom}
             </p>
-            <p className="text-[11px] text-[#6b7280] truncate">{member.email}</p>
+            <p className="text-[11px] text-[#6b7280] truncate" title={member.email}>{member.email}</p>
           </div>
         </div>
       </td>
-      {/* Entreprise */}
-      <td className="py-3 px-4">
-        <p className="text-[12px] text-[#374151] truncate max-w-[160px]">{member.entreprise}</p>
-        <p className="text-[11px] text-[#9ca3af] truncate">{member.fonction}</p>
+      {/* Entreprise + type de membre */}
+      <td className="py-3 px-3">
+        <p className="text-[12px] text-[#374151] truncate max-w-[170px]">{member.entreprise}</p>
+        <p className="text-[11px] text-[#9ca3af] truncate max-w-[170px]">{member.fonction}</p>
+        <Tag variant="teal" className="text-[10px] mt-1">{member.type_membre}</Tag>
       </td>
-      {/* Type */}
-      <td className="py-3 px-4">
-        <Tag variant="teal" className="text-[10px]">{member.type_membre}</Tag>
-      </td>
-      {/* Statut */}
-      <td className="py-3 px-4">
-        <Tag variant={s.variant} className="text-[10px]">{s.label}</Tag>
-      </td>
-      {/* Rôle */}
-      <td className="py-3 px-4">
-        <Tag variant={r.variant} className="text-[10px]">{r.label}</Tag>
+      {/* Statut + rôle */}
+      <td className="py-3 px-3">
+        <div className="flex flex-col items-start gap-1">
+          <Tag variant={s.variant} className="text-[10px]">{s.label}</Tag>
+          <Tag variant={r.variant} className="text-[10px]">{r.label}</Tag>
+        </div>
       </td>
       {/* Date */}
-      <td className="py-3 px-4">
-        <span className="text-[11px] text-[#9ca3af]">{formatDate(member.date_inscription)}</span>
+      <td className="py-3 px-3">
+        <span className="text-[11px] text-[#9ca3af] whitespace-nowrap">{formatDate(member.date_inscription)}</span>
       </td>
       {/* Actions */}
-      <td className="py-3 px-4">
+      <td className="py-3 px-3">
         <div className="flex items-center gap-1.5 flex-wrap">
           {/* Confirmation */}
           {confirmAction && (
@@ -265,11 +261,11 @@ export default function AdminMembresClient({ members }: { members: Member[] }) {
       {/* ── Tableau ───────────────────────────────────────────── */}
       <div className="bg-white border border-[#e5e7eb] rounded-[8px] overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[900px]">
+          <table className="w-full">
             <thead>
               <tr className="border-b border-[#e5e7eb] bg-[#fafafa]">
-                {["Membre", "Entreprise", "Type", "Statut", "Rôle", "Inscrit le", "Actions"].map((h) => (
-                  <th key={h} className="text-left py-2.5 px-4 text-[11px] font-semibold text-[#6b7280] uppercase tracking-wide">
+                {["Membre", "Entreprise", "Statut / rôle", "Inscrit le", "Actions"].map((h) => (
+                  <th key={h} className="text-left py-2.5 px-3 text-[11px] font-semibold text-[#6b7280] uppercase tracking-wide">
                     {h}
                   </th>
                 ))}
@@ -280,7 +276,7 @@ export default function AdminMembresClient({ members }: { members: Member[] }) {
                 filtered.map((m) => <MemberRow key={m.id} member={m} />)
               ) : (
                 <tr>
-                  <td colSpan={7} className="py-16 text-center text-[13px] text-[#9ca3af]">
+                  <td colSpan={5} className="py-16 text-center text-[13px] text-[#9ca3af]">
                     Aucun membre ne correspond aux filtres.
                   </td>
                 </tr>
