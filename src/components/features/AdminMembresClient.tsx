@@ -6,7 +6,7 @@ import Link from "next/link";
 import Avatar from "@/components/ui/Avatar";
 import Tag from "@/components/ui/Tag";
 import Button from "@/components/ui/Button";
-import { promoteToAdmin, suspendMember, approveMember } from "@/app/admin/actions";
+import { promoteToAdmin, suspendMember, approveMember, removeMember } from "@/app/admin/actions";
 import type { Member, MemberStatus, MemberRole } from "@/types";
 
 type StatusFilter = "" | MemberStatus;
@@ -44,6 +44,22 @@ function MemberRow({ member }: { member: Member }) {
       if (action === "suspend") await suspendMember(member.id);
       if (action === "approve") await approveMember(member.id);
       setConfirmAction(null);
+    });
+  }
+
+  /* Retrait définitif : confirmation explicite, l'action est irréversible */
+  function doRemove() {
+    const ok = window.confirm(
+      `Retirer définitivement ${member.prenom} ${member.nom} du club ?\n\n` +
+        "Son compte, son profil et sa photo seront supprimés. Cette personne disparaîtra " +
+        "de l'annuaire, de la liste des membres et des exports.\n\n" +
+        "Action irréversible : pour revenir, elle devra se réinscrire."
+    );
+    if (!ok) return;
+    setConfirmAction(null);
+    startTransition(async () => {
+      const { error } = await removeMember(member.id);
+      if (error) window.alert(error);
     });
   }
 
@@ -140,6 +156,18 @@ function MemberRow({ member }: { member: Member }) {
             >
               {confirmAction === "suspend" ? "Confirmer ?" : "Suspendre"}
             </Button>
+          )}
+
+          {/* Retirer du club : suppression définitive, hors admins */}
+          {member.role !== "admin" && (
+            <button
+              type="button"
+              onClick={doRemove}
+              disabled={pending}
+              className="inline-flex items-center px-3 py-1.5 rounded-[6px] text-[11px] font-semibold border border-[#fecaca] bg-white text-[#dc2626] hover:bg-[#fef2f2] transition-colors whitespace-nowrap disabled:opacity-50"
+            >
+              Retirer du club
+            </button>
           )}
         </div>
       </td>

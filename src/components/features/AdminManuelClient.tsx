@@ -358,6 +358,17 @@ export default function AdminManuelClient() {
               La suspension n&apos;efface pas les données du membre ni ses missions publiées. Elle bloque uniquement l&apos;accès à la plateforme. Vous pouvez réactiver le compte ultérieurement depuis cette même page.
             </Note>
 
+            <H3>Retirer un membre du club</H3>
+            <Steps items={[
+              "À utiliser quand une personne ne souhaite plus être membre ni être contactée.",
+              "Cliquez sur le bouton « Retirer du club » à côté du membre concerné.",
+              "Lisez le message puis confirmez : le compte, le profil, la photo et les missions de la personne sont supprimés.",
+              "Elle disparaît de l'annuaire, de la liste des membres et des exports CSV.",
+            ]} />
+            <Note color="orange">
+              Action irréversible : si la personne revient, elle devra se réinscrire. Le retrait ne concerne que la plateforme : si elle a déjà été importée dans HubSpot, supprimez-la aussi dans HubSpot. Les admins ne peuvent pas être retirés.
+            </Note>
+
             <H3>Consulter la fiche d&apos;un membre</H3>
             <p className="text-[14px] text-[#374151]">
               Cliquez sur le nom d&apos;un membre pour accéder à sa fiche complète dans l&apos;annuaire. Vous y voyez toutes ses informations, y compris son SIRET et ses coordonnées, qui sont masquées pour les autres membres.

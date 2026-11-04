@@ -2,6 +2,7 @@
 
 /* Server Actions pour le back-office admin */
 import { revalidatePath } from "next/cache";
+import { createClient as createServiceClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthUser, getMemberProfile } from "@/lib/auth";
 import {
@@ -95,6 +96,55 @@ export async function suspendMember(memberId: string) {
     .eq("id", memberId);
 
   revalidatePath("/admin/membres");
+}
+
+/**
+ * Retire définitivement un membre du club : compte, profil et photo.
+ * Irréversible. Le profil (et ses missions) part en cascade avec le compte.
+ * Les admins ne sont pas retirables : leur compte est référencé par
+ * les événements, replays et validations qu'ils ont créés.
+ */
+export async function removeMember(memberId: string): Promise<{ error?: string }> {
+  const { supabase, adminId } = await requireAdmin();
+
+  if (memberId === adminId) {
+    return { error: "Tu ne peux pas te retirer toi-même du club." };
+  }
+
+  const { data: m } = await supabase
+    .from("members")
+    .select("role")
+    .eq("id", memberId)
+    .single();
+
+  if (m?.role === "admin") {
+    return { error: "Un admin ne peut pas être retiré du club." };
+  }
+
+  /* La suppression d'un compte demande la clé service (côté serveur uniquement) */
+  const service = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+
+  /* Photo de profil : tout le dossier du membre dans le bucket avatars */
+  const { data: files } = await service.storage.from("avatars").list(memberId);
+  if (files && files.length > 0) {
+    await service.storage
+      .from("avatars")
+      .remove(files.map((f) => `${memberId}/${f.name}`));
+  }
+
+  const { error } = await service.auth.admin.deleteUser(memberId);
+  if (error) {
+    return { error: "La suppression a échoué. Réessaie ou contacte le support technique." };
+  }
+
+  revalidatePath("/admin/membres");
+  revalidatePath("/admin/demandes");
+  revalidatePath("/annuaire");
+  return {};
 }
 
 /* ── Événements ────────────────────────────────────────────── */
