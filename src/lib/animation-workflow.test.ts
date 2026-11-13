@@ -36,6 +36,7 @@ function fakeDb(respond: Responder) {
       neq(col: string, v: unknown) { op.filters.push(["neq", col, v]); return b; },
       in(col: string, v: unknown) { op.filters.push(["in", col, v]); return b; },
       gte(col: string, v: unknown) { op.filters.push(["gte", col, v]); return b; },
+      order() { return b; },
       single: run,
       maybeSingle: run,
       then(ok: (v: unknown) => unknown, ko?: (e: unknown) => unknown) { return run().then(ok, ko); },
@@ -137,7 +138,7 @@ describe("envoi d'une proposition", () => {
   });
 
   it("refuse côté serveur une date hors mardi / jeudi, trop proche ou déjà prise, sans rien enregistrer", async () => {
-    for (const date of ["2026-12-07", "2026-11-26", "2026-12-01"]) {
+    for (const date of ["2026-12-07", "2026-11-17", "2026-12-01"]) {
       /* L'agenda du Club contient déjà un webinaire le 1er décembre à 11h */
       const { db, ops } = fakeDb(defaultResponder({
         "events:select": () => ({

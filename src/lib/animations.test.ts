@@ -35,11 +35,13 @@ describe("dates autorisées : mardi / jeudi à 21 jours minimum", () => {
   });
 
   it("refuse un mardi ou un jeudi avant le délai de 21 jours", () => {
-    expect(isAllowedAnimationDate("2026-11-24", TODAY)).toBe(false); // mardi J+11
-    expect(isAllowedAnimationDate("2026-11-26", TODAY)).toBe(false); // jeudi J+13
+    expect(isAllowedAnimationDate("2026-11-17", TODAY)).toBe(false); // mardi J+4
+    expect(isAllowedAnimationDate("2026-11-19", TODAY)).toBe(false); // jeudi J+6
   });
 
-  it("ouvre exceptionnellement le 1er et le 3 décembre 2026, malgré le délai", () => {
+  it("ouvre exceptionnellement les 24 et 26 novembre et les 1er et 3 décembre 2026, malgré le délai", () => {
+    expect(isAllowedAnimationDate("2026-11-24", TODAY)).toBe(true); // mardi J+11
+    expect(isAllowedAnimationDate("2026-11-26", TODAY)).toBe(true); // jeudi J+13
     expect(isAllowedAnimationDate("2026-12-01", TODAY)).toBe(true); // mardi J+18
     expect(isAllowedAnimationDate("2026-12-03", TODAY)).toBe(true); // jeudi J+20
     /* Une fois la date passée, l'exception ne joue plus */
@@ -139,7 +141,7 @@ describe("contrôle du formulaire (même règle côté navigateur et serveur)", 
 
   it("refuse une date hors mardi / jeudi ou trop proche", () => {
     const lundi = validateProposal({ ...valid, date_souhaitee: "2026-12-07" }, TODAY);
-    const tropTot = validateProposal({ ...valid, date_souhaitee: "2026-11-26" }, TODAY);
+    const tropTot = validateProposal({ ...valid, date_souhaitee: "2026-11-17" }, TODAY);
     expect("errors" in lundi && lundi.errors.date_souhaitee).toBeTruthy();
     expect("errors" in tropTot && tropTot.errors.date_souhaitee).toBeTruthy();
   });

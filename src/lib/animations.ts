@@ -70,7 +70,7 @@ export function earliestDate(today: string): string {
 }
 
 /* Dates ouvertes exceptionnellement, même à moins de 21 jours */
-export const DATES_EXCEPTIONNELLES = ["2026-12-01", "2026-12-03"];
+export const DATES_EXCEPTIONNELLES = ["2026-11-24", "2026-11-26", "2026-12-01", "2026-12-03"];
 
 /** Mardi ou jeudi, au moins 21 jours après aujourd'hui (sauf dates exceptionnelles) */
 export function isAllowedAnimationDate(date: string, today: string): boolean {

@@ -8,6 +8,7 @@ import {
   formatDateLongue,
   formatHeure,
   parisDateTimeToISO,
+  parisToday,
   agendaEntries,
   takenDates,
   type AgendaEntry,
@@ -35,16 +36,19 @@ interface Person {
   email: string;
 }
 
-/** Événements à venir de l'agenda du Club (webinaires, afterworks, ateliers) */
+/** Événements de l'agenda du Club (webinaires, afterworks, ateliers)
+ *  depuis le début du mois en cours, premier mois affiché par le calendrier */
 export async function fetchAgenda(db: SupabaseClient): Promise<AgendaEntry[]> {
+  const debutDuMois = parisDateTimeToISO(`${parisToday().slice(0, 7)}-01`, "00:00");
   const { data } = await db
     .from("events")
     .select("date_heure, titre, type_event")
-    .gte("date_heure", new Date().toISOString());
+    .gte("date_heure", debutDuMois)
+    .order("date_heure", { ascending: true });
   return agendaEntries(data ?? []);
 }
 
-/** Dates déjà prises : tout jour ayant un événement à venir dans l'agenda */
+/** Dates déjà prises : tout jour ayant un événement dans l'agenda */
 export async function fetchTakenDates(db: SupabaseClient): Promise<string[]> {
   return takenDates(await fetchAgenda(db));
 }

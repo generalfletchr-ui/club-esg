@@ -4,12 +4,7 @@
  * seuls les mardis et jeudis à 21 jours minimum sont sélectionnables,
  * et les événements de l'agenda du Club y apparaissent (jour alors indisponible) */
 import { useState } from "react";
-import {
-  DATES_EXCEPTIONNELLES,
-  earliestDate,
-  isAllowedAnimationDate,
-  type AgendaEntry,
-} from "@/lib/animations";
+import { isAllowedAnimationDate, type AgendaEntry } from "@/lib/animations";
 
 const JOURS = ["lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."];
 
@@ -57,9 +52,8 @@ export default function AnimationDatePicker({
   /* Événements à venir de l'agenda du Club */
   agenda: AgendaEntry[];
 }) {
-  /* Premier mois affiché : le plus tôt entre J+21 et les dates exceptionnelles à venir */
-  const firstDate = [earliestDate(today), ...DATES_EXCEPTIONNELLES.filter((d) => d > today)].sort()[0];
-  const firstMonth = monthOf(firstDate);
+  /* Premier mois affiché : le mois en cours, pour voir aussi le programme du Club à venir */
+  const firstMonth = monthOf(today);
   const [month, setMonth] = useState(value ? monthOf(value) : firstMonth);
 
   const byDate = new Map<string, AgendaEntry[]>();
@@ -166,6 +160,7 @@ export default function AnimationDatePicker({
                   <span>
                     <span className="font-semibold text-[#374151]">{Number(d.slice(8))}</span>{" "}
                     {TYPE_STYLES[e.type]?.label ?? e.type} · {e.titre}
+                    {d < today && <span className="text-[#9ca3af]"> (passé)</span>}
                   </span>
                 </p>
               ))
