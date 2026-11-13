@@ -1,132 +1,11 @@
 "use client";
 
 import { useState, useMemo, useTransition } from "react";
+import Link from "next/link";
 import Tag from "@/components/ui/Tag";
 import { EVENT_TYPES } from "@/lib/constants";
 import { registerForEvent, unregisterFromEvent } from "@/app/agenda/actions";
 import type { Event, EventType, Intervenant } from "@/types";
-
-/* ── Modale Proposer une Animation ──────────────────────────── */
-function ProposeAnimationModal({ onClose }: { onClose: () => void }) {
-  const [type, setType] = useState("Webinaire");
-  const [sujet, setSujet] = useState("");
-  const [description, setDescription] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!sujet.trim() || !description.trim()) {
-      setError("Merci de remplir tous les champs.");
-      return;
-    }
-    setLoading(true);
-    setError("");
-    try {
-      const res = await fetch("/api/proposer-animation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type, sujet, description }),
-      });
-      if (!res.ok) throw new Error();
-      setSuccess(true);
-    } catch {
-      setError("Une erreur est survenue. Réessaie.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.4)" }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-    >
-      <div className="bg-white rounded-[10px] w-full max-w-[480px] shadow-[0_4px_24px_rgba(0,0,0,0.12)]">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[#e5e7eb]">
-          <h2 className="text-[15px] font-semibold text-[#111827]">Proposer une animation</h2>
-          <button onClick={onClose} className="text-[#9ca3af] hover:text-[#374151] text-xl leading-none">×</button>
-        </div>
-
-        {success ? (
-          <div className="px-5 py-8 text-center">
-            <p className="text-2xl mb-3">🎉</p>
-            <p className="text-[14px] font-semibold text-[#111827] mb-1">Proposition envoyée !</p>
-            <p className="text-[12px] text-[#6b7280] mb-4">L'équipe du Club ESG reviendra vers toi rapidement.</p>
-            <button
-              onClick={onClose}
-              className="px-5 py-2 rounded-[6px] text-[12px] font-semibold bg-[#016050] text-white hover:bg-[#014d40] transition-colors"
-            >
-              Fermer
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="px-5 py-4 space-y-3">
-            {/* Type */}
-            <div className="flex flex-col gap-1">
-              <label className="text-[12px] font-medium text-[#374151]">Type d'animation <span className="text-[#ef4444]">*</span></label>
-              <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#374151] outline-none focus:border-[#016050] transition-colors"
-              >
-                <option>Webinaire</option>
-                <option>Workshop</option>
-              </select>
-            </div>
-
-            {/* Sujet */}
-            <div className="flex flex-col gap-1">
-              <label className="text-[12px] font-medium text-[#374151]">Sujet proposé <span className="text-[#ef4444]">*</span></label>
-              <input
-                type="text"
-                value={sujet}
-                onChange={(e) => setSujet(e.target.value)}
-                placeholder="Ex : Stratégie net-zéro pour les PME"
-                maxLength={120}
-                className="h-[34px] w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#016050] transition-colors"
-              />
-            </div>
-
-            {/* Description */}
-            <div className="flex flex-col gap-1">
-              <label className="text-[12px] font-medium text-[#374151]">Description & angle <span className="text-[#ef4444]">*</span></label>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Décris l'angle, les points clés que tu souhaites aborder, ton niveau d'expertise sur le sujet…"
-                rows={4}
-                maxLength={600}
-                className="w-full rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] py-[8px] text-[12px] text-[#111827] placeholder:text-[#9ca3af] outline-none focus:border-[#016050] resize-none transition-colors"
-              />
-            </div>
-
-            {error && <p className="text-[11px] text-[#ef4444]">{error}</p>}
-
-            <div className="flex justify-end gap-2 pt-1">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 rounded-[6px] text-[12px] font-medium text-[#374151] border border-[#e5e7eb] hover:bg-[#f5f6f8] transition-colors"
-              >
-                Annuler
-              </button>
-              <button
-                type="submit"
-                disabled={loading}
-                className="px-4 py-2 rounded-[6px] text-[12px] font-semibold text-white bg-[#016050] hover:bg-[#014d40] transition-colors disabled:opacity-60"
-              >
-                {loading ? "Envoi…" : "Envoyer la proposition →"}
-              </button>
-            </div>
-          </form>
-        )}
-      </div>
-    </div>
-  );
-}
 
 const EVENT_ICONS: Record<string, string> = {
   Webinaire: "🎙",
@@ -189,7 +68,6 @@ export default function AgendaClient({
   myRegistrations?: string[];
 }) {
   const [activeTab, setActiveTab]       = useState<TabValue>("Tout");
-  const [showProposeModal, setShowProposeModal] = useState(false);
   const [showPast, setShowPast]         = useState(false);
 
   const now = new Date();
@@ -224,8 +102,6 @@ export default function AgendaClient({
 
   return (
     <div className="max-w-[70%]">
-      {showProposeModal && <ProposeAnimationModal onClose={() => setShowProposeModal(false)} />}
-
       {/* ── En-tête ──────────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-4 mb-4">
         <div>
@@ -234,12 +110,12 @@ export default function AgendaClient({
             {upcoming.length} à venir · {past.length} passé{past.length > 1 ? "s" : ""}
           </p>
         </div>
-        <button
-          onClick={() => setShowProposeModal(true)}
+        <Link
+          href="/proposer-animation"
           className="flex-shrink-0 px-[14px] py-[9px] rounded-[6px] text-[13px] font-semibold text-[#016050] bg-[#e4f7f3] hover:bg-[#c8f0e8] transition-colors"
         >
           + Proposer une animation
-        </button>
+        </Link>
       </div>
 
       {/* ── Tabs ─────────────────────────────────────────────── */}

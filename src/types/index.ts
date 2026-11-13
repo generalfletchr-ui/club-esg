@@ -91,6 +91,31 @@ export interface Replay {
   created_at: string;
 }
 
+/* ── Propositions d'animation ───────────────────────────────── */
+
+export interface AnimationProposal {
+  id: string;
+  member_id: string;
+  format: "webinaire" | "atelier";
+  theme: string;
+  theme_autre: string | null;
+  titre: string;
+  /* Plus demandé dans le formulaire */
+  resume: string | null;
+  date_souhaitee: string;
+  heure: string;
+  coanimateur_nom: string | null;
+  coanimateur_email: string | null;
+  engagement_le: string;
+  statut: "en_attente" | "validee" | "a_ajuster" | "refusee";
+  message_admin: string | null;
+  event_id: string | null;
+  traite_par: string | null;
+  traite_le: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 /* ── Missions (Job Board) ──────────────────────────────────── */
 
 export type MissionStatut = "pending" | "published" | "rejected" | "pourvue" | "expired";

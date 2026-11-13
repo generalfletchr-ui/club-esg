@@ -12,6 +12,7 @@ const MEMBER_NAV = [
   { label: "Annuaire",        href: "/annuaire",      icon: "◫" },
   { label: "Agenda",          href: "/agenda",        icon: "◷" },
   { label: "Replays",         href: "/replays",       icon: "▶" },
+  { label: "Proposer une animation", href: "/proposer-animation", icon: "⊕" },
   { label: "Missions",        href: "/missions",      icon: "◈" },
   { label: "Mes missions",    href: "/mes-missions",  icon: "◇" },
 ];
@@ -22,6 +23,7 @@ const ADMIN_NAV = [
   { label: "Membres",     href: "/admin/membres",     icon: "≡" },
   { label: "Missions",    href: "/admin/missions",    icon: "◈" },
   { label: "Événements",  href: "/admin/evenements",  icon: "✦" },
+  { label: "Animations",  href: "/admin/animations",  icon: "◎" },
   { label: "Replays",     href: "/admin/replays",     icon: "▤" },
   { label: "Export CSV",  href: "/admin/export-csv",  icon: "↓" },
   { label: "Manuel",      href: "/admin/manuel",      icon: "?" },

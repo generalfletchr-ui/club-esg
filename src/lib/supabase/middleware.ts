@@ -40,6 +40,7 @@ export async function updateSession(request: NextRequest) {
     "/annuaire",
     "/agenda",
     "/replays",
+    "/proposer-animation",
     "/mon-profil",
     "/admin",
     "/en-attente",

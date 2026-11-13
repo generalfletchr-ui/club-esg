@@ -509,6 +509,23 @@ export default function AdminManuelClient() {
                 ["Adresse", "Non", "Lieu pour les événements en présentiel"],
               ]}
             />
+
+            <H3>Propositions d&apos;animation des membres</H3>
+            <p className="text-[14px] text-[#374151] leading-relaxed mb-3">
+              Les membres proposent un webinaire (45 min, à 11h00) ou un atelier (1h30) depuis « Proposer une animation ».
+              Les dates possibles sont uniquement les mardis et jeudis, au moins 21 jours à l&apos;avance.
+              Les propositions arrivent dans Admin → Animations, et vous êtes prévenu par e-mail.
+            </p>
+            <Steps items={[
+              "Ouvrez la proposition pour lire la fiche complète.",
+              "Valider : saisissez le lien d'inscription. L'événement est créé dans l'agenda et le membre reçoit le mail de validation avec le modèle de présentation.",
+              "Demander un ajustement : écrivez votre message. Le membre reçoit un lien pour modifier sa proposition, qui revient ensuite « En attente ».",
+              "Refuser : écrivez votre message, il est envoyé tel quel au membre.",
+            ]} />
+            <Note color="orange">
+              Un même créneau ne peut pas être validé deux fois : en cas de conflit avec une autre animation ou un événement de l&apos;agenda, la validation est bloquée.
+              Déposez le modèle PowerPoint du Club en haut de la page Animations : il est joint automatiquement aux mails de validation.
+            </Note>
           </section>
 
           {/* ─────────────────────────────────────────────

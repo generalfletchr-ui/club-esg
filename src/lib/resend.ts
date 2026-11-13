@@ -369,22 +369,23 @@ export async function sendAdminNewMemberEmail(
   });
 }
 
-/** Notification aux admins : proposition d'animation */
-export async function sendAdminAnimationProposal(
-  adminEmails: string[],
-  prenom: string,
-  nom: string,
-  email: string,
-  type: string,
-  sujet: string,
-  description: string,
-) {
-  if (!adminEmails.length) return;
-  return resend.emails.send({
-    from: FROM,
-    to: adminEmails,
-    subject: `Club ESG : proposition d'animation de ${prenom} ${nom}`,
-    html: `
+/* ── Propositions d'animation ──────────────────────────────── */
+
+const FROM_EQUIPE = "L'équipe du Club ESG <noreply@club.fletchr.fr>";
+const SITE_URL = "https://club.fletchr.fr";
+
+/** Échappe le texte saisi par les membres avant de l'insérer dans un mail */
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/** Gabarit commun aux mails d'animation (même charte que les autres mails) */
+function animationMailLayout(body: string): string {
+  return `
 <!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -399,28 +400,9 @@ export async function sendAdminAnimationProposal(
           </td>
         </tr>
         <tr>
-          <td style="padding:40px 48px;">
-            <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;color:#111827;">
-              Nouvelle proposition d'animation
-            </h1>
-            <table width="100%" cellpadding="0" cellspacing="0"
-                   style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:24px;">
-              <tr><td style="padding:20px;">
-                <p style="margin:0 0 8px;font-size:13px;color:#6b7280;">
-                  <strong style="color:#374151;">Membre :</strong> ${prenom} ${nom} (${email})
-                </p>
-                <p style="margin:0 0 8px;font-size:13px;color:#6b7280;">
-                  <strong style="color:#374151;">Type :</strong> ${type}
-                </p>
-                <p style="margin:0 0 8px;font-size:13px;color:#6b7280;">
-                  <strong style="color:#374151;">Sujet :</strong> ${sujet}
-                </p>
-                <p style="margin:0;font-size:13px;color:#374151;white-space:pre-line;">${description}</p>
-              </td></tr>
-            </table>
-            <p style="margin:0;font-size:13px;color:#6b7280;line-height:1.6;">
-              L'équipe Club ESG
-            </p>
+          <td style="padding:40px 48px;font-size:15px;color:#374151;line-height:1.6;">
+            ${body}
+            <p style="margin:24px 0 0;font-size:15px;color:#374151;">L'équipe du Club ESG</p>
           </td>
         </tr>
         <tr>
@@ -434,8 +416,121 @@ export async function sendAdminAnimationProposal(
     </td></tr>
   </table>
 </body>
-</html>`,
-  });
+</html>`;
+}
+
+const P = 'style="margin:0 0 16px;"';
+
+/** Message de l'admin : texte libre, retours à la ligne conservés */
+function messageBlock(message: string): string {
+  return `<p style="margin:0 0 16px;white-space:pre-line;">${escapeHtml(message)}</p>`;
+}
+
+export interface AnimationMailInfo {
+  email: string;
+  prenom: string;
+  titre: string;
+}
+
+/** Accusé de réception au membre */
+export function buildAnimationReceivedEmail(info: AnimationMailInfo) {
+  return {
+    from: FROM_EQUIPE,
+    to: info.email,
+    subject: "Nous avons bien reçu votre proposition d'animation",
+    html: animationMailLayout(`
+      <p ${P}>Bonjour ${escapeHtml(info.prenom)},</p>
+      <p ${P}>Merci pour votre proposition « ${escapeHtml(info.titre)} » ! Nous revenons vers vous sous une semaine.</p>`),
+  };
+}
+
+/** Validation, avec le modèle de présentation en pièce jointe */
+export function buildAnimationValidatedEmail(
+  info: AnimationMailInfo & { format: "webinaire" | "atelier"; dateLongue: string; heure: string },
+  attachment?: { filename: string; content: Buffer }
+) {
+  return {
+    from: FROM_EQUIPE,
+    to: info.email,
+    subject: "Votre animation pour le Club ESG est validée !",
+    html: animationMailLayout(`
+      <p ${P}>Bonjour ${escapeHtml(info.prenom)},</p>
+      <p ${P}>Merci pour votre proposition : votre ${info.format} « ${escapeHtml(info.titre)} » est validé ! Il aura lieu le ${info.dateLongue} à ${info.heure}, en ligne sur Teams.</p>
+      <p style="margin:0 0 8px;">Pour bien le préparer :</p>
+      <ol style="margin:0 0 16px;padding-left:20px;">
+        <li>Vous trouverez en pièce jointe le modèle de présentation du Club, avec un guide pour l'intervenant.</li>
+        <li>Merci de nous envoyer votre support au plus tard une semaine avant la date.</li>
+        <li>Nous calerons ensemble un test technique de 15 minutes deux jours avant, pour vérifier la connexion, le micro et le partage d'écran.</li>
+      </ol>
+      <p ${P}>De notre côté, nous nous occupons de la communication et de l'animation des sondages pendant la session.</p>
+      <p ${P}>Merci de faire vivre le Club !</p>`),
+    ...(attachment ? { attachments: [attachment] } : {}),
+  };
+}
+
+/** Demande d'ajustement, avec le lien de modification */
+export function buildAnimationAdjustEmail(info: AnimationMailInfo & { message: string; proposalId: string }) {
+  const lien = `${SITE_URL}/proposer-animation/${info.proposalId}`;
+  return {
+    from: FROM_EQUIPE,
+    to: info.email,
+    subject: "Votre proposition d'animation : un petit ajustement",
+    html: animationMailLayout(`
+      <p ${P}>Bonjour ${escapeHtml(info.prenom)},</p>
+      <p ${P}>Merci pour votre proposition « ${escapeHtml(info.titre)} ».</p>
+      ${messageBlock(info.message)}
+      <p ${P}>Vous pouvez modifier votre proposition ici : <a href="${lien}" style="color:#016050;font-weight:600;">${lien}</a></p>`),
+  };
+}
+
+/** Refus */
+export function buildAnimationRefusedEmail(info: AnimationMailInfo & { message: string }) {
+  return {
+    from: FROM_EQUIPE,
+    to: info.email,
+    subject: "Votre proposition d'animation",
+    html: animationMailLayout(`
+      <p ${P}>Bonjour ${escapeHtml(info.prenom)},</p>
+      <p ${P}>Merci pour votre proposition « ${escapeHtml(info.titre)} ».</p>
+      ${messageBlock(info.message)}
+      <p ${P}>N'hésitez pas à nous proposer un autre sujet.</p>`),
+  };
+}
+
+/** Notification aux admins : nouvelle proposition ou proposition ajustée */
+export function buildAdminAnimationNotification(
+  adminEmails: string[],
+  info: {
+    prenom: string;
+    nom: string;
+    titre: string;
+    formatLabel: string;
+    theme: string;
+    dateLongue: string;
+    heure: string;
+    ajustee: boolean;
+  }
+) {
+  const quoi = info.ajustee ? "Proposition d'animation ajustée" : "Nouvelle proposition d'animation";
+  return {
+    from: FROM_EQUIPE,
+    to: adminEmails,
+    subject: `Club ESG : ${quoi.toLowerCase()} de ${info.prenom} ${info.nom}`,
+    html: animationMailLayout(`
+      <p ${P}><strong>${quoi}</strong></p>
+      <p style="margin:0 0 4px;"><strong>Intervenant :</strong> ${escapeHtml(info.prenom)} ${escapeHtml(info.nom)}</p>
+      <p style="margin:0 0 4px;"><strong>Titre :</strong> ${escapeHtml(info.titre)}</p>
+      <p style="margin:0 0 4px;"><strong>Format :</strong> ${info.formatLabel}</p>
+      <p style="margin:0 0 4px;"><strong>Thème :</strong> ${escapeHtml(info.theme)}</p>
+      <p ${P}><strong>Date souhaitée :</strong> ${info.dateLongue} à ${info.heure}</p>
+      <p ${P}><a href="${SITE_URL}/admin/animations" style="color:#016050;font-weight:600;">Traiter la proposition dans l'espace admin →</a></p>`),
+  };
+}
+
+/** Envoie un mail préparé par l'un des builders ci-dessus */
+export async function sendAnimationEmail(payload: Parameters<typeof resend.emails.send>[0]) {
+  if (Array.isArray(payload.to) && payload.to.length === 0) return;
+  return resend.emails.send(payload);
 }
 
 /** Email envoyé quand une demande est refusée */

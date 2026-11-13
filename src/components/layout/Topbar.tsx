@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 const ROUTE_LABELS: Record<string, string> = {
   "/dashboard":         "Tableau de bord",
   "/annuaire":          "Annuaire",
+  "/proposer-animation": "Proposer une animation",
   "/missions":          "Missions",
   "/mes-missions":      "Mes missions",
   "/agenda":            "Agenda",
@@ -16,6 +17,7 @@ const ROUTE_LABELS: Record<string, string> = {
   "/admin/membres":     "Membres",
   "/admin/missions":    "Missions",
   "/admin/evenements":  "Événements",
+  "/admin/animations":  "Animations",
   "/admin/replays":     "Replays",
   "/admin/export-csv":  "Export CSV",
 };

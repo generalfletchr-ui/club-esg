@@ -229,6 +229,38 @@ export default async function DashboardPage() {
           </Card>
         </div>
 
+        {/* ── Proposer une animation ───────────────────────── */}
+        <div className="relative overflow-hidden rounded-[8px] bg-gradient-to-br from-[#016050] to-[#014d40] px-6 py-5">
+          {/* Halo décoratif */}
+          <div className="pointer-events-none absolute -right-10 -top-12 w-[180px] h-[180px] rounded-full bg-white/[0.06]" />
+          <div className="pointer-events-none absolute right-24 -bottom-16 w-[120px] h-[120px] rounded-full bg-white/[0.04]" />
+
+          <div className="relative flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-[48px] h-[48px] rounded-[10px] bg-white/15 flex items-center justify-center flex-shrink-0 text-[24px]">
+                💡
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-[#e4f7f3]/80 mb-0.5">
+                  Partagez votre expertise
+                </p>
+                <p className="text-[16px] font-bold text-white leading-snug">
+                  Animez un webinaire ou un atelier du Club
+                </p>
+                <p className="text-[12px] text-white/70 mt-0.5">
+                  45 min ou 1h30, en ligne, les mardis et jeudis. On s&apos;occupe de la communication.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/proposer-animation"
+              className="flex-shrink-0 inline-flex items-center px-5 py-2.5 rounded-[6px] text-[13px] font-semibold text-[#016050] bg-white hover:bg-[#e4f7f3] transition-colors"
+            >
+              Proposer une animation →
+            </Link>
+          </div>
+        </div>
+
         {/* ── Dernières missions ───────────────────────────── */}
         <Card>
           <div className="flex items-center justify-between mb-3">

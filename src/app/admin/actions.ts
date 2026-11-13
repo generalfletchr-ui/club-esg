@@ -6,6 +6,12 @@ import { createClient as createServiceClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthUser, getMemberProfile } from "@/lib/auth";
 import {
+  decideProposal,
+  RESSOURCES_BUCKET,
+  TEMPLATE_SETTING_KEY,
+  type AdminDecision,
+} from "@/lib/animation-workflow";
+import {
   sendApprovalEmail,
   sendRejectionEmail,
   sendMissionPublishedEmail,
@@ -284,6 +290,43 @@ export async function deleteReplay(replayId: string) {
 
   revalidatePath("/admin/replays");
   revalidatePath("/replays");
+}
+
+/* ── Propositions d'animation ──────────────────────────────── */
+
+export async function decideAnimationProposal(proposalId: string, decision: AdminDecision) {
+  const { supabase, adminId } = await requireAdmin();
+  const result = await decideProposal(supabase, adminId, proposalId, decision);
+
+  revalidatePath("/admin/animations");
+  revalidatePath("/proposer-animation");
+  revalidatePath("/agenda");
+  revalidatePath("/admin/evenements");
+  revalidatePath("/dashboard");
+  return result;
+}
+
+/** Enregistre le modèle PowerPoint déposé (déjà envoyé dans le bucket) et retire l'ancien */
+export async function setPresentationTemplate(path: string) {
+  const { supabase } = await requireAdmin();
+
+  const { data: before } = await supabase
+    .from("app_settings")
+    .select("value")
+    .eq("key", TEMPLATE_SETTING_KEY)
+    .maybeSingle();
+
+  const { error } = await supabase
+    .from("app_settings")
+    .upsert({ key: TEMPLATE_SETTING_KEY, value: path, updated_at: new Date().toISOString() });
+  if (error) return { error: "L'enregistrement du modèle a échoué." };
+
+  if (before?.value && before.value !== path) {
+    await supabase.storage.from(RESSOURCES_BUCKET).remove([before.value]);
+  }
+
+  revalidatePath("/admin/animations");
+  return {};
 }
 
 /* ── Missions ──────────────────────────────────────────────── */
