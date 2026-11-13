@@ -237,8 +237,14 @@ export default async function DashboardPage() {
 
           <div className="relative flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div className="w-[48px] h-[48px] rounded-[10px] bg-white/15 flex items-center justify-center flex-shrink-0 text-[24px]">
-                💡
+              <div className="w-[48px] h-[48px] rounded-[10px] bg-white/15 flex items-center justify-center flex-shrink-0">
+                {/* Micro : prise de parole lors d'un webinaire ou d'un atelier */}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="9" y="2.5" width="6" height="11.5" rx="3" />
+                  <path d="M5.5 10.5a6.5 6.5 0 0 0 13 0" />
+                  <path d="M12 17v4" />
+                  <path d="M8.5 21h7" />
+                </svg>
               </div>
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-[#e4f7f3]/80 mb-0.5">
