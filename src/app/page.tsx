@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import HashErrorRedirect from "./_hash-error-redirect";
 import PublicNav from "@/components/layout/PublicNav";
 import PublicFooter from "@/components/layout/PublicFooter";
+import HeroSlideshow from "@/components/features/HeroSlideshow";
 import { getActiveMembersLabel } from "@/lib/members-count";
 
 /* Page régénérée au plus toutes les heures (nombre de membres à jour) */
@@ -80,14 +80,7 @@ export default async function HomePage() {
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative isolate bg-[#016050] px-4 sm:px-10 pt-20 pb-20">
-        <Image
-          src="/hero-home-parasol.webp"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[center_52%] -z-10"
-        />
+        <HeroSlideshow />
         {/* Voile vert : garde le texte lisible et l'identité Fletchr par-dessus la photo */}
         <div className="absolute inset-0 -z-10 bg-[#016050]/75" />
 
