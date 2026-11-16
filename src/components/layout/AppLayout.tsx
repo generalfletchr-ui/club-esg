@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { createClient } from "@/lib/supabase/server";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
+import AnnouncementPopup from "@/components/features/AnnouncementPopup";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -27,6 +28,7 @@ export default async function AppLayout({ children, isAdmin = false, userName }:
 
   return (
     <div className="flex min-h-screen bg-[#f5f6f8]">
+      <AnnouncementPopup />
       <Sidebar isAdmin={isAdmin} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar userName={displayName} />
